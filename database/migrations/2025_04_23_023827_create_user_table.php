@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->require();
             $table->string('tempat_tanggal_lahir')->require(); // Optional phone number
@@ -21,11 +21,12 @@ return new class extends Migration
             $table->integer('gaji_pokok')->require(); // Optional phone number
             $table->integer('tunjangan_makan')->nullable(); // Optional phone number
             $table->integer('tunjangan_hari_tua')->nullable(); // Optional phone number
-            $table->integer('tunjangan_retar')->nullable(); // Optional phone number
-            $table->integer('jumlah_kotor')->require(); // Optional phone number
+            $table->integer('tunjangan_retase')->nullable(); // Optional phone number
+            $table->integer('jumlah_kotor')->require()->storedAs('gaji_pokok + (tunjangan_makan + tunjangan_hari_tua + tunjangan_retase)');
             $table->integer('potongan_BPJS')->nullable(); // Optional phone number
             $table->integer('potongan_tabungan_hari_tua')->nullable(); // Optional phone number
             $table->integer('potongan_kredit_kasbon')->nullable(); // Optional phone number
+            $table->integer('jumlah_bersih')->require()->storedAs('jumlah_kotor - (potongan_BPJS + potongan_tabungan_hari_tua + potongan_kredit_kasbon)');
             $table->boolean('ttd')->nullable(); // Optional phone number
             $table->timestamps();
         });

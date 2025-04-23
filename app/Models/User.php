@@ -16,7 +16,7 @@ class User extends Model
         'gaji_pokok',
         'tunjangan_makan',
         'tunjangan_hari_tua',
-        'tunjangan_retar',
+        'tunjangan_retase',
         'jumlah_kotor',
         'potongan_BPJS',
         'potongan_tabungan_hari_tua',

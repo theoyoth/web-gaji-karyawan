@@ -14,8 +14,8 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('table');
-});
 
-Route::apiResource('/user', UserController::class);
+Route::get('/', [UserController::class, 'read']);
+Route::get('/create', function() {
+    return view('create.index');
+});

@@ -11,7 +11,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return response()->json(['data' => $users], 200);
+        return view('table', compact('users'));
     }
 
     public function store(Request $request)
@@ -33,9 +33,9 @@ class UserController extends Controller
         $user->gaji_pokok = $request->input('gaji_pokok'); 
         $user->tunjangan_makan = $request->input('tunjangan_makan'); 
         $user->tunjangan_hari_tua = $request->input('tunjangan_hari_tua'); 
-        $user->tunjangan_retar = $request->input('tunjangan_retar'); 
+        $user->tunjangan_retase = $request->input('tunjangan_retase'); 
         $user->jumlah_kotor = $request->input('jumlah_kotor'); 
-        $user->potongan_BPJS = $request->input('potongan_BPJS'); 
+        $user->potongan_BPJS = $request->input('potongan_bpjs'); 
         $user->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua'); 
         $user->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon'); 
         $user->jumlah_bersih = $request->input('jumlah_bersih'); 
