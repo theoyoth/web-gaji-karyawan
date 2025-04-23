@@ -10,6 +10,11 @@
             <h1 class="text-4xl font-bold text-center">DAFTAR GAJI KARYAWAN</h3>
         </div>
         
+        @if(session('success'))
+            <div class="bg-green-100 text-green-800 p-2 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="mb-4">
             <a href={{ url('/create') }} class="px-4 py-2 rounded-lg bg-green-600">Create +</button>
         </div>

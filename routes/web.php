@@ -19,3 +19,4 @@ Route::get('/', [UserController::class, 'read']);
 Route::get('/create', function() {
     return view('create.index');
 });
+Route::post('/create', [UserController::class, 'store'])->name('create.user');
