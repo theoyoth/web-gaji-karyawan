@@ -5,14 +5,14 @@
         {{-- <div class="w-auto h-100 relative"> --}}
             <img loading="lazy" decoding="async" class="w-50 h-20" src="https://gunungselatan.com/wp-content/uploads/2025/03/header.png" alt="logo" itemprop="image" srcset="https://gunungselatan.com/wp-content/uploads/2025/03/header.png 250w, https://gunungselatan.com/wp-content/uploads/2025/03/header-150x37.png 150w" sizes="auto, (max-width: 250px) 100vw, 250px" />
         {{-- </div> --}}
-            
+
         <div>
-            <h1 class="text-4xl font-bold text-center">DAFTAR :  GAJI KARYAWAN KANTOR 1</h3>
+            <h1 class="text-4xl font-bold text-center">DAFTAR :  GAJI KARYAWAN KANTOR 1</h1>
         </div>
         <div>
-            <h1 class="text-2xl font-bold text-center">BULAN : APRIL 2025</h3>
+            <h1 class="text-2xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h1>
         </div>
-        
+
         @if(session('success'))
             <div id="success-msg" class="bg-green-100 text-green-800 p-2 rounded">
                 {{ session('success') }}
@@ -24,10 +24,10 @@
             }, 4000);
             </script>
         @endif
-        
-        
+
+
         <div class="w-full flex justify-between">
-            <a href="{{ route('daftar.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
+            <a href="{{ route('header.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
             <div class="flex gap-4">
                 <a href="{{ route('user.create') }}" class="inline-block my-4 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Buat baru +</a>
                 <a href="{{ route('print.kantor1') }}" class="inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Print</a>
@@ -35,28 +35,28 @@
         </div>
 
         <form method="GET" action="{{ route('filter.kantor1') }}" class="mb-4">
-            <select name="bulan" required>
+            <select name="bulan" required class="px-4 py-2">
                 <option value="">-- Pilih Bulan --</option>
                 @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
                     <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
                 @endforeach
             </select>
-        
-            <select name="tahun" required>
+
+            <select name="tahun" required class="px-4 py-2">
                 <option value="">-- Pilih Tahun --</option>
                 @for ($y = 2020; $y <= now()->year; $y++)
-                    <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                    <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
                 @endfor
             </select>
-        
-            <button type="submit">Filter</button>
+
+            <button type="submit" class="px-4 py-2 text-white bg-blue-600  border">Filter</button>
         </form>
 
         <div class="bg-gray-100">
             @if($users->flatMap->salaries->isNotEmpty())
                 <!-- your table -->
             @else
-                <p class="text-red-500 mt-4">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
+                <p class="text-red-500 py-2 bg-gray-100 indent-2">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
             @endif
             <table class="min-w-full table-auto border-collapse">
                 <thead>
@@ -65,22 +65,22 @@
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Nama</th>
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th>
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th>
-                        
+
                         <!-- Gaji Pokok with 3 sub-columns -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
-                        
+
                         <!-- Tunjangan -->
                         <th colspan="3" class="py-2 border border-black bg-gray-500">Tunjangan</th>
-                        
+
                         <!-- Jumlah Kotor -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Kotor</th>
-                        
+
                         <!-- Potongan with 3 sub-columns -->
                         <th colspan="3" class="py-2 border border-black bg-gray-500 text-center">Potongan</th>
-                        
+
                         <!-- Jumlah Bersih -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Bersih</th>
-                        
+
                         <!-- TTD -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">TTD</th>
                     </tr>
@@ -89,7 +89,7 @@
                         <th class="py-2 border border-black bg-gray-500">Makan</th>
                         <th class="py-2 border border-black bg-gray-500">Hari tua</th>
                         <th class="py-2 border border-black bg-gray-500">Retase</th>
-                        
+
                         <!-- Sub-columns for Potongan -->
                         <th class="py-2 border border-black bg-gray-500">BPJS</th>
                         <th class="py-2 border border-black bg-gray-500">Tabungan hari tua</th>
