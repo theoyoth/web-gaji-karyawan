@@ -69,6 +69,21 @@
             text-align:center;
             line-height: 14px;
         }
+        .empty-list{
+          color:red;
+          background-color:#f3f4f6;
+          border-radius:10px;
+          padding-inline: 10px;
+          padding-block: 8px;
+        }
+        .select-input{
+          padding-block:10px;
+          padding-inline: 16px;
+          cursor: pointer;
+        }
+        form{
+          margin-bottom: 10px;
+        }
 
         /* Hide the print button during printing */
         @media print {
@@ -106,29 +121,53 @@
                 text-align:center;
                 line-height: 14px;
             }
+            .empty-list{
+              display: none;
+            }
+            form{
+              display: none;
+            }
 
         }
     </style>
 </head>
 <body>
-    <div class="px-4">        
+    <div class="px-4">
         <div>
             <h1 class="header-text text-2xl font-bold text-center">PT.GUNUNG SELATAN</h3>
             <h1 class="header-subtext text-xl font-bold text-center">DAFTAR :  GAJI KARYAWAN KANTOR 2</h3>
-            <h1 class="header-subtext text-xl font-bold text-center">BULAN : APRIL 2025</h3>
+            <h1 class="header-subtext text-xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
         </div>
-    
+
 
         <div class="w-full flex gap-4">
             <a href="{{ route('kantor2.index') }}" class="link-button inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- Kembali</a>
-            <button class="print-button inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onclick="window.print()">Print</button>
+            <button class="print-button inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onclick="window.print()">🖨️ Print</button>
         </div>
+
+        <form method="GET" action="{{ route('filterprint.kantor2') }}" class="mb-4">
+          <select name="bulan" required class="select-input">
+              <option value="">-- Pilih Bulan --</option>
+              @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
+                  <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
+              @endforeach
+          </select>
+
+          <select name="tahun" required class="select-input">
+              <option value="">-- Pilih Tahun --</option>
+              @for ($y = 2020; $y <= now()->year; $y++)
+                  <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
+              @endfor
+          </select>
+
+          <button type="submit" class="select-input">Filter</button>
+        </form>
 
         <div class="bg-gray-100">
             @if($users->flatMap->salaries->isNotEmpty())
                 <!-- your table -->
             @else
-                <p class="text-red-500 mt-4">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
+                <p class="text-red-500 mt-4 empty-list">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
             @endif
             <table class="min-w-full table-auto border-collapse">
                 <thead>
@@ -137,22 +176,22 @@
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Nama</th>
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th>
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th>
-                        
+
                         <!-- Gaji Pokok with 3 sub-columns -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
-                        
+
                         <!-- Tunjangan -->
                         <th colspan="3" class="py-2 border border-black bg-gray-500">Tunjangan</th>
-                        
+
                         <!-- Jumlah Kotor -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Kotor</th>
-                        
+
                         <!-- Potongan with 3 sub-columns -->
                         <th colspan="3" class="py-2 border border-black bg-gray-500 text-center">Potongan</th>
-                        
+
                         <!-- Jumlah Bersih -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Bersih</th>
-                        
+
                         <!-- TTD -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">TTD</th>
                     </tr>
@@ -161,7 +200,7 @@
                         <th class="py-2 border border-black bg-gray-500">Makan</th>
                         <th class="py-2 border border-black bg-gray-500">Hari tua</th>
                         <th class="py-2 border border-black bg-gray-500">Retase</th>
-                        
+
                         <!-- Sub-columns for Potongan -->
                         <th class="py-2 border border-black bg-gray-500">BPJS</th>
                         <th class="py-2 border border-black bg-gray-500">Tabungan hari tua</th>
@@ -191,7 +230,7 @@
                                     <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd w-20 h-20scale-50">
                                 </td>
                             @endforeach
-                            
+
                         </tr>
                     @endforeach
                 </tbody>
