@@ -124,7 +124,7 @@
             <button class="print-button inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onclick="window.print()">Print</button>
         </div>
 
-        {{-- <form method="GET" action="{{ route('filter.kantor1') }}" class="mb-4">
+        <form method="GET" action="{{ route('filter.kantor1', ['view'=>'print']) }}" class="mb-4">
             <select name="bulan" required>
                 <option value="">-- Pilih Bulan --</option>
                 @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
@@ -140,7 +140,7 @@
             </select>
         
             <button type="submit">Filter</button>
-        </form> --}}
+        </form>
 
         <div class="bg-gray-100">
             <table class="min-w-full table-auto border-collapse">
