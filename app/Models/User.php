@@ -11,17 +11,17 @@ class User extends Model
 
     protected $fillable = [
         'nama',
-        'tempat_tanggal_lahir',
+        'tempat_lahir',
+        'tanggal_lahir',
         'tanggal_diangkat',
-        'gaji_pokok',
-        'tunjangan_makan',
-        'tunjangan_hari_tua',
-        'tunjangan_retase',
-        'jumlah_kotor',
-        'potongan_BPJS',
-        'potongan_tabungan_hari_tua',
-        'potongan_kredit_kasbon',
-        'jumlah_bersih',
-        'ttd'
     ];
+
+    protected $casts = [
+        'tanggal_lahir' => 'date',
+        'tanggal_diangkat' => 'date',
+    ];
+
+    public function salaries(){
+        return $this->hasMany(Salary::class);
+    }
 }

@@ -10,7 +10,7 @@
 
         <title>Gaji pegawai</title>
     </head>
-    <body class="antialiased font-poppins">
+    <body class="antialiased font-poppins bg-gray-300 py-4">
         @yield('content')
     </body>
 </html>

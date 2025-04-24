@@ -1,0 +1,202 @@
+<!-- resources/views/user/print.blade.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print User Details</title>
+    <style>
+        .link-button{
+            display: inline-block;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            background-color: #374151;
+            border-radius: 10px;
+            padding-inline: 16px;
+            padding-block: 10px;
+            text-decoration: none;
+            color:#eaeaea;
+            border:none;
+            outline: none;
+        }
+
+        .print-button{
+            display: inline-block;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            border-radius: 10px;
+            padding-inline: 16px;
+            padding-block: 10px;
+            text-decoration: none;
+            color:#eaeaea;
+            cursor: pointer;
+            background-color: #2563eb;
+            border:none;
+            outline: none;
+        }
+        .print-button:hover{
+            background-color: #1d4ed8;
+
+        }
+        .link-hover:hover{
+            background-color: #1f2937;
+        }
+      /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+        .ttd{
+            width:80px;
+            height: 35px;
+        }
+        .header-text{
+            font-size: 2rem;
+            text-align: center;
+            line-height: 10px;
+        }
+        .header-subtext {
+            font-size: 1.5rem;
+            text-align:center;
+            line-height: 14px;
+        }
+
+        /* Hide the print button during printing */
+        @media print {
+            .print-button,.link-button {
+                display: none;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            table {
+                width: 100%;
+                page-break-after: always;
+            }
+            th {
+                background-color: #f4f4f4;
+            }
+            body {
+                font-size: 12pt;
+                margin: 0;
+            }
+            .ttd{
+                width:50px;
+                height: 30px;
+            }
+            .header-text{
+                font-size: 2rem;
+                text-align: center;
+                line-height: 10px;
+            }
+            .header-subtext {
+                font-size: 1.5rem;
+                text-align:center;
+                line-height: 14px;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="px-4">        
+        <div>
+            <h1 class="header-text text-2xl font-bold text-center">PT.GUNUNG SELATAN</h3>
+            <h1 class="header-subtext text-xl font-bold text-center">GAJI KARYAWAN TRANSPORTIR AWAK 1 DAN AWAK 2</h3>
+            <h1 class="header-subtext text-xl font-bold text-center">BULAN : APRIL 2025</h3>
+        </div>
+    
+
+        <div class="w-full flex gap-4">
+            <a href="{{ route('awak12.index') }}" class="link-button inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- Kembali</a>
+            <button class="print-button inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onclick="window.print()">Print</button>
+        </div>
+
+        <div class="bg-gray-100">
+            @if($users->flatMap->salaries->isNotEmpty())
+                <!-- your table -->
+            @else
+                <p class="text-red-500 mt-4">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
+            @endif
+            <table class="min-w-full table-auto border-collapse">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Nama</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th>
+                        
+                        <!-- Gaji Pokok with 3 sub-columns -->
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
+                        
+                        <!-- Tunjangan -->
+                        <th colspan="3" class="py-2 border border-black bg-gray-500">Tunjangan</th>
+                        
+                        <!-- Jumlah Kotor -->
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Kotor</th>
+                        
+                        <!-- Potongan with 3 sub-columns -->
+                        <th colspan="3" class="py-2 border border-black bg-gray-500 text-center">Potongan</th>
+                        
+                        <!-- Jumlah Bersih -->
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Bersih</th>
+                        
+                        <!-- TTD -->
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500">TTD</th>
+                    </tr>
+                    <tr>
+                        <!-- Sub-columns for tunjangan -->
+                        <th class="py-2 border border-black bg-gray-500">Makan</th>
+                        <th class="py-2 border border-black bg-gray-500">Hari tua</th>
+                        <th class="py-2 border border-black bg-gray-500">Retase</th>
+                        
+                        <!-- Sub-columns for Potongan -->
+                        <th class="py-2 border border-black bg-gray-500">BPJS</th>
+                        <th class="py-2 border border-black bg-gray-500">Tabungan hari tua</th>
+                        <th class="py-2 border border-black bg-gray-500">Kredit/kasbon</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $no = 1; @endphp
+                    @foreach($users as $user)
+                        <tr>
+                            <td class="px-4 py-2 border border-gray-300">{{ $no++ }}</td>
+                            <td class="px-4 py-2 border border-gray-300">{{$user->nama}}</td>
+                            <td class="px-4 py-2 border border-gray-300">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
+                            <td class="px-4 py-2 border border-gray-300">{{$user->tanggal_diangkat->format('d F Y')}}</td>
+
+                            @foreach ($user->salaries as $salary)
+                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
+                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
+                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
+                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_retase, 0, ',', '.')}}</td>
+                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_kotor, 0, ',', '.')}}</td>
+                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
+                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
+                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
+                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
+                                <td class="px-4 py-2 border border-gray-300">
+                                    <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd w-20 h-20scale-50">
+                                </td>
+                            @endforeach
+                            
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
