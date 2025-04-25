@@ -4,7 +4,7 @@
 <div class="container-fluid px-4">
     <main class="min-h-screen flex justify-center items-center">
         <div class="w-1/2 m-auto py-2 bg-gray-100 rounded-lg p-10 border border-black">
-            <a href="{{ route('daftar.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
+            <a href="{{ route('header.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
               <- kembali
             </a>
             <h1 class="text-4xl font-bold text-center">FORMULIR INPUT</h1>
@@ -16,51 +16,55 @@
                         <div class="space-y-4">
                             <div>
                                 <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                 @error('nama')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div>
                                 <label for="kantor" class="block text-sm font-medium text-gray-700">Kantor</label>
-                                <input type="text" id="kantor" name="kantor" value="{{ old('kantor') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                {{-- <input type="text" id="kantor" name="kantor" value="{{ old('kantor') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm"> --}}
+                              
+                                <select name="kantor" id="kantor" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                    @foreach (['kantor 1','kantor 2','awak 1 dan awak 2'] as $kan)
+                                        <option value="{{ $kan }}" {{ request('kan') ? 'selected' : '' }}>{{ $kan }}</option>
+                                    @endforeach
+                                </select>
                                 @error('kantor')
-                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                              @enderror
                             </div>
                             <div>
                                 <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat lahir</label>
-                                <input type="text" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                <input type="text" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                 @error('tempat_lahir')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div>
                                 <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Tanggal lahir</label>
-                                <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                 @error('tanggal_lahir')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div>
                                 <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Tanggal diangkat</label>
-                                <input type="date" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat') }}"  class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                <input type="date" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat') }}"  class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                 @error('tanggal_diangkat')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div>
                                 <label for="gaji_pokok" class="block text-sm font-medium text-gray-700">Gaji pokok</label>
-                                <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                 @error('gaji_pokok')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div>
-                                <label for="bulan" class="block text-sm font-medium text-gray-700">Bulan</label>
-                                {{-- <input type="month" id="bulan" name="bulan" value="{{ old('bulan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required> --}}
-                               
-                                <select name="bulan" required value="{{ old('bulan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500">
+                                <label for="bulan" class="block text-sm font-medium text-gray-700">Bulan</label>                               
+                                <select name="bulan" value="{{ old('bulan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500">
                                     <option value="Januari">Januari</option>
                                     <option value="Februari">Februari</option>
                                     <option value="Maret">Maret</option>
@@ -80,7 +84,12 @@
                             </div>
                             <div>
                                 <label for="tahun" class="block text-sm font-medium text-gray-700">Tahun</label>
-                                <input type="number" id="tahun" name="tahun" value="{{ old('tahun') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+                                {{-- <input type="number" id="tahun" name="tahun" value="{{ old('tahun') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm" > --}}
+                                <select name="tahun" id="tahun" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                    @for ($y = 2020; $y <= now()->year; $y++)
+                                        <option value="{{ $y }}" {{ (request('tahun') ?? now()->year) == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                    @endfor
+                                </select>
                                 @error('tahun')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -95,21 +104,21 @@
                                 <div class="flex-1">
                                     <div class="mt-2">
                                         <label for="tunjangan_makan" class="block text-sm font-medium text-gray-700">Makan</label>
-                                        <input type="number" id="tunjangan_makan" name="tunjangan_makan" value="{{ old('tunjangan_makan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                        <input type="number" id="tunjangan_makan" name="tunjangan_makan" value="{{ old('tunjangan_makan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                         @error('tunjangan_makan')
                                           <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="mt-2">
                                         <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">Hari tua</label>
-                                        <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                        <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                         @error('tunjangan_hari_tua')
                                           <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="mt-2">
                                         <label for="tunjangan_retase" class="block text-sm font-medium text-gray-700">Retase</label>
-                                        <input type="number" id="tunjangan_retase" name="tunjangan_retase" value="{{ old('tunjangan_retase') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                        <input type="number" id="tunjangan_retase" name="tunjangan_retase" value="{{ old('tunjangan_retase') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                         @error('tunjangan_retase')
                                           <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                         @enderror
@@ -121,21 +130,21 @@
                                 <div class="flex-1">
                                     <div class="mt-2">
                                         <label for="potongan_bpjs" class="block text-sm font-medium text-gray-700">BPJS</label>
-                                        <input type="number" id="potongan_bpjs" name="potongan_bpjs" value="{{ old('potongan_bpjs') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                        <input type="number" id="potongan_bpjs" name="potongan_bpjs" value="{{ old('potongan_bpjs') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                         @error('potongan_bpjs')
                                           <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="mt-2">
                                         <label for="potongan_tabungan_hari_tua" class="block text-sm font-medium text-gray-700">Tabungan hari tua</label>
-                                        <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                        <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                         @error('potongan_tabungan_hari_tua')
                                           <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="mt-2">
                                         <label for="potongan_kredit_kasbon" class="block text-sm font-medium text-gray-700">Kredit/Kasbon</label>
-                                        <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                        <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                         @error('potongan_kredit_kasbon')
                                           <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                         @enderror

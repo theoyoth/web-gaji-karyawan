@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use App\Models\Salary;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,13 +12,6 @@ class UserController extends Controller
 {
     public function create(){
         return view('user.create');
-    }
-
-    public function print()
-    {
-        $users = User::all();
-
-        return view('user.print', compact('users'));
     }
 
     public function store(Request $request)
@@ -30,7 +24,7 @@ class UserController extends Controller
             'tanggal_diangkat' => 'required|date',
             'gaji_pokok' => 'required|numeric',
             'bulan' => 'required',
-            'tahun' => 'required',
+            'tahun' => 'required|digits:4|integer|min:2010|max:'. date('Y'),
             'tunjangan_makan' => 'required|numeric',
             'tunjangan_hari_tua' => 'required|numeric',
             'tunjangan_retase' => 'required|numeric',
@@ -46,7 +40,7 @@ class UserController extends Controller
         $image = str_replace(' ', '+', $image);
 
         // Create unique filename
-        $fileName = $request->input('nama') . '.png';
+        $fileName = Str::title($request->input('nama')) . '.png';
 
         // Store file in storage/app/public/signatures
         Storage::disk('public')->put('ttd/' . $fileName, base64_decode($image));
@@ -54,9 +48,9 @@ class UserController extends Controller
         $user = new User();
         $salary = new Salary();
 
-        $user->nama = $request->input('nama');
+        $user->nama = Str::title($request->input('nama'));
         $user->kantor = $request->input('kantor');
-        $user->tempat_lahir = $request->input('tempat_lahir');
+        $user->tempat_lahir = Str::title($request->input('tempat_lahir'));
         $user->tanggal_lahir = $request->input('tanggal_lahir');
         $user->tanggal_diangkat = $request->input('tanggal_diangkat');
 
@@ -77,7 +71,41 @@ class UserController extends Controller
         $salary->save();
         $salary->refresh();
 
-        return redirect()->route('daftar.index')->with('success', 'user saved successfully!');
+        if($user->kantor === 'kantor 1'){
+            return redirect()->route('kantor1.index')->with('success', 'user saved successfully!');
+        }
+        else if($user->kantor === 'kantor 2'){
+            return redirect()->route('kantor2.index')->with('success', 'user saved successfully!');
+        }
+        else if($user->kantor === 'awak 1 dan awak 2'){
+            return redirect()->route('awak12.index')->with('success', 'user saved successfully!');
+        }
+        else{
+            return redirect()->route('header.index')->with('success', 'user saved successfully!');
+        }
 
+    }
+
+    public function destroy($id){
+        $user = User::with('salaries')->findOrFail($id);
+
+        // Loop through each salary associated with the user
+        foreach ($user->salaries as $salary) {
+            $fileName = Str::title($user->nama) . '.png'; // using capital first letter user's name for the signature
+            $path = 'ttd/' . $fileName;
+
+            if (Storage::disk('public')->exists($path)) {
+                // Delete the file
+                Storage::disk('public')->delete($path);
+            }
+
+            // Optionally delete the salary record if needed
+            $salary->delete();
+        }
+
+        // Delete the user
+        $user->delete();
+
+        return redirect()->back()->with('success', 'User deleted successfully.');
     }
 }
