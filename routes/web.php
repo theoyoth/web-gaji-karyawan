@@ -20,6 +20,7 @@ use App\Http\Controllers\UserController;
 Route::get('/', [DaftarController::class, 'index'])->name('header.index');
 Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
+Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
 Route::get('/kantor-1', [placeController::class, 'kantor1'])->name('kantor1.index');
 Route::get('/kantor-2', [placeController::class, 'kantor2'])->name('kantor2.index');
