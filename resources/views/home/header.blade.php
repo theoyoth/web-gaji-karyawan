@@ -1,9 +1,9 @@
 @extends('layout.main')
 
 @section('content')
-    <div class="flex justify-center items-center h-[90vh]">
+<div class="flex justify-center items-center h-[90vh]">
+        <img src="/image/building.jpg" alt="building" class="absolute inset-0 -z-[10] h-screen w-full object-cover">
         <div class="bg-zinc-100 w-2/3 rounded-lg h-3/4 p-10 relative overflow-hidden backdrop-blur-md bg-white/50 border border-white/30 shadow-lg">
-            {{-- <img src="/image/pattern-bw.jpg" alt="pattern" class="absolute inset-0 opacity-5 z-0"> --}}
             <div class="relative z-10">
                 <div>
                     <h1 class="text-4xl font-bold text-center">DAFTAR :  GAJI KARYAWAN PT. GUNUNG SELATAN</h3>
