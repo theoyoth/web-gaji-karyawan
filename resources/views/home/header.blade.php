@@ -1,22 +1,36 @@
 @extends('layout.main')
 
 @section('content')
-    <div class="px-4">
-        <div class="w-52 relative">
-              <img loading="lazy" decoding="async" src="https://gunungselatan.com/wp-content/uploads/2025/03/header.png" alt="logo"
-              class="w-full h-full object-contain"" />
-        </div>
-
-        <div>
-            <h1 class="text-4xl font-bold text-center">DAFTAR :  GAJI KARYAWAN PT. GUNUNG SELATAN</h3>
-        </div>
-    </div>
-    <div class="w-1/2 m-auto">
-        {{-- <a href="{{ route('user.create') }}" class="inline-block my-4 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">DAFTAR GAJI BARU+</a> --}}
-        <div>
-            <a href="{{ route('awak12.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">AWAK 1 DAN AWAK 2</a>
-            <a href="{{ route('kantor1.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">KANTOR 1</a>
-            <a href="{{ route('kantor2.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">KANTOR 2</a>
+    <div class="flex justify-center items-center h-[90vh]">
+        <div class="bg-zinc-100 w-2/3 rounded-lg h-3/4 p-10 relative overflow-hidden backdrop-blur-md bg-white/50 border border-white/30 shadow-lg">
+            {{-- <img src="/image/pattern-bw.jpg" alt="pattern" class="absolute inset-0 opacity-5 z-0"> --}}
+            <div class="relative z-10">
+                <div>
+                    <h1 class="text-4xl font-bold text-center">DAFTAR :  GAJI KARYAWAN PT. GUNUNG SELATAN</h3>
+                </div>
+                <div class="w-full m-auto">
+                    <div class="flex gap-4">
+                        <a href="{{ route('awak12.index') }}" class="my-4 w-[200px] h-[100px] flex flex-col items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
+                            <div class="text-blue-500 text-4xl mb-2">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="text-center font-semibold text-white">AWAK 1 & AWAK 2</div>
+                        </a>
+                        <a href="{{ route('kantor1.index') }}" class="my-4 w-[200px] h-[100px] flex items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
+                            <div class="text-green-500 text-4xl mb-2">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="text-center font-semibold text-white ml-2">KANTOR 1</div>
+                        </a>
+                        <a href="{{ route('kantor2.index') }}" class="my-4 w-[200px] h-[100px] flex items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
+                            <div class="text-purple-500 text-4xl mb-2">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="text-center font-semibold text-white ml-2">KANTOR 2</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
