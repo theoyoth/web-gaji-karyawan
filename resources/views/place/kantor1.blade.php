@@ -1,9 +1,9 @@
 @extends('layout.main')
 
 @section('content')
-        <div class="min-h-screen">
-            <img src="/image/pattern-bw.jpg" alt="building" class="fixed top-0 left-0 -z-[10] opacity-10 h-screen w-full object-cover">
-            <div class="bg-zinc-100 rounded-lg mt-4 px-1 pt-4 min-h-screen backdrop-blur-md bg-white/65 border border-white/30 shadow-lg">
+        <div class="min-h-screen w-full">
+            <img src="/image/pattern-bw.jpg" alt="building" class="fixed top-0 left-0 -z-[10] opacity-10 h-screen min-w-full object-cover">
+            <div class="bg-zinc-100 rounded-lg mt-4 px-1 pt-4 min-h-screen min-w-screen backdrop-blur-md bg-white/65 border border-white/30 shadow-lg overflow-scroll">
                 <div>
                     <h1 class="text-4xl font-bold text-center">DAFTAR :  GAJI KARYAWAN KANTOR 1</h1>
                 </div>
@@ -100,7 +100,7 @@
                                         <td class="text-center py-2 border border-gray-300">Rp.{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') }}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{ number_format($salary->jumlah_bersih, 0, ',', '.') }}</td>
                                         <td class="text-center py-2 border border-gray-300">
-                                            <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ 'ttd' . $user->nama }}" class="ttd w-20 h-20 scale-100 object-cover">
+                                            <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ $user->nama }}" class="ttd w-20 h-20 scale-100 object-cover">
                                         </td>
                                         <td class="text-center px-1 py-2 border border-gray-300">
                                             <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">

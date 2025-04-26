@@ -100,7 +100,7 @@
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
                                         <td class="text-center py-2 border border-gray-300">
-                                            <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="w-20 h-20scale-50">
+                                            <img src="{{ asset('storage/app/ttd/' . $user->nama. '.png') }}" alt="{{ $user->nama }}" class="w-20 h-20scale-50">
                                         </td>
                                         <td class="text-center px-1 py-2 border border-gray-300">
                                             <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
