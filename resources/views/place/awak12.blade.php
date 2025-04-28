@@ -49,13 +49,13 @@
                     @else
                         <p class="text-red-500 py-2 bg-gray-100 indent-2">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
                     @endif
-                    <table class="min-w-full table-auto border-collapse">
+                    <table class="min-w-full table-auto border-collapse text-[0.8rem]">
                         <thead>
                             <tr>
                                 <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500">Nama</th>
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th>
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th>
+                                <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[180px]">Nama</th>
+                                <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[150px]">Tempat, Tanggal Lahir</th>
+                                <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[140px]">Tanggal diangkat</th>
                                 <!-- Gaji Pokok with 3 sub-columns -->
                                 <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
                                 <!-- Tunjangan -->
@@ -67,17 +67,17 @@
                                 <!-- Jumlah Bersih -->
                                 <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Bersih</th>
                                 <!-- TTD -->
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500">TTD</th>
+                                <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[60px]">TTD</th>
                                 <th rowspan="2" class="py-2 border border-black bg-gray-500"></th>
                             </tr>
                             <tr>
                                 <!-- Sub-columns for tunjangan -->
-                                <th class="py-2 border border-black bg-gray-500">Makan</th>
-                                <th class="py-2 border border-black bg-gray-500">Hari tua</th>
-                                <th class="py-2 border border-black bg-gray-500">Retase</th>
+                                <th class="py-2 border border-black bg-gray-500 w-[120px]">Makan</th>
+                                <th class="py-2 border border-black bg-gray-500 w-[120px]">Hari tua</th>
+                                <th class="py-2 border border-black bg-gray-500 w-[120px]">Retase</th>
                                 <!-- Sub-columns for Potongan -->
-                                <th class="py-2 border border-black bg-gray-500">BPJS</th>
-                                <th class="py-2 border border-black bg-gray-500">Tabungan hari tua</th>
+                                <th class="py-2 border border-black bg-gray-500 w-[120px]">BPJS</th>
+                                <th class="py-2 border border-black bg-gray-500 w-[120px]">Tabungan hari tua</th>
                                 <th class="py-2 border border-black bg-gray-500">Kredit/kasbon</th>
                             </tr>
                         </thead>

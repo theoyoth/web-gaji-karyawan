@@ -84,6 +84,15 @@
         form{
           margin-bottom: 10px;
         }
+        table{
+            font-size: 0.8rem;
+        }
+        th,td{
+            border-color:black;
+        }
+        .h-ttd{
+            width: 50px;
+        }
 
         /* Hide the print button during printing */
         @media print {
@@ -102,6 +111,12 @@
             }
             th {
                 background-color: #f4f4f4;
+                border-color:black;
+                font-size: 10px;
+            }
+            td{
+                border-color:black;
+                font-size: 10px;
             }
             body {
                 font-size: 12pt;
@@ -109,7 +124,7 @@
             }
             .ttd{
                 width:50px;
-                height: 30px;
+                object-fit: contain;
             }
             .header-text{
                 font-size: 2rem;
@@ -127,6 +142,30 @@
             form{
               display:none;
             }
+            .h-name{
+                width:150px;
+            }
+            .h-lahir{
+                width:100px;
+            }
+            .h-t-diangkat{
+                width:100px;
+            }
+            .h-tunjangan{
+                width:100px;
+            }
+            .h-potongan{
+                width:100px;
+            }
+            .h-gaji-pokok{
+                width: 100px;
+            }
+            .h-jumlah{
+                width: 100px;
+            }
+            .h-ttd{
+                width: 50px;
+            }
 
         }
     </style>
@@ -136,7 +175,8 @@
         <div>
             <h1 class="header-text text-2xl font-bold text-center">PT.GUNUNG SELATAN</h3>
             <h1 class="header-subtext text-xl font-bold text-center">GAJI KARYAWAN TRANSPORTIR AWAK 1 DAN AWAK 2</h3>
-            <h1 class="header-subtext text-xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
+            {{-- <h1 class="header-subtext text-xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3> --}}
+            <h1 class="header-subtext text-xl font-bold text-center">BULAN : April 2025</h3>
         </div>
 
 
@@ -173,43 +213,43 @@
                 <thead>
                     <tr>
                         <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Nama</th>
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th>
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-name">Nama</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-lahir">Tempat, Tanggal Lahir</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-t-diangkat">Tanggal diangkat</th>
 
                         <!-- Gaji Pokok with 3 sub-columns -->
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center h-gaji-pokok">Gaji Pokok</th>
 
                         <!-- Tunjangan -->
                         <th colspan="3" class="py-2 border border-black bg-gray-500">Tunjangan</th>
 
                         <!-- Jumlah Kotor -->
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Kotor</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-jumlah">Jumlah Kotor</th>
 
                         <!-- Potongan with 3 sub-columns -->
                         <th colspan="3" class="py-2 border border-black bg-gray-500 text-center">Potongan</th>
 
                         <!-- Jumlah Bersih -->
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Bersih</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-jumlah">Jumlah Bersih</th>
 
                         <!-- TTD -->
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500">TTD</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-ttd">TTD</th>
                     </tr>
                     <tr>
                         <!-- Sub-columns for tunjangan -->
-                        <th class="py-2 border border-black bg-gray-500">Makan</th>
-                        <th class="py-2 border border-black bg-gray-500">Hari tua</th>
-                        <th class="py-2 border border-black bg-gray-500">Retase</th>
+                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Makan</th>
+                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Hari tua</th>
+                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Retase</th>
 
                         <!-- Sub-columns for Potongan -->
-                        <th class="py-2 border border-black bg-gray-500">BPJS</th>
-                        <th class="py-2 border border-black bg-gray-500">Tabungan hari tua</th>
-                        <th class="py-2 border border-black bg-gray-500">Kredit/kasbon</th>
+                        <th class="py-2 border border-black bg-gray-500 h-potongan">BPJS</th>
+                        <th class="py-2 border border-black bg-gray-500 h-potongan">Tabungan hari tua</th>
+                        <th class="py-2 border border-black bg-gray-500 h-potongan">Kredit/kasbon</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $no = 1; @endphp
-                    @foreach($users as $user)
+                    {{-- @foreach($users as $user)
                         <tr>
                             <td class="px-4 py-2 border border-gray-300">{{ $no++ }}</td>
                             <td class="px-4 py-2 border border-gray-300">{{$user->nama}}</td>
@@ -227,12 +267,36 @@
                                 <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
                                 <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
                                 <td class="px-4 py-2 border border-gray-300">
-                                    <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd w-20 h-20scale-50">
+                                    <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd w-20 h-20">
                                 </td>
                             @endforeach
 
                         </tr>
-                    @endforeach
+                    @endforeach --}}
+                    @for ($i = 1; $i <= 16; $i++)
+                        <tr>
+                            <td class="px-4 py-2 border border-gray-300">{{ $i }}</td>
+                            <td class="px-4 py-2 border border-gray-300"></td>
+                            <td class="px-4 py-2 border border-gray-300"></td>
+                            <td class="px-4 py-2 border border-gray-300"></td>
+
+                            {{-- @foreach ($user->salaries as $salary) --}}
+                                <td class="px-4 py-2 border border-gray-300"></td>
+                                <td class="px-4 py-2 border border-gray-300"></td>
+                                <td class="px-4 py-2 border border-gray-300"></td>
+                                <td class="px-4 py-2 border border-gray-300"></td>
+                                <td class="px-4 py-2 border border-gray-300"></td>
+                                <td class="px-4 py-2 border border-gray-300"></td>
+                                <td class="px-4 py-2 border border-gray-300"></td>
+                                <td class="px-4 py-2 border border-gray-300"></td>
+                                <td class="px-4 py-2 border border-gray-300"></td>
+                                <td class="px-4 py-2 border border-gray-300">
+                                    {{-- <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd w-20 h-20> --}}
+                                </td>
+                            {{-- @endforeach --}}
+
+                        </tr>
+                    @endfor
                 </tbody>
             </table>
         </div>

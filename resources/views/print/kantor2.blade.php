@@ -56,8 +56,7 @@
             background-color: #f4f4f4;
         }
         .ttd{
-            width:80px;
-            height: 35px;
+            width:50px;
         }
         .header-text{
             font-size: 2rem;
@@ -84,6 +83,15 @@
         form{
           margin-bottom: 10px;
         }
+        table{
+            font-size: 0.8rem;
+        }
+        th,td{
+            border-color:black;
+        }
+        .h-ttd{
+            width: 50px;
+        }
 
         /* Hide the print button during printing */
         @media print {
@@ -102,6 +110,12 @@
             }
             th {
                 background-color: #f4f4f4;
+                border-color:black;
+                font-size: 10px;
+            }
+            td{
+                border-color:black;
+                font-size: 10px;
             }
             body {
                 font-size: 12pt;
@@ -109,7 +123,7 @@
             }
             .ttd{
                 width:50px;
-                height: 30px;
+                object-fit: contain;
             }
             .header-text{
                 font-size: 2rem;
@@ -122,10 +136,34 @@
                 line-height: 14px;
             }
             .empty-list{
-              display: none;
+              display:none;
             }
             form{
-              display: none;
+              display:none;
+            }
+            .h-name{
+                width:150px;
+            }
+            .h-lahir{
+                width:100px;
+            }
+            .h-t-diangkat{
+                width:100px;
+            }
+            .h-tunjangan{
+                width:100px;
+            }
+            .h-potongan{
+                width:100px;
+            }
+            .h-gaji-pokok{
+                width: 100px;
+            }
+            .h-jumlah{
+                width: 100px;
+            }
+            .h-ttd{
+                width: 50px;
             }
 
         }
@@ -173,7 +211,7 @@
                 <thead>
                     <tr>
                         <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Nama</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-name">Nama</th>
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th>
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th>
 
@@ -193,18 +231,18 @@
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Bersih</th>
 
                         <!-- TTD -->
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500">TTD</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-ttd">TTD</th>
                     </tr>
                     <tr>
                         <!-- Sub-columns for tunjangan -->
-                        <th class="py-2 border border-black bg-gray-500">Makan</th>
-                        <th class="py-2 border border-black bg-gray-500">Hari tua</th>
-                        <th class="py-2 border border-black bg-gray-500">Retase</th>
+                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Makan</th>
+                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Hari tua</th>
+                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Retase</th>
 
                         <!-- Sub-columns for Potongan -->
-                        <th class="py-2 border border-black bg-gray-500">BPJS</th>
-                        <th class="py-2 border border-black bg-gray-500">Tabungan hari tua</th>
-                        <th class="py-2 border border-black bg-gray-500">Kredit/kasbon</th>
+                        <th class="py-2 border border-black bg-gray-500 h-potongan">BPJS</th>
+                        <th class="py-2 border border-black bg-gray-500 h-potongan">Tabungan hari tua</th>
+                        <th class="py-2 border border-black bg-gray-500 h-potongan">Kredit/kasbon</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -227,7 +265,7 @@
                                 <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
                                 <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
                                 <td class="px-4 py-2 border border-gray-300">
-                                    <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd w-20 h-20scale-50">
+                                    <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd w-20 h-20">
                                 </td>
                             @endforeach
 
