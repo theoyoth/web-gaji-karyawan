@@ -54,14 +54,20 @@
                             <tr>
                                 <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
                                 <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[180px]">Nama</th>
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[150px]">Tempat, Tanggal Lahir</th>
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[140px]">Tanggal diangkat</th>
                                 <!-- Gaji Pokok with 3 sub-columns -->
                                 <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
+                                <!-- hari kerja -->
+                                <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Hari Kerja</th>
+                                <!-- jumlah retase -->
+                                <th colspan="2" class="py-2 border border-black bg-gray-500 text-center">Jumlah Retase</th>
+                                <!-- tarif retase -->
+                                <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Tarif Retase</th>
                                 <!-- Tunjangan -->
-                                <th colspan="3" class="py-2 border border-black bg-gray-500">Tunjangan</th>
+                                <th colspan="2" class="py-2 border border-black bg-gray-500">Tunjangan</th>
+                                <!-- jumlah ur -->
+                                <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah UR</th>
                                 <!-- Jumlah Kotor -->
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Kotor</th>
+                                <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Gaji</th>
                                 <!-- Potongan with 3 sub-columns -->
                                 <th colspan="3" class="py-2 border border-black bg-gray-500 text-center">Potongan</th>
                                 <!-- Jumlah Bersih -->
@@ -71,10 +77,12 @@
                                 <th rowspan="2" class="py-2 border border-black bg-gray-500"></th>
                             </tr>
                             <tr>
+                                <!-- Sub-columns jumlah retase -->
+                                <th class="py-2 border border-black bg-gray-500 w-[120px]"></th>
+                                <th class="py-2 border border-black bg-gray-500 w-[120px]"></th>
                                 <!-- Sub-columns for tunjangan -->
                                 <th class="py-2 border border-black bg-gray-500 w-[120px]">Makan</th>
                                 <th class="py-2 border border-black bg-gray-500 w-[120px]">Hari tua</th>
-                                <th class="py-2 border border-black bg-gray-500 w-[120px]">Retase</th>
                                 <!-- Sub-columns for Potongan -->
                                 <th class="py-2 border border-black bg-gray-500 w-[120px]">BPJS</th>
                                 <th class="py-2 border border-black bg-gray-500 w-[120px]">Tabungan hari tua</th>
@@ -89,14 +97,13 @@
                                         <td class="text-center py-2 border border-gray-300">{{ $no++ }}</td>
                                         <td class="text-center py-2 border border-gray-300">{{$user->nama}}</td>
                                         {{-- <td class="text-center py-2 border border-gray-300">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
-                                        <td class="text-center py-2 border border-gray-300">{{ $user->tempat_lahir }}</td>
                                         {{-- <td class="text-center py-2 border border-gray-300">{{$user->tanggal_diangkat->format('d F Y')}}</td> --}}
-                                        <td class="text-center py-2 border border-gray-300">{{$user->tanggal_diangkat}}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
+                                        <td class="text-center py-2 border border-gray-300">{{$salary->hari_kerja}}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_retase, 0, ',', '.')}}</td>
-                                        <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_kotor, 0, ',', '.')}}</td>
+                                        <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
