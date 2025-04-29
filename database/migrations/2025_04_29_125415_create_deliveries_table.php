@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('tempat_lahir')->nullable();
-            $table->date('tanggal_lahir')->nullable();
-            $table->date('tanggal_diangkat')->nullable();
-            $table->string('kantor');
+            $table->foreignId('salary_id')->constrained()->onDelete('cascade'); // Link to salary
+            $table->string('kota');
+            $table->integer('jumlah_retase');
+            $table->integer('tarif_retase');
+            $table->decimal('jumlah_ur',20,2)
+                ->storedAs('jumlah_retase * tarif_retase');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('deliveries');
     }
 };

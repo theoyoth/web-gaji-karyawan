@@ -24,9 +24,9 @@
                             <div>
                                 <label for="kantor" class="block text-sm font-medium text-gray-700">Kantor</label>
                                 {{-- <input type="text" id="kantor" name="kantor" value="{{ old('kantor') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm"> --}}
-                              
+
                                 <select name="kantor" id="kantor" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                    @foreach (['kantor 1','kantor 2','awak 1 dan awak 2'] as $kan)
+                                    @foreach (['awak 1 dan awak 2','kantor 1','kantor 2'] as $kan)
                                         <option value="{{ $kan }}" {{ request('kan') ? 'selected' : '' }}>{{ $kan }}</option>
                                     @endforeach
                                 </select>
@@ -34,7 +34,7 @@
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                               @enderror
                             </div>
-                            <div>
+                            {{-- <div>
                                 <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat lahir</label>
                                 <input type="text" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                 @error('tempat_lahir')
@@ -54,7 +54,7 @@
                                 @error('tanggal_diangkat')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div>
                                 <label for="gaji_pokok" class="block text-sm font-medium text-gray-700">Gaji pokok</label>
                                 <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
@@ -63,7 +63,14 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="bulan" class="block text-sm font-medium text-gray-700">Bulan</label>                               
+                                <label for="hari_kerja" class="block text-sm font-medium text-gray-700">Hari kerja</label>
+                                <input type="number" id="hari_kerja" name="hari_kerja" value="{{ old('hari_kerja') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                @error('hari_kerja')
+                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label for="bulan" class="block text-sm font-medium text-gray-700">Bulan</label>
                                 <select name="bulan" value="{{ old('bulan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500">
                                     <option value="Januari">Januari</option>
                                     <option value="Februari">Februari</option>
@@ -94,62 +101,79 @@
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
+                            <div class="flex items-center gap-10">
+                              <p class="block text-sm font-medium text-gray-700">Tunjangan</p>
+                              <div class="flex-1">
+                                  <div class="mt-2">
+                                      <label for="tunjangan_makan" class="block text-sm font-medium text-gray-700">Makan</label>
+                                      <input type="number" id="tunjangan_makan" name="tunjangan_makan" value="{{ old('tunjangan_makan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                      @error('tunjangan_makan')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                      @enderror
+                                  </div>
+                                  <div class="mt-2">
+                                      <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">Hari tua</label>
+                                      <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                      @error('tunjangan_hari_tua')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                      @enderror
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="flex items-center">
+                              <p class="block text-sm font-medium text-gray-700 mr-10">Potongan</p>
+                              <div class="flex-1">
+                                  <div class="mt-2">
+                                      <label for="potongan_bpjs" class="block text-sm font-medium text-gray-700">BPJS</label>
+                                      <input type="number" id="potongan_bpjs" name="potongan_bpjs" value="{{ old('potongan_bpjs') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                      @error('potongan_bpjs')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                      @enderror
+                                  </div>
+                                  <div class="mt-2">
+                                      <label for="potongan_tabungan_hari_tua" class="block text-sm font-medium text-gray-700">Tabungan hari tua</label>
+                                      <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                      @error('potongan_tabungan_hari_tua')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                      @enderror
+                                  </div>
+                                  <div class="mt-2">
+                                      <label for="potongan_kredit_kasbon" class="block text-sm font-medium text-gray-700">Kredit/Kasbon</label>
+                                      <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                      @error('potongan_kredit_kasbon')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                      @enderror
+                                  </div>
+                              </div>
+                          </div>
 
                         </div>
 
                         <!-- Right Column -->
                         <div class="space-y-4">
-                            <div class="flex items-center gap-10">
-                                <p class="block text-sm font-medium text-gray-700">Tunjangan</p>
-                                <div class="flex-1">
-                                    <div class="mt-2">
-                                        <label for="tunjangan_makan" class="block text-sm font-medium text-gray-700">Makan</label>
-                                        <input type="number" id="tunjangan_makan" name="tunjangan_makan" value="{{ old('tunjangan_makan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                        @error('tunjangan_makan')
-                                          <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="mt-2">
-                                        <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">Hari tua</label>
-                                        <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                        @error('tunjangan_hari_tua')
-                                          <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="mt-2">
-                                        <label for="tunjangan_retase" class="block text-sm font-medium text-gray-700">Retase</label>
-                                        <input type="number" id="tunjangan_retase" name="tunjangan_retase" value="{{ old('tunjangan_retase') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                        @error('tunjangan_retase')
-                                          <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
+                            <div>
+                              <label for="jumlah_gaji" class="block text-sm font-medium text-gray-700">Jumlah gaji</label>
+                              <input type="number" id="jumlah_gaji" name="jumlah_gaji" value="{{ old('jumlah_gaji') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                              @error('jumlah_gaji')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                              @enderror
                             </div>
-                            <div class="flex items-center">
-                                <p class="block text-sm font-medium text-gray-700 mr-10">Potongan</p>
-                                <div class="flex-1">
-                                    <div class="mt-2">
-                                        <label for="potongan_bpjs" class="block text-sm font-medium text-gray-700">BPJS</label>
-                                        <input type="number" id="potongan_bpjs" name="potongan_bpjs" value="{{ old('potongan_bpjs') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                        @error('potongan_bpjs')
-                                          <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="mt-2">
-                                        <label for="potongan_tabungan_hari_tua" class="block text-sm font-medium text-gray-700">Tabungan hari tua</label>
-                                        <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                        @error('potongan_tabungan_hari_tua')
-                                          <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="mt-2">
-                                        <label for="potongan_kredit_kasbon" class="block text-sm font-medium text-gray-700">Kredit/Kasbon</label>
-                                        <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                        @error('potongan_kredit_kasbon')
-                                          <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
+                            <div class="">
+                              <h2 class="text-lg font-bold mb-2">Input Retase</h2>
+                              <div id="delivery-wrapper">
+                                  <div class="flex flex-col gap-1 pb-2 border-b border-gray-500">
+                                      <div>
+                                        <input type="text" name="deliveries[0][kota]" placeholder="kota" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                      </div>
+                                      <div>
+                                        <input type="number" name="deliveries[0][jumlah_retase]" placeholder="jumlah retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                      </div>
+                                      <div>
+                                        <input type="number" name="deliveries[0][tarif_retase]" placeholder="tarif retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                      </div>
+                                  </div>
+                              </div>
+                              <button type="button" onclick="addDeliveryRow()" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded mt-4">+ Tambah Pengiriman</button>
                             </div>
 
                             {{-- TTD --}}
@@ -174,9 +198,10 @@
                 <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 
                 <script>
+                  // input signature
                     const canvas = document.getElementById('signature-pad');
                     const signaturePad = new SignaturePad(canvas);
-                    
+
                     document.querySelector('form').addEventListener('submit', function (e) {
                         /*if (signaturePad.isEmpty()) {
                             alert("Silakan tanda tangan terlebih dahulu.");
@@ -192,6 +217,28 @@
                     document.getElementById('clear').addEventListener('click', function () {
                         signaturePad.clear();
                     });
+
+                    // setting for multiple input retase
+                    let deliveryIndex = 1;
+
+                    function addDeliveryRow() {
+                        const wrapper = document.getElementById('delivery-wrapper');
+                        const row = document.createElement('div');
+                        row.className = 'delivery-row flex flex-col gap-1 pb-2 border-b border-gray-500';
+                        row.innerHTML = `
+                            <input type="text" name="deliveries[${deliveryIndex}][kota]" placeholder="Kota" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                            <input type="number" name="deliveries[${deliveryIndex}][jumlah_retase]" placeholder="Jumlah retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                            <input type="number" name="deliveries[${deliveryIndex}][tarif_retase]" placeholder="Tarif retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+
+                            <button type="button" onclick="removeDeliveryRow(this)" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Hapus</button>
+                        `;
+                        wrapper.appendChild(row);
+                        deliveryIndex++;
+                    }
+
+                    function removeDeliveryRow(button) {
+                        button.parentElement.remove();
+                    }
                 </script>
         </div>
     </main>

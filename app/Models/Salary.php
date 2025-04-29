@@ -13,21 +13,23 @@ class Salary extends Model
         'month',
         'year',
         'gaji_pokok',
-        'bulan',
-        'tahun',
+        'hari_kerja',
         'tunjangan_makan',
         'tunjangan_hari_tua',
-        'tunjangan_retase',
-        'jumlah_kotor',
+        'jumlah_gaji',
         'potongan_bpjs',
         'potongan_tabungan_hari_tua',
         'potongan_kredit_kasbon',
         'jumlah_bersih',
-        'ttd'
+        'ttd',
     ];
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function deliveries() {
+      return $this->hasMany(Delivery::class);
     }
 
 }
