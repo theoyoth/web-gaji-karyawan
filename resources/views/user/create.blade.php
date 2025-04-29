@@ -178,11 +178,11 @@
                     const signaturePad = new SignaturePad(canvas);
                     
                     document.querySelector('form').addEventListener('submit', function (e) {
-                        if (signaturePad.isEmpty()) {
+                        /*if (signaturePad.isEmpty()) {
                             alert("Silakan tanda tangan terlebih dahulu.");
                             e.preventDefault();
                             return;
-                        }
+                        }*/
 
                         // Convert to Base64 and set in hidden input
                         document.getElementById('signature').value = signaturePad.toDataURL();

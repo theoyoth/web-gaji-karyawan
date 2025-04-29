@@ -88,8 +88,10 @@
                                     <tr>
                                         <td class="text-center py-2 border border-gray-300">{{ $no++ }}</td>
                                         <td class="text-center py-2 border border-gray-300">{{$user->nama}}</td>
-                                        <td class="text-center py-2 border border-gray-300">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
-                                        <td class="text-center py-2 border border-gray-300">{{$user->tanggal_diangkat->format('d F Y')}}</td>
+                                        {{-- <td class="text-center py-2 border border-gray-300">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
+                                        <td class="text-center py-2 border border-gray-300">{{ $user->tempat_lahir }}</td>
+                                        {{-- <td class="text-center py-2 border border-gray-300">{{$user->tanggal_diangkat->format('d F Y')}}</td> --}}
+                                        <td class="text-center py-2 border border-gray-300">{{$user->tanggal_diangkat}}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
                                         <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>

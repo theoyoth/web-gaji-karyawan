@@ -19,19 +19,19 @@ class UserController extends Controller
         $request->validate([
             'nama' => 'required|max:255',
             'kantor' => 'required|max:255',
-            'tempat_lahir' => 'required',
-            'tanggal_lahir' => 'required|date',
-            'tanggal_diangkat' => 'required|date',
+            'tempat_lahir' => 'nullable|string',
+            'tanggal_lahir' => 'nullable|date',
+            'tanggal_diangkat' => 'nullable|date',
             'gaji_pokok' => 'required|numeric',
             'bulan' => 'required',
             'tahun' => 'required|digits:4|integer|min:2010|max:'. date('Y'),
-            'tunjangan_makan' => 'required|numeric',
-            'tunjangan_hari_tua' => 'required|numeric',
-            'tunjangan_retase' => 'required|numeric',
+            'tunjangan_makan' => 'nullable|numeric',
+            'tunjangan_hari_tua' => 'nullable|numeric',
+            'tunjangan_retase' => 'nullable|numeric',
             'potongan_bpjs' => 'required|numeric',
-            'potongan_tabungan_hari_tua' => 'required|numeric',
-            'potongan_kredit_kasbon' => 'required|numeric',
-            'ttd' => 'required|string',
+            'potongan_tabungan_hari_tua' => 'nullable|numeric',
+            'potongan_kredit_kasbon' => 'nullable|numeric',
+            'ttd' => 'nullable|string',
         ]);
 
         // Clean the base64 signature
@@ -50,9 +50,9 @@ class UserController extends Controller
 
         $user->nama = Str::title($request->input('nama'));
         $user->kantor = $request->input('kantor');
-        $user->tempat_lahir = Str::title($request->input('tempat_lahir'));
-        $user->tanggal_lahir = $request->input('tanggal_lahir');
-        $user->tanggal_diangkat = $request->input('tanggal_diangkat');
+        $user->tempat_lahir = Str::title($request->input('tempat_lahir')) ?: null;
+        $user->tanggal_lahir = $request->input('tanggal_lahir') ?: null;
+        $user->tanggal_diangkat = $request->input('tanggal_diangkat') ?: null;
 
         $user->save();
 
