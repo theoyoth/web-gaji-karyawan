@@ -1,0 +1,30 @@
+langkah-langkah membuat office/kantor baru di project ini:
+-buat file baru di resources/views/place/
+-nama file sesuaikan dengan nama kantor. e.g kantor3.blade.php
+-buat route untuk file tersebut di folder routes/web.php
+file route ->
+     Route::get('/kantor3', [placeController::class, 'kantor3'])->name('kantor3.index');
+route tersebut akan mengarahkan ke controller dengan nama placeController
+-di placeController buat method sesuai nama kantor. e.g. kantor3 lalu isinya bisa copy function dari method lain. e.g. kantor2
+-di method tersebut buat return ke view dengan nama place.kantor3 sesuaikan dengan nama kantor yang baru dibuat dan kembalikan juga semua users
+-tambahkan method untuk memfilter users sesuai bulan dan tahun dari inputan user
+-beri nama filterKantor3 sesuaikan dengan nama kantor, lalu copy function dari method lain lalu kembalikan view place.kantor3 serta kembalikan data filter
+-buatkan route untuk filter kantor
+file route ->
+     Route::get('/kantor3/filter', [placeController::class, 'filterkantor3'])->name('filter.kantor3');
+-kemudian tambahkan halaman print. buat file baru di folder resources/views/print/ dengan nama kantor3.blade.php sesuaikan dengan nama kantor
+-copy-kan UI dari file lain
+-buatkan route di routes/web.php
+file route ->
+     Route::get('/print/kantor3', [PrintController::class, 'kantor3'])->name('print.kantor3');
+route ini akan mengarah ke PrintController
+-di PrintController buat method kantor3 sesuaikan dengan nama kantor 
+-copy-kan fungsi dari method lain lalu return view print.kantor3 beserta data semua users
+-tambahkan method untuk filter users sesuai bulan dan tahun 
+-beri nama filterKantor3 lalu copy-kan fungsi dari method lain dan kembalikan view print.kantor3 beserta data hasil filter
+-buatkan route di routes/web.php
+file route ->
+     Route::get('/print/kantor3/filter', [PrintController::class, 'filterkantor3'])->name('filterprint.kantor3');
+-finish
+
+
