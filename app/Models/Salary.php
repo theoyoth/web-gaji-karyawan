@@ -16,7 +16,6 @@ class Salary extends Model
         'hari_kerja',
         'tunjangan_makan',
         'tunjangan_hari_tua',
-        'jumlah_gaji',
         'potongan_bpjs',
         'potongan_tabungan_hari_tua',
         'potongan_kredit_kasbon',

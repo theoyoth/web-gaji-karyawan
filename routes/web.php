@@ -18,8 +18,10 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', [DaftarController::class, 'index'])->name('header.index');
-Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
-Route::post('/user', [UserController::class, 'store'])->name('user.store');
+Route::get('/user/create/kantor', [UserController::class, 'create'])->name('user.createKantor');
+Route::get('/user/create/awak12', [UserController::class, 'createAwak12'])->name('user.createAwak12');
+Route::post('/user/create/kantor', [UserController::class, 'store'])->name('user.store');
+Route::post('/user/create/awak12', [UserController::class, 'storeAwak12'])->name('user.storeAwak12');
 Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
 Route::get('/kantor-1', [placeController::class, 'kantor1'])->name('kantor1.index');

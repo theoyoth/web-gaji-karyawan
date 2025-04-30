@@ -3,13 +3,13 @@
 @section('content')
 <div class="container-fluid px-4">
     <main class="min-h-screen flex justify-center items-center">
-        <div class="w-1/2 m-auto py-2 bg-gray-100 rounded-lg p-10 border border-black">
+        <div class="w-1/2 m-auto py-2 px-10 bg-gray-100 rounded-lg border border-black my-4">
             <a href="{{ route('header.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
               <- kembali
             </a>
-            <h1 class="text-4xl font-bold text-center">FORMULIR INPUT</h1>
+            <h1 class="text-3xl font-bold text-center">FORMULIR INPUT TRANSPORTIR AWAK 1 & AWAK 2</h1>
             <div class="mt-8">
-                <form action="{{ route('user.store') }}" method="POST">
+                <form action="{{ route('user.storeAwak12') }}" method="POST">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Left Column -->
@@ -23,38 +23,15 @@
                             </div>
                             <div>
                                 <label for="kantor" class="block text-sm font-medium text-gray-700">Kantor</label>
-                                {{-- <input type="text" id="kantor" name="kantor" value="{{ old('kantor') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm"> --}}
-
                                 <select name="kantor" id="kantor" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                    @foreach (['awak 1 dan awak 2','kantor 1','kantor 2'] as $kan)
+                                    @foreach (['awak 1 dan awak 2'] as $kan)
                                         <option value="{{ $kan }}" {{ request('kan') ? 'selected' : '' }}>{{ $kan }}</option>
                                     @endforeach
                                 </select>
                                 @error('kantor')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                              @enderror
-                            </div>
-                            {{-- <div>
-                                <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat lahir</label>
-                                <input type="text" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                @error('tempat_lahir')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div>
-                                <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Tanggal lahir</label>
-                                <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                @error('tanggal_lahir')
-                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Tanggal diangkat</label>
-                                <input type="date" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat') }}"  class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                @error('tanggal_diangkat')
-                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div> --}}
                             <div>
                                 <label for="gaji_pokok" class="block text-sm font-medium text-gray-700">Gaji pokok</label>
                                 <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
@@ -110,13 +87,13 @@
                                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                       @enderror
                                   </div>
-                                  <div class="mt-2">
+                                  {{-- <div class="mt-2">
                                       <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">Hari tua</label>
                                       <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                       @error('tunjangan_hari_tua')
                                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                       @enderror
-                                  </div>
+                                  </div> --}}
                               </div>
                             </div>
                             <div class="flex items-center">
@@ -150,25 +127,18 @@
 
                         <!-- Right Column -->
                         <div class="space-y-4">
-                            <div>
-                              <label for="jumlah_gaji" class="block text-sm font-medium text-gray-700">Jumlah gaji</label>
-                              <input type="number" id="jumlah_gaji" name="jumlah_gaji" value="{{ old('jumlah_gaji') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                              @error('jumlah_gaji')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                              @enderror
-                            </div>
                             <div class="">
                               <h2 class="text-lg font-bold mb-2">Input Retase</h2>
                               <div id="delivery-wrapper">
                                   <div class="flex flex-col gap-1 pb-2 border-b border-gray-500">
                                       <div>
-                                        <input type="text" name="deliveries[0][kota]" value="{{ old('deliveries[0][kota]') }}" placeholder="kota" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                        <input type="text" name="deliveries[0][kota]" value="{{ $delivery['kota'] ?? '' }}" placeholder="kota" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                       </div>
                                       <div>
-                                        <input type="number" name="deliveries[0][jumlah_retase]" value="{{ old('deliveries[0][jumlah_retase]') }}" placeholder="jumlah retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                        <input type="number" name="deliveries[0][jumlah_retase]" value="{{ $delivery['jumlah_retase'] ?? '' }}" placeholder="jumlah retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                       </div>
                                       <div>
-                                        <input type="number" name="deliveries[0][tarif_retase]" value="{{ old('deliveries[0][tarif_retase]') }}" placeholder="tarif retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                        <input type="number" name="deliveries[0][tarif_retase]" value="{{ $delivery['tarif_retase'] ?? '' }}" placeholder="tarif retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                       </div>
                                   </div>
                               </div>

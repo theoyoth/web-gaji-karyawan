@@ -12,11 +12,14 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     public function create(){
-        return view('user.create');
+        return view('user.create-kantor');
     }
 
-    public function store(Request $request)
-    {
+    public function createAwak12(){
+        return view('user.create-awak12');
+    }
+
+    public function store(Request $request){
         $request->validate([
             'nama' => 'required|max:255',
             'kantor' => 'required|max:255',
@@ -38,14 +41,7 @@ class UserController extends Controller
 
             'jumlah_gaji' => 'required|numeric',
 
-            // delivery validation array
-            'deliveries' => 'required|array|min:1',
-            'deliveries.*.kota' => 'required|string',
-            'deliveries.*.jumlah_retase' => 'required|numeric',
-            'deliveries.*.tarif_retase' => 'required|numeric',
-
             'ttd' => 'nullable|string',
-
         ]);
 
         // store image in storage folder
@@ -90,6 +86,84 @@ class UserController extends Controller
         $salary->save();
         $salary->refresh();
 
+        if($user->kantor === 'kantor 1'){
+            return redirect()->route('kantor1.index')->with('success', 'user saved successfully!');
+        }
+        else if($user->kantor === 'kantor 2'){
+            return redirect()->route('kantor2.index')->with('success', 'user saved successfully!');
+        }
+        else{
+            return redirect()->route('header.index')->with('success', 'user saved successfully!');
+        }
+
+    }
+
+    public function storeAwak12(Request $request){
+        $request->validate([
+            'nama' => 'required|max:255',
+            'kantor' => 'required|max:255',
+
+            'gaji_pokok' => 'required|numeric',
+            'hari_kerja' => 'required|numeric',
+            'bulan' => 'required',
+            'tahun' => 'required|digits:4|integer|min:2010|max:'. date('Y'),
+
+            'tunjangan_makan' => 'nullable|numeric',
+
+            'potongan_bpjs' => 'required|numeric',
+            'potongan_tabungan_hari_tua' => 'required|numeric',
+            'potongan_kredit_kasbon' => 'required|numeric',
+            // delivery validation array
+            'deliveries' => 'required|array|min:1',
+            'deliveries.*.kota' => 'required|string',
+            'deliveries.*.jumlah_retase' => 'required|numeric',
+            'deliveries.*.tarif_retase' => 'required|numeric',
+
+            'ttd' => 'nullable|string',
+
+        ]);
+
+        // store image in storage folder
+        // Clean the base64 signature
+        $imageData = $request->input('ttd');
+        $image = str_replace('data:image/png;base64,', '', $imageData);
+        $image = str_replace(' ', '+', $image);
+
+        // Create unique filename
+        $fileName = Str::title($request->input('nama')) . '.png';
+
+        // Store file in storage/app/public/signatures
+        Storage::disk('public')->put('ttd/' . $fileName, base64_decode($image));
+
+        // create new instance for user,salary,delivery
+        $user = new User();
+        $salary = new Salary();
+        
+
+        // input data
+        $user->nama = Str::title($request->input('nama'));
+        $user->kantor = $request->input('kantor');
+      
+        $user->save();
+
+        $salary->user_id = $user->id;
+        $salary->gaji_pokok = $request->input('gaji_pokok');
+        $salary->hari_kerja = $request->input('hari_kerja');
+        $salary->bulan = $request->input('bulan');
+        $salary->tahun = $request->input('tahun');
+        $salary->tunjangan_makan = $request->input('tunjangan_makan');
+        $salary->tunjangan_hari_tua = $request->input('tunjangan_hari_tua') ?: 0;
+
+        $salary->jumlah_gaji = 0;
+
+        $salary->potongan_bpjs = $request->input('potongan_bpjs');
+        $salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua');
+        $salary->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon');
+        $salary->ttd = $fileName;
+
+        $salary->save();
+        $salary->refresh();
+
         // 4. Save multiple deliveries
         foreach ($request->input('deliveries', []) as $inputDelivery) {
             $delivery = new Delivery();
@@ -102,19 +176,18 @@ class UserController extends Controller
             $delivery->save();
         }
 
-        if($user->kantor === 'kantor 1'){
-            return redirect()->route('kantor1.index')->with('success', 'user saved successfully!');
-        }
-        else if($user->kantor === 'kantor 2'){
-            return redirect()->route('kantor2.index')->with('success', 'user saved successfully!');
-        }
-        else if($user->kantor === 'awak 1 dan awak 2'){
-            return redirect()->route('awak12.index')->with('success', 'user saved successfully!');
-        }
-        else{
-            return redirect()->route('header.index')->with('success', 'user saved successfully!');
-        }
+         // Reload deliveries relation to access them
+        $salary->load('deliveries');
 
+        // Calculate total gaji
+        $salary->jumlah_gaji = $salary->gaji_pokok
+            + $salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase)
+            + ($salary->tunjangan_makan ?? 0)
+            + ($salary->tunjangan_hari_tua ?? 0);
+
+        $salary->save(); // Save the updated jumlah_gaji
+
+        return redirect()->route('awak12.index')->with('success', 'user saved successfully!');
     }
 
     public function destroy($id){
