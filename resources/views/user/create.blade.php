@@ -91,7 +91,6 @@
                             </div>
                             <div>
                                 <label for="tahun" class="block text-sm font-medium text-gray-700">Tahun</label>
-                                {{-- <input type="number" id="tahun" name="tahun" value="{{ old('tahun') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm" > --}}
                                 <select name="tahun" id="tahun" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                     @for ($y = 2020; $y <= now()->year; $y++)
                                         <option value="{{ $y }}" {{ (request('tahun') ?? now()->year) == $y ? 'selected' : '' }}>{{ $y }}</option>
@@ -163,13 +162,13 @@
                               <div id="delivery-wrapper">
                                   <div class="flex flex-col gap-1 pb-2 border-b border-gray-500">
                                       <div>
-                                        <input type="text" name="deliveries[0][kota]" placeholder="kota" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                        <input type="text" name="deliveries[0][kota]" value="{{ old('deliveries[0][kota]') }}" placeholder="kota" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                       </div>
                                       <div>
-                                        <input type="number" name="deliveries[0][jumlah_retase]" placeholder="jumlah retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                        <input type="number" name="deliveries[0][jumlah_retase]" value="{{ old('deliveries[0][jumlah_retase]') }}" placeholder="jumlah retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                       </div>
                                       <div>
-                                        <input type="number" name="deliveries[0][tarif_retase]" placeholder="tarif retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                        <input type="number" name="deliveries[0][tarif_retase]" value="{{ old('deliveries[0][tarif_retase]') }}" placeholder="tarif retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                       </div>
                                   </div>
                               </div>
@@ -180,7 +179,7 @@
                             <div class="mt-4">
                                 <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
                                 <canvas id="signature-pad" width="200" height="100" style="border: 1px solid #000;"></canvas>
-                                <input type="hidden" name="ttd" id="signature">
+                                <input type="hidden" name="ttd" id="ttd">
                                 <p class="text-gray-500 text-xs mt-1">Gambar tanda tangan di atas</p>
                                 <div class="flex mt-2">
                                     <button type="button" id="clear" class="mr-4 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md">Clear</button>
@@ -203,14 +202,13 @@
                     const signaturePad = new SignaturePad(canvas);
 
                     document.querySelector('form').addEventListener('submit', function (e) {
-                        /*if (signaturePad.isEmpty()) {
-                            alert("Silakan tanda tangan terlebih dahulu.");
-                            e.preventDefault();
-                            return;
-                        }*/
+                      if (signaturePad.isEmpty()) {
+                          alert("Silakan tanda tangan terlebih dahulu.");
+                          e.preventDefault(); // prevent form from submitting
+                          return;
+                      }
+                      document.getElementById('ttd').value = signaturePad.toDataURL();
 
-                        // Convert to Base64 and set in hidden input
-                        document.getElementById('signature').value = signaturePad.toDataURL();
                     });
 
                     // Clear the signature pad

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Delivery;
 use Illuminate\Support\Str;
 use App\Models\Salary;
 use App\Models\User;
+use App\Models\Delivery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,6 +23,7 @@ class UserController extends Controller
             'tempat_lahir' => 'nullable|string',
             'tanggal_lahir' => 'nullable|date',
             'tanggal_diangkat' => 'nullable|date',
+
             'gaji_pokok' => 'required|numeric',
             'hari_kerja' => 'required|numeric',
             'bulan' => 'required',
@@ -32,14 +33,16 @@ class UserController extends Controller
             'tunjangan_hari_tua' => 'nullable|numeric',
 
             'potongan_bpjs' => 'required|numeric',
-            'potongan_tabungan_hari_tua' => 'nullable|numeric',
-            'potongan_kredit_kasbon' => 'nullable|numeric',
+            'potongan_tabungan_hari_tua' => 'required|numeric',
+            'potongan_kredit_kasbon' => 'required|numeric',
 
             'jumlah_gaji' => 'required|numeric',
 
-            'kota' => 'required|string',
-            'jumlah_retase' => 'required|numeric',
-            'tarif_retase' => 'required|numeric',
+            // delivery validation array
+            'deliveries' => 'required|array|min:1',
+            'deliveries.*.kota' => 'required|string',
+            'deliveries.*.jumlah_retase' => 'required|numeric',
+            'deliveries.*.tarif_retase' => 'required|numeric',
 
             'ttd' => 'nullable|string',
 
@@ -60,25 +63,25 @@ class UserController extends Controller
         // create new instance for user,salary,delivery
         $user = new User();
         $salary = new Salary();
-        $delivery = new Delivery();
+        
 
+        // input data
         $user->nama = Str::title($request->input('nama'));
         $user->kantor = $request->input('kantor');
-
-        if($request->input('tempat_lahir') && $request->input('tanggal_lahir') && $request->input('tanggal_diangkat')){
-          $user->tempat_lahir = Str::title($request->input('tempat_lahir')) ?: null;
-          $user->tanggal_lahir = $request->input('tanggal_lahir') ?: null;
-          $user->tanggal_diangkat = $request->input('tanggal_diangkat') ?: null;
-        }
+        $user->tempat_lahir = Str::title($request->input('tempat_lahir')) ?: null;
+        $user->tanggal_lahir = $request->input('tanggal_lahir') ?: null;
+        $user->tanggal_diangkat = $request->input('tanggal_diangkat') ?: null;
 
         $user->save();
 
         $salary->user_id = $user->id;
         $salary->gaji_pokok = $request->input('gaji_pokok');
+        $salary->hari_kerja = $request->input('hari_kerja');
         $salary->bulan = $request->input('bulan');
         $salary->tahun = $request->input('tahun');
         $salary->tunjangan_makan = $request->input('tunjangan_makan');
-        $salary->tunjangan_hari_tua = $request->input('tunjangan_hari_tua');
+        $salary->tunjangan_hari_tua = $request->input('tunjangan_hari_tua') ?: 0;
+        $salary->jumlah_gaji = $request->input('jumlah_gaji');
         $salary->potongan_bpjs = $request->input('potongan_bpjs');
         $salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua');
         $salary->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon');
@@ -89,12 +92,14 @@ class UserController extends Controller
 
         // 4. Save multiple deliveries
         foreach ($request->input('deliveries', []) as $inputDelivery) {
-          $delivery->salary_id = $salary->id;
-          $delivery->kota = $inputDelivery['kota'];
-          $delivery->jumlah_retase = $inputDelivery['jumlah_retase'];
-          $delivery->tarif_retase = $inputDelivery['tarif_retase'];
+            $delivery = new Delivery();
 
-          $delivery->save();
+            $delivery->salary_id = $salary->id;
+            $delivery->kota = $inputDelivery['kota'];
+            $delivery->jumlah_retase = $inputDelivery['jumlah_retase'];
+            $delivery->tarif_retase = $inputDelivery['tarif_retase'];
+
+            $delivery->save();
         }
 
         if($user->kantor === 'kantor 1'){

@@ -45,7 +45,7 @@
                 </form>
                 <div class="bg-gray-100">
                     @if($users->flatMap->salaries->isNotEmpty())
-                        <!-- your table -->
+                        <!-- do nothing -->
                     @else
                         <p class="text-red-500 py-2 bg-gray-100 indent-2">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
                     @endif
@@ -93,34 +93,44 @@
                             @php $no = 1; @endphp
                             @foreach($users as $user)
                                 @foreach ($user->salaries as $salary)
+                                    @php $deliveryCount = $salary->deliveries->count(); @endphp
+                                    @foreach ($salary->deliveries as $index => $delivery)
                                     <tr>
-                                        <td class="text-center py-2 border border-gray-300">{{ $no++ }}</td>
-                                        <td class="text-center py-2 border border-gray-300">{{$user->nama}}</td>
-                                        {{-- <td class="text-center py-2 border border-gray-300">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
-                                        {{-- <td class="text-center py-2 border border-gray-300">{{$user->tanggal_diangkat->format('d F Y')}}</td> --}}
-                                        <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
-                                        <td class="text-center py-2 border border-gray-300">{{$salary->hari_kerja}}</td>
-                                        <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
-                                        <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
-                                        <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_retase, 0, ',', '.')}}</td>
-                                        <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
-                                        <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
-                                        <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
-                                        <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
-                                        <td class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
-                                        <td class="text-center py-2 border border-gray-300">
-                                            <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ $user->nama }}" class="w-20 h-20 object-contain">
-                                        </td>
-                                        <td class="text-center px-1 py-2 border border-gray-300">
-                                            <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="bg-red-500 py-1 px-2 rounded">
-                                                    <i class="fas fa-trash text-white"></i>
-                                                </button>
-                                            </form>
-                                        </td>
+                                        @if($index === 0)
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">{{ $no++ }}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">{{$user->nama}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">{{$salary->hari_kerja}}</td>
+                                        @endif
+                                        <td class="text-center py-2 border border-gray-300">{{ $delivery->jumlah_retase }}</td>
+                                        <td class="text-center py-2 border border-gray-300">{{ $delivery->kota }}</td>
+                                        <td class="text-center py-2 border border-gray-300">Rp.{{ number_format($delivery->tarif_retase, 0, ',', '.') }}</td>
+                                        @if($index === 0)
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
+                                        @endif
+                                            <td class="text-center py-2 border border-gray-300">Rp.{{number_format($delivery->jumlah_ur, 0, ',', '.')}}</td>
+                                        @if($index === 0)
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">
+                                                <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ $user->nama }}" class="w-20 h-20 object-contain">
+                                            </td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center px-1 py-2 border border-gray-300">
+                                                <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="bg-red-500 py-1 px-2 rounded">
+                                                        <i class="fas fa-trash text-white"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        @endif
                                     </tr>
+                                    @endforeach
                                 @endforeach
                             @endforeach
                         </tbody>
