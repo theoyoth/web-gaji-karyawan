@@ -97,29 +97,29 @@
                                     @foreach ($salary->deliveries as $index => $delivery)
                                     <tr>
                                         @if($index === 0)
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">{{ $no++ }}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">{{$user->nama}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">{{$salary->hari_kerja}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{ $no++ }}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$user->nama}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$salary->hari_kerja}}</td>
                                         @endif
-                                        <td class="text-center py-2 border border-gray-300">{{ $delivery->jumlah_retase }}</td>
-                                        <td class="text-center py-2 border border-gray-300">{{ $delivery->kota }}</td>
-                                        <td class="text-center py-2 border border-gray-300">Rp.{{ number_format($delivery->tarif_retase, 0, ',', '.') }}</td>
+                                        <td class="text-center py-2 border border-gray-500">{{ $delivery->jumlah_retase }}</td>
+                                        <td class="text-center py-2 border border-gray-500">{{ $delivery->kota }}</td>
+                                        <td class="text-center py-2 border border-gray-500">Rp{{ number_format($delivery->tarif_retase, 0, ',', '.') }}</td>
                                         @if($index === 0)
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
                                         @endif
-                                            <td class="text-center py-2 border border-gray-300">Rp.{{number_format($delivery->jumlah_ur, 0, ',', '.')}}</td>
+                                            <td class="text-center py-2 border border-gray-500">Rp{{number_format($delivery->jumlah_ur, 0, ',', '.')}}</td>
                                         @if($index === 0)
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-300">
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">
                                                 <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ $user->nama }}" class="w-20 h-20 object-contain">
                                             </td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center px-1 py-2 border border-gray-300">
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center px-1 py-2 border border-gray-500">
                                                 <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
                                                     @csrf
                                                     @method('DELETE')
