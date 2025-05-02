@@ -213,90 +213,76 @@
                 <thead>
                     <tr>
                         <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-name">Nama</th>
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-lahir">Tempat, Tanggal Lahir</th>
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-t-diangkat">Tanggal diangkat</th>
-
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[180px]">Nama</th>
                         <!-- Gaji Pokok with 3 sub-columns -->
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center h-gaji-pokok">Gaji Pokok</th>
-
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
+                        <!-- hari kerja -->
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Hari Kerja</th>
+                        <!-- jumlah retase -->
+                        <th colspan="2" class="py-2 border border-black bg-gray-500 text-center h-retase">Jumlah Retase</th>
+                        <!-- tarif retase -->
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Tarif Retase</th>
                         <!-- Tunjangan -->
-                        <th colspan="3" class="py-2 border border-black bg-gray-500">Tunjangan</th>
-
+                        <th colspan="2" class="py-2 border border-black bg-gray-500">Tunjangan</th>
+                        <!-- jumlah ur -->
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah UR</th>
                         <!-- Jumlah Kotor -->
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-jumlah">Jumlah Kotor</th>
-
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-jumlah">Jumlah Gaji</th>
                         <!-- Potongan with 3 sub-columns -->
                         <th colspan="3" class="py-2 border border-black bg-gray-500 text-center">Potongan</th>
-
                         <!-- Jumlah Bersih -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500 h-jumlah">Jumlah Bersih</th>
-
                         <!-- TTD -->
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500 h-ttd">TTD</th>
+                        <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[50px] h-ttd">TTD</th>
                     </tr>
                     <tr>
+                        <!-- Sub-columns jumlah retase -->
+                        <th class="py-2 border border-black bg-gray-500 w-[120px]"></th>
+                        <th class="py-2 border border-black bg-gray-500 w-[120px]"></th>
                         <!-- Sub-columns for tunjangan -->
-                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Makan</th>
-                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Hari tua</th>
-                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Retase</th>
-
+                        <th class="py-2 border border-black bg-gray-500 w-[120px] h-tunjangan">Makan</th>
+                        <th class="py-2 border border-black bg-gray-500 w-[120px] h-tunjangan">Hari tua</th>
                         <!-- Sub-columns for Potongan -->
-                        <th class="py-2 border border-black bg-gray-500 h-potongan">BPJS</th>
-                        <th class="py-2 border border-black bg-gray-500 h-potongan">Tabungan hari tua</th>
+                        <th class="py-2 border border-black bg-gray-500 w-[120px] h-potongan">BPJS</th>
+                        <th class="py-2 border border-black bg-gray-500 w-[120px] h-potongan">Tabungan hari tua</th>
                         <th class="py-2 border border-black bg-gray-500 h-potongan">Kredit/kasbon</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $no = 1; @endphp
-                    {{-- @foreach($users as $user)
-                        <tr>
-                            <td class="px-4 py-2 border border-gray-300">{{ $no++ }}</td>
-                            <td class="px-4 py-2 border border-gray-300">{{$user->nama}}</td>
-                            <td class="px-4 py-2 border border-gray-300">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
-                            <td class="px-4 py-2 border border-gray-300">{{$user->tanggal_diangkat->format('d F Y')}}</td>
-
+                        @foreach($users as $user)
                             @foreach ($user->salaries as $salary)
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_retase, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_kotor, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">
-                                    <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd w-20 h-20">
-                                </td>
+                                @php $deliveryCount = $salary->deliveries->count(); @endphp
+                                @foreach ($salary->deliveries as $index => $delivery)
+                                <tr>
+                                    @if($index === 0)
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{ $no++ }}</td>
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$user->nama}}</td>
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$salary->hari_kerja}}</td>
+                                    @endif
+                                    <td class="text-center py-2 border border-gray-500">{{ $delivery->jumlah_retase }}</td>
+                                    <td class="text-center py-2 border border-gray-500">{{ $delivery->kota }}</td>
+                                    <td class="text-center py-2 border border-gray-500">Rp{{ number_format($delivery->tarif_retase, 0, ',', '.') }}</td>
+                                    @if($index === 0)
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
+                                    @endif
+                                        <td class="text-center py-2 border border-gray-500">Rp{{number_format($delivery->jumlah_ur, 0, ',', '.')}}</td>
+                                    @if($index === 0)
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
+                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">
+                                            <img src="{{ file_exists(public_path('storage/ttd/' . $user->nama . '.png')) ? asset('storage/ttd/' . $user->nama . '.png') : '' }}" alt="ttd" class="w-20 h-20 object-contain">
+                                        </td>
+                                    @endif
+                                </tr>
+                                @endforeach
                             @endforeach
-
-                        </tr>
-                    @endforeach --}}
-                    @for ($i = 1; $i <= 16; $i++)
-                        <tr>
-                            <td class="px-4 py-2 border border-gray-300">{{ $i }}</td>
-                            <td class="px-4 py-2 border border-gray-300"></td>
-                            <td class="px-4 py-2 border border-gray-300"></td>
-                            <td class="px-4 py-2 border border-gray-300"></td>
-
-                            {{-- @foreach ($user->salaries as $salary) --}}
-                                <td class="px-4 py-2 border border-gray-300"></td>
-                                <td class="px-4 py-2 border border-gray-300"></td>
-                                <td class="px-4 py-2 border border-gray-300"></td>
-                                <td class="px-4 py-2 border border-gray-300"></td>
-                                <td class="px-4 py-2 border border-gray-300"></td>
-                                <td class="px-4 py-2 border border-gray-300"></td>
-                                <td class="px-4 py-2 border border-gray-300"></td>
-                                <td class="px-4 py-2 border border-gray-300"></td>
-                                <td class="px-4 py-2 border border-gray-300"></td>
-                                <td class="px-4 py-2 border border-gray-300">
-                                    {{-- <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd w-20 h-20> --}}
-                                </td>
-                            {{-- @endforeach --}}
-
-                        </tr>
-                    @endfor
+                        @endforeach
                 </tbody>
             </table>
         </div>

@@ -39,8 +39,6 @@ class UserController extends Controller
             'potongan_tabungan_hari_tua' => 'required|numeric',
             'potongan_kredit_kasbon' => 'required|numeric',
 
-            'jumlah_gaji' => 'required|numeric',
-
             'ttd' => 'nullable|string',
         ]);
 
@@ -55,6 +53,11 @@ class UserController extends Controller
 
         // Store file in storage/app/public/signatures
         Storage::disk('public')->put('ttd/' . $fileName, base64_decode($image));
+
+        // calculated early the jumlah_gaji
+        $jumlah_gaji = $request->gaji_pokok
+        + ($request->tunjangan_makan ?? 0)
+        + ($request->tunjangan_hari_tua ?? 0);
 
         // create new instance for user,salary,delivery
         $user = new User();
@@ -77,10 +80,12 @@ class UserController extends Controller
         $salary->tahun = $request->input('tahun');
         $salary->tunjangan_makan = $request->input('tunjangan_makan');
         $salary->tunjangan_hari_tua = $request->input('tunjangan_hari_tua') ?: 0;
-        $salary->jumlah_gaji = $request->input('jumlah_gaji');
+        $salary->jumlah_gaji = $jumlah_gaji;
+        
         $salary->potongan_bpjs = $request->input('potongan_bpjs');
         $salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua');
         $salary->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon');
+
         $salary->ttd = $fileName;
 
         $salary->save();
@@ -211,5 +216,15 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->back()->with('success', 'User deleted successfully.');
+    }
+
+    public function getUSer(){
+        // return view('user.create-awak12');
+    }
+    public function updatePageAwak12(){
+        return view('user.create-awak12');
+    }
+    public function updateAwak12(){
+        return view('user.create-awak12');
     }
 }

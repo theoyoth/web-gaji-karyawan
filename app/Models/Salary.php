@@ -19,7 +19,6 @@ class Salary extends Model
         'potongan_bpjs',
         'potongan_tabungan_hari_tua',
         'potongan_kredit_kasbon',
-        'jumlah_bersih',
         'ttd',
     ];
 

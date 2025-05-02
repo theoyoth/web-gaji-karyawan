@@ -73,8 +73,8 @@
                                 <!-- Jumlah Bersih -->
                                 <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Bersih</th>
                                 <!-- TTD -->
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[60px]">TTD</th>
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500"></th>
+                                <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[50px]">TTD</th>
+                                <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[50px]"></th>
                             </tr>
                             <tr>
                                 <!-- Sub-columns jumlah retase -->
@@ -117,16 +117,19 @@
                                             <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
                                             <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
                                             <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">
-                                                <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ $user->nama }}" class="w-20 h-20 object-contain">
+                                                <img src="{{ file_exists(public_path('storage/ttd/' . $user->nama . '.png')) ? asset('storage/ttd/' . $user->nama . '.png') : '' }}" alt="ttd" class="w-20 h-20 object-contain">
                                             </td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center px-1 py-2 border border-gray-500">
-                                                <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="bg-red-500 py-1 px-2 rounded">
-                                                        <i class="fas fa-trash text-white"></i>
-                                                    </button>
-                                                </form>
+                                            <td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">
+                                                <div class="flex flex-col gap-1 items-center">
+                                                    <a href="{{ route('updatepage.awak12', $user->id) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
+                                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="bg-red-500 py-1 px-2 rounded">
+                                                            <i class="fas fa-trash text-white"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </td>
                                         @endif
                                     </tr>
