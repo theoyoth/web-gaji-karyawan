@@ -80,6 +80,7 @@ class UserController extends Controller
         $salary->tahun = $request->input('tahun');
         $salary->tunjangan_makan = $request->input('tunjangan_makan');
         $salary->tunjangan_hari_tua = $request->input('tunjangan_hari_tua') ?: 0;
+        
         $salary->jumlah_gaji = $jumlah_gaji;
         
         $salary->potongan_bpjs = $request->input('potongan_bpjs');
@@ -234,18 +235,27 @@ class UserController extends Controller
         // Update salary
         
         $salary = $user->salary;
-        $salary->update([
-            'gaji_pokok' => $request->input('gaji_pokok'),
-            'bulan' => $request->input('bulan'),
-            'tahun' => $request->input('tahun'),
-            'hari_kerja' => $request->input('hari_kerja'),
-            'tunjangan_makan' => $request->input('tunjangan_makan'),
-            'potongan_bpjs' => $request->input('potongan_bpjs'),
-            'potongan_tabungan_hari_tua' => $request->input('potongan_tabungan_hari_tua'),
-            'potongan_kredit_kasbon' => $request->input('potongan_kredit_kasbon'),
-            'ttd' => $request->input('ttd') ?? '',
-        ]);
+        $salary->gaji_pokok = $request->input('gaji_pokok', $salary->gaji_pokok);
+        $salary->bulan = $request->input('bulan', $salary->bulan);
+        $salary->tahun = $request->input('tahun', $salary->tahun);
+        $salary->hari_kerja = $request->input('hari_kerja', $salary->hari_kerja);
+        $salary->tunjangan_makan = $request->input('tunjangan_makan', $salary->tunjangan_makan);
+        $salary->potongan_bpjs = $request->input('potongan_bpjs', $salary->potongan_bpjs);
+        $salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua', $salary->potongan_tabungan_hari_tua);
+        $salary->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon', $salary->potongan_kredit_kasbon);
+        $salary->ttd = $request->input('ttd', $salary->ttd) ?: '';
 
+        // Reload deliveries relation to access them
+        $salary->load('deliveries');
+
+        // Calculate total gaji
+        $salary->jumlah_gaji = $salary->gaji_pokok
+            + $salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase)
+            + ($salary->tunjangan_makan ?? 0)
+            + ($salary->tunjangan_hari_tua ?? 0);
+
+        $salary->save();
+        
         // Delete old deliveries
         $salary->deliveries()->delete();
 
