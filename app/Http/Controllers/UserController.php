@@ -219,12 +219,13 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'User deleted successfully.');
     }
 
-    public function getUSer(){
-        // return view('user.create-awak12');
-    }
     public function editPageAwak12(User $user){
         // dd($user->salaries);
         return view('edit.awak12', compact('user'));
+    }
+    public function editPageKantor(User $user){
+        // dd($user->salaries);
+        return view('edit.kantor', compact('user'));
     }
     public function updateAwak12(Request $request, $userId){
         $user = User::with('salary.deliveries')->findOrFail($userId);
@@ -243,7 +244,28 @@ class UserController extends Controller
         $salary->potongan_bpjs = $request->input('potongan_bpjs', $salary->potongan_bpjs);
         $salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua', $salary->potongan_tabungan_hari_tua);
         $salary->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon', $salary->potongan_kredit_kasbon);
-        $salary->ttd = $request->input('ttd', $salary->ttd) ?: '';
+        
+        // Handle signature overwrite if provided
+        if ($request->filled('ttd')) {
+            $oldSignature = $salary->ttd;
+            $imageData = $request->input('ttd');
+
+           // Clean and decode base64 image
+            $imageData = str_replace('data:image/png;base64,', '', $request->input('ttd'));
+            $imageData = str_replace(' ', '+', $imageData);
+            $fileName = Str::title($user->nama) . '.png';
+
+            // Delete old signature file if different
+            if ($oldSignature && Storage::disk('public')->exists('ttd/' . $oldSignature)) {
+                Storage::disk('public')->delete('ttd/' . $oldSignature);
+            }
+
+            // Save new signature
+            Storage::disk('public')->put('ttd/' . $fileName, base64_decode($imageData));
+
+            $salary->ttd = $fileName;
+        }
+
 
         // Reload deliveries relation to access them
         $salary->load('deliveries');
@@ -272,4 +294,60 @@ class UserController extends Controller
 
         return redirect()->route('awak12.index')->with('success', 'User updated successfully!');
     }
+    public function updateKantor(Request $request, $userId){
+        $user = User::with('salary')->findOrFail($userId);
+
+        // Validate user data
+        $user->update($request->only(['nama', 'kantor']));
+        
+        // Update salary
+        
+        $salary = $user->salary;
+        $salary->gaji_pokok = $request->input('gaji_pokok', $salary->gaji_pokok);
+        $salary->bulan = $request->input('bulan', $salary->bulan);
+        $salary->tahun = $request->input('tahun', $salary->tahun);
+        $salary->hari_kerja = $request->input('hari_kerja', $salary->hari_kerja);
+        $salary->tunjangan_makan = $request->input('tunjangan_makan', $salary->tunjangan_makan);
+        $salary->potongan_bpjs = $request->input('potongan_bpjs', $salary->potongan_bpjs);
+        $salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua', $salary->potongan_tabungan_hari_tua);
+        $salary->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon', $salary->potongan_kredit_kasbon);
+        
+        
+        // Handle signature overwrite if provided
+        if ($request->filled('ttd')) {
+            $oldSignature = $salary->ttd;
+            $imageData = $request->input('ttd');
+
+           // Clean and decode base64 image
+            $imageData = str_replace('data:image/png;base64,', '', $request->input('ttd'));
+            $imageData = str_replace(' ', '+', $imageData);
+            $fileName = Str::title($user->nama) . '.png';
+
+            // Delete old signature file if different
+            if ($oldSignature && Storage::disk('public')->exists('ttd/' . $oldSignature)) {
+                Storage::disk('public')->delete('ttd/' . $oldSignature);
+            }
+
+            // Save new signature
+            Storage::disk('public')->put('ttd/' . $fileName, base64_decode($imageData));
+
+            $salary->ttd = $fileName;
+        }
+
+        // Calculate total gaji
+        $salary->jumlah_gaji = $salary->gaji_pokok
+            + ($salary->tunjangan_makan ?? 0)
+            + ($salary->tunjangan_hari_tua ?? 0);
+
+        $salary->save();
+        
+        if($user->kantor === 'kantor 1'){
+            return redirect()->route('kantor1.index')->with('success', 'user updated successfully!');
+        }
+        else if($user->kantor === 'kantor 2'){
+            return redirect()->route('kantor2.index')->with('success', 'user updated successfully!');
+        }
+    }
+
+    
 }

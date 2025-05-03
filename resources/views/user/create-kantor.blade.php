@@ -149,13 +149,13 @@
                                 </div>
                             </div>
                           </div>
-                          <div>
+                          {{-- <div>
                             <label for="jumlah_gaji" class="block text-sm font-medium text-gray-700">Jumlah gaji</label>
                             <input type="number" id="jumlah_gaji" name="jumlah_gaji" value="{{ old('jumlah_gaji') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                             @error('jumlah_gaji')
                               <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
-                          </div>
+                          </div> --}}
                           {{-- TTD --}}
                           <div class="mt-4">
                               <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
@@ -183,12 +183,11 @@
                     const signaturePad = new SignaturePad(canvas);
 
                     document.querySelector('form').addEventListener('submit', function (e) {
-                      if (signaturePad.isEmpty()) {
-                          alert("Silakan tanda tangan terlebih dahulu.");
-                          e.preventDefault(); // prevent form from submitting
-                          return;
+                      if (!signaturePad.isEmpty()) {
+                        document.getElementById('ttd').value = signaturePad.toDataURL();
                       }
-                      document.getElementById('ttd').value = signaturePad.toDataURL();
+
+                      document.getElementById('ttd').value = '';
 
                     });
 

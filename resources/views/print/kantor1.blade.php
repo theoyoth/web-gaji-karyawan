@@ -213,14 +213,14 @@
                     <tr>
                         <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
                         <th rowspan="2" class="py-2 border border-black bg-gray-500 h-name">Nama</th>
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th>
-                        <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th>
+                        {{-- <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th> --}}
+                        {{-- <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th> --}}
 
                         <!-- Gaji Pokok with 3 sub-columns -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
 
                         <!-- Tunjangan -->
-                        <th colspan="3" class="py-2 border border-black bg-gray-500">Tunjangan</th>
+                        <th class="py-2 border border-black bg-gray-500">Tunjangan</th>
 
                         <!-- Jumlah Kotor -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Kotor</th>
@@ -237,8 +237,8 @@
                     <tr>
                         <!-- Sub-columns for tunjangan -->
                         <th class="py-2 border border-black bg-gray-500 h-tunjangan">Makan</th>
-                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Hari tua</th>
-                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Retase</th>
+                        {{-- <th class="py-2 border border-black bg-gray-500 h-tunjangan">Hari tua</th>
+                        <th class="py-2 border border-black bg-gray-500 h-tunjangan">Retase</th> --}}
 
                         <!-- Sub-columns for Potongan -->
                         <th class="py-2 border border-black bg-gray-500 h-potongan">BPJS</th>
@@ -249,18 +249,22 @@
                 <tbody>
                     @php $no = 1; @endphp
                     @foreach($users as $user)
-                        <tr>
-                            <td class="px-4 py-2 border border-gray-300">{{ $no++ }}</td>
-                            <td class="px-4 py-2 border border-gray-300">{{$user->nama}}</td>
-                            <td class="px-4 py-2 border border-gray-300">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
-                            <td class="px-4 py-2 border border-gray-300">{{$user->tanggal_diangkat->format('d F Y')}}</td>
+                        @php
+                            $salary = $user->salary;
+                        @endphp
+                        @if ($user->salary)
+                            <tr>
+                                <td class="px-4 py-2 border border-gray-300">{{ $no++ }}</td>
+                                <td class="px-4 py-2 border border-gray-300">{{$user->nama}}</td>
+                                {{-- <td class="px-4 py-2 border border-gray-300">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
+                                {{-- <td class="px-4 py-2 border border-gray-300">{{$user->tanggal_diangkat->format('d F Y')}}</td> --}}
 
-                            @foreach ($user->salaries as $salary)
+                                
                                 <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
                                 <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_retase, 0, ',', '.')}}</td>
-                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_kotor, 0, ',', '.')}}</td>
+                                {{-- <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
+                                {{-- <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_retase, 0, ',', '.')}}</td> --}}
+                                <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
                                 <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
                                 <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
                                 <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
@@ -268,9 +272,8 @@
                                 <td class="px-4 py-2 border border-gray-300">
                                     <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd w-20 h-20">
                                 </td>
-                            @endforeach
-
-                        </tr>
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>

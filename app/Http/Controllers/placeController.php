@@ -13,7 +13,7 @@ class placeController extends Controller
 
         // Load users with their salaries, filtered by kantor
         $users = User::where('kantor', "kantor 1")
-                    ->with('salaries')
+                    ->with('salary')
                     ->get();
 
         return view('place.kantor1', compact('users'));
@@ -22,7 +22,7 @@ class placeController extends Controller
     public function kantor2(){
         // Load users with their salaries, filtered by kantor
         $users = User::where('kantor', "kantor 2")
-                    ->with('salaries')
+                    ->with('salary')
                     ->get();
 
         return view('place.kantor2', compact('users'));

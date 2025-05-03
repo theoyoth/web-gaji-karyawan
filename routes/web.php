@@ -43,6 +43,7 @@ Route::get('/print/kantor2/filter', [PrintController::class, 'filterKantor2'])->
 Route::get('/awak12/edit/user/{user}', [UserController::class, 'editPageAwak12'])->name('edit.awak12');
 Route::put('/awak12/update/user/{userId}', [UserController::class, 'updateAwak12'])->name('update.awak12');
 
-// Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-// Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+Route::get('/kantor/edit/user/{user}', [UserController::class, 'editPageKantor'])->name('edit.kantor');
+Route::put('/kantor/update/user/{userId}', [UserController::class, 'updateKantor'])->name('update.kantor');
+
 
