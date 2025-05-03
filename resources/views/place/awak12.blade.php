@@ -63,7 +63,7 @@
                                 <!-- tarif retase -->
                                 <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Tarif Retase</th>
                                 <!-- Tunjangan -->
-                                <th colspan="2" class="py-2 border border-black bg-gray-500">Tunjangan</th>
+                                <th class="py-2 border border-black bg-gray-500">Tunjangan</th>
                                 <!-- jumlah ur -->
                                 <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah UR</th>
                                 <!-- Jumlah Kotor -->
@@ -82,7 +82,6 @@
                                 <th class="py-2 border border-black bg-gray-500 w-[120px]"></th>
                                 <!-- Sub-columns for tunjangan -->
                                 <th class="py-2 border border-black bg-gray-500 w-[120px]">Makan</th>
-                                <th class="py-2 border border-black bg-gray-500 w-[120px]">Hari tua</th>
                                 <!-- Sub-columns for Potongan -->
                                 <th class="py-2 border border-black bg-gray-500 w-[120px]">BPJS</th>
                                 <th class="py-2 border border-black bg-gray-500 w-[120px]">Tabungan hari tua</th>
@@ -92,49 +91,51 @@
                         <tbody>
                             @php $no = 1; @endphp
                             @foreach($users as $user)
-                                @foreach ($user->salaries as $salary)
-                                    @php $deliveryCount = $salary->deliveries->count(); @endphp
+                                @if($user->salary)
+                                    @php 
+                                        $salary = $user->salary; 
+                                        $deliveryCount = $salary->deliveries->count(); 
+                                    @endphp
                                     @foreach ($salary->deliveries as $index => $delivery)
-                                    <tr>
-                                        @if($index === 0)
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{ $no++ }}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$user->nama}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$salary->hari_kerja}}</td>
-                                        @endif
-                                        <td class="text-center py-2 border border-gray-500">{{ $delivery->jumlah_retase }}</td>
-                                        <td class="text-center py-2 border border-gray-500">{{ $delivery->kota }}</td>
-                                        <td class="text-center py-2 border border-gray-500">Rp{{ number_format($delivery->tarif_retase, 0, ',', '.') }}</td>
-                                        @if($index === 0)
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
-                                        @endif
-                                            <td class="text-center py-2 border border-gray-500">Rp{{number_format($delivery->jumlah_ur, 0, ',', '.')}}</td>
-                                        @if($index === 0)
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">
-                                                <img src="{{ file_exists(public_path('storage/ttd/' . $user->nama . '.png')) ? asset('storage/ttd/' . $user->nama . '.png') : '' }}" alt="ttd" class="w-20 h-20 object-contain">
-                                            </td>
-                                            <td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">
-                                                <div class="flex flex-col gap-1 items-center">
-                                                    <a href="{{ route('updatepage.awak12', $user->id) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
-                                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="bg-red-500 py-1 px-2 rounded">
-                                                            <i class="fas fa-trash text-white"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        @endif
-                                    </tr>
+                                        <tr>
+                                            @if($index === 0)
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{ $no++ }}</td>
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$user->nama}}</td>
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$salary->hari_kerja}}</td>
+                                            @endif
+                                            <td class="text-center py-2 border border-gray-500">{{ $delivery->jumlah_retase }}</td>
+                                            <td class="text-center py-2 border border-gray-500">{{ $delivery->kota }}</td>
+                                            <td class="text-center py-2 border border-gray-500">Rp{{ number_format($delivery->tarif_retase, 0, ',', '.') }}</td>
+                                            @if($index === 0)
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
+                                            @endif
+                                                <td class="text-center py-2 border border-gray-500">Rp{{number_format($delivery->jumlah_ur, 0, ',', '.')}}</td>
+                                            @if($index === 0)
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">
+                                                    <img src="{{ file_exists(public_path('storage/ttd/' . $user->nama . '.png')) ? asset('storage/ttd/' . $user->nama . '.png') : '' }}" alt="ttd" class="w-20 h-20 object-contain">
+                                                </td>
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">
+                                                    <div class="flex flex-col gap-1 items-center">
+                                                        <a href="{{ route('edit.awak12', $user->id) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
+                                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="bg-red-500 py-1 px-2 rounded">
+                                                                <i class="fas fa-trash text-white"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            @endif
+                                        </tr>
                                     @endforeach
-                                @endforeach
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

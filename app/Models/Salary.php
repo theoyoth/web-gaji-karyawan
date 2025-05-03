@@ -10,8 +10,8 @@ class Salary extends Model
     use HasFactory;
 
     protected $fillable = [
-        'month',
-        'year',
+        'bulan',
+        'tahun',
         'gaji_pokok',
         'hari_kerja',
         'tunjangan_makan',

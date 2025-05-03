@@ -196,10 +196,10 @@ class UserController extends Controller
     }
 
     public function destroy($id){
-        $user = User::with('salaries')->findOrFail($id);
+        $user = User::with('salary')->findOrFail($id);
 
         // Loop through each salary associated with the user
-        foreach ($user->salaries as $salary) {
+        if ($user->salary) {
             $fileName = Str::title($user->nama) . '.png'; // using capital first letter user's name for the signature
             $path = 'ttd/' . $fileName;
 
@@ -209,7 +209,7 @@ class UserController extends Controller
             }
 
             // Optionally delete the salary record if needed
-            $salary->delete();
+            $user->salary->delete();
         }
 
         // Delete the user
@@ -221,10 +221,45 @@ class UserController extends Controller
     public function getUSer(){
         // return view('user.create-awak12');
     }
-    public function updatePageAwak12(){
-        return view('user.create-awak12');
+    public function editPageAwak12(User $user){
+        // dd($user->salaries);
+        return view('edit.awak12', compact('user'));
     }
-    public function updateAwak12(){
-        return view('user.create-awak12');
+    public function updateAwak12(Request $request, $userId){
+        $user = User::with('salary.deliveries')->findOrFail($userId);
+
+        // Validate user data
+        $user->update($request->only(['nama', 'kantor']));
+        
+        // Update salary
+        
+        $salary = $user->salary;
+        $salary->update([
+            'gaji_pokok' => $request->input('gaji_pokok'),
+            'bulan' => $request->input('bulan'),
+            'tahun' => $request->input('tahun'),
+            'hari_kerja' => $request->input('hari_kerja'),
+            'tunjangan_makan' => $request->input('tunjangan_makan'),
+            'potongan_bpjs' => $request->input('potongan_bpjs'),
+            'potongan_tabungan_hari_tua' => $request->input('potongan_tabungan_hari_tua'),
+            'potongan_kredit_kasbon' => $request->input('potongan_kredit_kasbon'),
+            'ttd' => $request->input('ttd') ?? '',
+        ]);
+
+        // Delete old deliveries
+        $salary->deliveries()->delete();
+
+        // Add new deliveries
+        if ($request->has('deliveries')) {
+            foreach ($request->input('deliveries',[]) as $deliveryData) {
+                $salary->deliveries()->create([
+                    'kota' => $deliveryData['kota'],
+                    'jumlah_retase' => $deliveryData['jumlah_retase'],
+                    'tarif_retase' => $deliveryData['tarif_retase'],
+                ]);
+            }
+        }
+
+        return redirect()->route('awak12.index')->with('success', 'User updated successfully!');
     }
 }

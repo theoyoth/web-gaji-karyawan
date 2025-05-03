@@ -21,7 +21,7 @@ class User extends Model
         'tanggal_diangkat' => 'date',
     ];
 
-    public function salaries(){
-        return $this->hasMany(Salary::class);
+    public function salary(){
+        return $this->hasOne(Salary::class);
     }
 }

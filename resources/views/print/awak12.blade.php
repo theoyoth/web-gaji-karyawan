@@ -223,7 +223,7 @@
                         <!-- tarif retase -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Tarif Retase</th>
                         <!-- Tunjangan -->
-                        <th colspan="2" class="py-2 border border-black bg-gray-500">Tunjangan</th>
+                        <th class="py-2 border border-black bg-gray-500">Tunjangan</th>
                         <!-- jumlah ur -->
                         <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah UR</th>
                         <!-- Jumlah Kotor -->
@@ -241,7 +241,6 @@
                         <th class="py-2 border border-black bg-gray-500 w-[120px]"></th>
                         <!-- Sub-columns for tunjangan -->
                         <th class="py-2 border border-black bg-gray-500 w-[120px] h-tunjangan">Makan</th>
-                        <th class="py-2 border border-black bg-gray-500 w-[120px] h-tunjangan">Hari tua</th>
                         <!-- Sub-columns for Potongan -->
                         <th class="py-2 border border-black bg-gray-500 w-[120px] h-potongan">BPJS</th>
                         <th class="py-2 border border-black bg-gray-500 w-[120px] h-potongan">Tabungan hari tua</th>
@@ -251,8 +250,11 @@
                 <tbody>
                     @php $no = 1; @endphp
                         @foreach($users as $user)
-                            @foreach ($user->salaries as $salary)
-                                @php $deliveryCount = $salary->deliveries->count(); @endphp
+                            @if ($user->salary)
+                                @php $deliveryCount = $salary =
+                                    $user->salary; 
+                                    $deliveryCount = $salary->deliveries->count(); 
+                                @endphp
                                 @foreach ($salary->deliveries as $index => $delivery)
                                 <tr>
                                     @if($index === 0)
@@ -266,7 +268,7 @@
                                     <td class="text-center py-2 border border-gray-500">Rp{{ number_format($delivery->tarif_retase, 0, ',', '.') }}</td>
                                     @if($index === 0)
                                         <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
-                                        <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
+                                        {{-- <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
                                     @endif
                                         <td class="text-center py-2 border border-gray-500">Rp{{number_format($delivery->jumlah_ur, 0, ',', '.')}}</td>
                                     @if($index === 0)
@@ -281,7 +283,7 @@
                                     @endif
                                 </tr>
                                 @endforeach
-                            @endforeach
+                            @endif
                         @endforeach
                 </tbody>
             </table>
