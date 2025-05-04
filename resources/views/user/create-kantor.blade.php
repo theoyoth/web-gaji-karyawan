@@ -4,9 +4,11 @@
 <div class="container-fluid px-4">
     <main class="min-h-screen flex justify-center items-center">
         <div class="w-1/2 m-auto py-2 px-10 bg-gray-100 rounded-lg border border-black my-4">
-            <a href="{{ route('header.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
-              <- kembali
-            </a>
+            @if(request('from') === 'kantor1')
+              <a href="{{ route('kantor1.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
+            @elseif(request('from') === 'kantor2')
+              <a href="{{ route('kantor2.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
+            @endif
             <h1 class="text-4xl font-bold text-center">FORMULIR INPUT KANTOR</h1>
             <div class="mt-8">
                 <form action="{{ route('user.store') }}" method="POST">
@@ -23,7 +25,6 @@
                             </div>
                             <div>
                                 <label for="kantor" class="block text-sm font-medium text-gray-700">Kantor</label>
-                                {{-- <input type="text" id="kantor" name="kantor" value="{{ old('kantor') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm"> --}}
 
                                 <select name="kantor" id="kantor" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                     @foreach (['kantor 1','kantor 2'] as $kan)

@@ -62,7 +62,7 @@ class UserController extends Controller
         // create new instance for user,salary,delivery
         $user = new User();
         $salary = new Salary();
-        
+
 
         // input data
         $user->nama = Str::title($request->input('nama'));
@@ -80,9 +80,9 @@ class UserController extends Controller
         $salary->tahun = $request->input('tahun');
         $salary->tunjangan_makan = $request->input('tunjangan_makan');
         $salary->tunjangan_hari_tua = $request->input('tunjangan_hari_tua') ?: 0;
-        
+
         $salary->jumlah_gaji = $jumlah_gaji;
-        
+
         $salary->potongan_bpjs = $request->input('potongan_bpjs');
         $salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua');
         $salary->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon');
@@ -144,12 +144,12 @@ class UserController extends Controller
         // create new instance for user,salary,delivery
         $user = new User();
         $salary = new Salary();
-        
+
 
         // input data
         $user->nama = Str::title($request->input('nama'));
         $user->kantor = $request->input('kantor');
-      
+
         $user->save();
 
         $salary->user_id = $user->id;
@@ -232,9 +232,9 @@ class UserController extends Controller
 
         // Validate user data
         $user->update($request->only(['nama', 'kantor']));
-        
+
         // Update salary
-        
+
         $salary = $user->salary;
         $salary->gaji_pokok = $request->input('gaji_pokok', $salary->gaji_pokok);
         $salary->bulan = $request->input('bulan', $salary->bulan);
@@ -244,7 +244,7 @@ class UserController extends Controller
         $salary->potongan_bpjs = $request->input('potongan_bpjs', $salary->potongan_bpjs);
         $salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua', $salary->potongan_tabungan_hari_tua);
         $salary->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon', $salary->potongan_kredit_kasbon);
-        
+
         // Handle signature overwrite if provided
         if ($request->filled('ttd')) {
             $oldSignature = $salary->ttd;
@@ -277,7 +277,7 @@ class UserController extends Controller
             + ($salary->tunjangan_hari_tua ?? 0);
 
         $salary->save();
-        
+
         // Delete old deliveries
         $salary->deliveries()->delete();
 
@@ -295,59 +295,58 @@ class UserController extends Controller
         return redirect()->route('awak12.index')->with('success', 'User updated successfully!');
     }
     public function updateKantor(Request $request, $userId){
-        $user = User::with('salary')->findOrFail($userId);
+      $user = User::with('salary')->findOrFail($userId);
 
-        // Validate user data
-        $user->update($request->only(['nama', 'kantor']));
-        
-        // Update salary
-        
-        $salary = $user->salary;
-        $salary->gaji_pokok = $request->input('gaji_pokok', $salary->gaji_pokok);
-        $salary->bulan = $request->input('bulan', $salary->bulan);
-        $salary->tahun = $request->input('tahun', $salary->tahun);
-        $salary->hari_kerja = $request->input('hari_kerja', $salary->hari_kerja);
-        $salary->tunjangan_makan = $request->input('tunjangan_makan', $salary->tunjangan_makan);
-        $salary->potongan_bpjs = $request->input('potongan_bpjs', $salary->potongan_bpjs);
-        $salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua', $salary->potongan_tabungan_hari_tua);
-        $salary->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon', $salary->potongan_kredit_kasbon);
-        
-        
-        // Handle signature overwrite if provided
-        if ($request->filled('ttd')) {
-            $oldSignature = $salary->ttd;
-            $imageData = $request->input('ttd');
+      // Validate user data
+      $user->update($request->only(['nama', 'kantor']));
 
-           // Clean and decode base64 image
-            $imageData = str_replace('data:image/png;base64,', '', $request->input('ttd'));
-            $imageData = str_replace(' ', '+', $imageData);
-            $fileName = Str::title($user->nama) . '.png';
+      // Update salary
+      $salary = $user->salary;
 
-            // Delete old signature file if different
-            if ($oldSignature && Storage::disk('public')->exists('ttd/' . $oldSignature)) {
-                Storage::disk('public')->delete('ttd/' . $oldSignature);
-            }
+      $salary->gaji_pokok = $request->input('gaji_pokok', $salary->gaji_pokok);
+      $salary->bulan = $request->input('bulan', $salary->bulan);
+      $salary->tahun = $request->input('tahun', $salary->tahun);
+      $salary->hari_kerja = $request->input('hari_kerja', $salary->hari_kerja);
+      $salary->tunjangan_makan = $request->input('tunjangan_makan', $salary->tunjangan_makan);
+      $salary->potongan_bpjs = $request->input('potongan_bpjs', $salary->potongan_bpjs);
+      $salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua', $salary->potongan_tabungan_hari_tua);
+      $salary->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon', $salary->potongan_kredit_kasbon);
 
-            // Save new signature
-            Storage::disk('public')->put('ttd/' . $fileName, base64_decode($imageData));
 
-            $salary->ttd = $fileName;
-        }
+      // Handle signature overwrite if provided
+      if ($request->filled('ttd')) {
+          $oldSignature = $salary->ttd;
+          $imageData = $request->input('ttd');
 
-        // Calculate total gaji
-        $salary->jumlah_gaji = $salary->gaji_pokok
-            + ($salary->tunjangan_makan ?? 0)
-            + ($salary->tunjangan_hari_tua ?? 0);
+          // Clean and decode base64 image
+          $imageData = str_replace('data:image/png;base64,', '', $request->input('ttd'));
+          $imageData = str_replace(' ', '+', $imageData);
+          $fileName = Str::title($user->nama) . '.png';
 
-        $salary->save();
-        
-        if($user->kantor === 'kantor 1'){
-            return redirect()->route('kantor1.index')->with('success', 'user updated successfully!');
-        }
-        else if($user->kantor === 'kantor 2'){
-            return redirect()->route('kantor2.index')->with('success', 'user updated successfully!');
-        }
+          // Delete old signature file if different
+          if ($oldSignature && Storage::disk('public')->exists('ttd/' . $oldSignature)) {
+              Storage::disk('public')->delete('ttd/' . $oldSignature);
+          }
+
+          // Save new signature
+          Storage::disk('public')->put('ttd/' . $fileName, base64_decode($imageData));
+
+          $salary->ttd = $fileName;
+      }
+
+      // Calculate total gaji
+      $salary->jumlah_gaji = $salary->gaji_pokok
+          + ($salary->tunjangan_makan ?? 0)
+          + ($salary->tunjangan_hari_tua ?? 0);
+
+      $salary->save();
+
+      if($request->input('kantor') === 'kantor 1'){
+          return redirect()->route('kantor1.index')->with('success', 'user updated successfully!');
+      }
+      else if($request->input('kantor') === 'kantor 2'){
+          return redirect()->route('kantor2.index')->with('success', 'user updated successfully!');
+      }
     }
 
-    
 }

@@ -11,6 +11,7 @@ class User extends Model
 
     protected $fillable = [
         'nama',
+        'kantor',
         'tempat_lahir',
         'tanggal_lahir',
         'tanggal_diangkat',

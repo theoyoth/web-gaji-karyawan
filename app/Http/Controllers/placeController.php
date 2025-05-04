@@ -44,14 +44,14 @@ class placeController extends Controller
         $kantor = 'kantor 1';
 
         $users = User::where('kantor', $kantor) // Filter by kantor (from users table)
-        ->whereHas('salaries', function ($query) use ($month, $year) {
+        ->whereHas('salary', function ($query) use ($month, $year) {
             // Filter salaries by bulan (month) and tahun (year)
             if ($month && $year) {
                 $query->where('bulan', $month)
                       ->where('tahun', $year);
             }
         })
-        ->with(['salaries' => function ($query) use ($month, $year) {
+        ->with(['salary' => function ($query) use ($month, $year) {
             // Also filter the eager-loaded salaries by bulan and tahun
             if ($month && $year) {
                 $query->where('bulan', $month)
@@ -69,14 +69,14 @@ class placeController extends Controller
         $kantor = 'kantor 2';
 
         $users = User::where('kantor', $kantor) // Filter by kantor (from users table)
-        ->whereHas('salaries', function ($query) use ($month, $year) {
+        ->whereHas('salary', function ($query) use ($month, $year) {
             // Filter salaries by bulan (month) and tahun (year)
             if ($month && $year) {
                 $query->where('bulan', $month)
                       ->where('tahun', $year);
             }
         })
-        ->with(['salaries' => function ($query) use ($month, $year) {
+        ->with(['salary' => function ($query) use ($month, $year) {
             // Also filter the eager-loaded salaries by bulan and tahun
             if ($month && $year) {
                 $query->where('bulan', $month)
