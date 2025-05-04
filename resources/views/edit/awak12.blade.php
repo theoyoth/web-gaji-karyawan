@@ -157,7 +157,7 @@
                                   {{-- TTD --}}
                                   <div class="mt-4">
                                       <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
-                                      <canvas id="signature-pad" width="200" height="100" style="border: 1px solid #000;"></canvas>
+                                      <canvas id="signature-pad" width="200" height="100" style="border: 1px solid #000;" data-image="{{ $salary->ttd ? asset('storage/ttd/' . $salary->ttd) : '' }}"></canvas>
                                       <input type="hidden" name="ttd" id="ttd" value="{{ old('ttd', $salary->ttd ?? '') }}">
                                       <p class="text-gray-500 text-xs mt-1">Gambar tanda tangan di atas</p>
                                       <div class="flex mt-2">
@@ -178,44 +178,57 @@
 
                 <script>
                   // input signature
-                    const canvas = document.getElementById('signature-pad');
-                    const signaturePad = new SignaturePad(canvas);
+                  const canvas = document.getElementById('signature-pad');
+                  const signaturePad = new SignaturePad(canvas);
+                  const ttdInput = document.getElementById('ttd');
 
-                    document.querySelector('form').addEventListener('submit', function (e) {
-                      if (!signaturePad.isEmpty()) {
-                        document.getElementById('ttd').value = signaturePad.toDataURL();
-                      } else {
-                        document.getElementById('ttd').value = '';
-                      }
+                  // Load existing signature if available
+                  const existingImage = canvas.dataset.image;
+                  if (existingImage) {
+                    const img = new Image();
+                    img.src = existingImage;
+                    img.onload = () => {
+                      const ctx = canvas.getContext('2d');
+                      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    };
+                  }
 
-                    });
-
-                    // Clear the signature pad
-                    document.getElementById('clear').addEventListener('click', function () {
-                        signaturePad.clear();
-                    });
-
-                    // setting for multiple input retase
-                    let deliveryIndex = {{ count($salary->deliveries) }};
-
-                    function addDeliveryRow() {
-                        const wrapper = document.getElementById('delivery-wrapper');
-                        const row = document.createElement('div');
-                        row.className = 'delivery-row flex flex-col gap-1 pb-2 border-b border-gray-500';
-                        row.innerHTML = `
-                            <input type="text" name="deliveries[${deliveryIndex}][kota]" placeholder="Kota" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                            <input type="number" name="deliveries[${deliveryIndex}][jumlah_retase]" placeholder="Jumlah retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                            <input type="number" name="deliveries[${deliveryIndex}][tarif_retase]" placeholder="Tarif retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-
-                            <button type="button" onclick="removeDeliveryRow(this)" class="bg-red-500 hover:bg-red-600 text-white px-4 py-0 rounded">Hapus</button>
-                        `;
-                        wrapper.appendChild(row);
-                        deliveryIndex++;
+                  // Submit form: set ttd input to base64 image
+                  document.querySelector('form').addEventListener('submit', function () {
+                    if (!signaturePad.isEmpty()) {
+                      ttdInput.value = signaturePad.toDataURL('image/png');
+                    } else {
+                      ttdInput.value = '';
                     }
+                  });
 
-                    function removeDeliveryRow(button) {
-                        button.parentElement.remove();
-                    }
+                  // Clear signature
+                  document.getElementById('clear').addEventListener('click', function () {
+                    signaturePad.clear();
+                    ttdInput.value = '';
+                  });
+
+                  // setting for multiple input retase
+                  let deliveryIndex = {{ count($salary->deliveries) }};
+
+                  function addDeliveryRow() {
+                    const wrapper = document.getElementById('delivery-wrapper');
+                    const row = document.createElement('div');
+                    row.className = 'delivery-row flex flex-col gap-1 pb-2 border-b border-gray-500';
+                    row.innerHTML = `
+                        <input type="text" name="deliveries[${deliveryIndex}][kota]" placeholder="Kota" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                        <input type="number" name="deliveries[${deliveryIndex}][jumlah_retase]" placeholder="Jumlah retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                        <input type="number" name="deliveries[${deliveryIndex}][tarif_retase]" placeholder="Tarif retase" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+
+                        <button type="button" onclick="removeDeliveryRow(this)" class="bg-red-500 hover:bg-red-600 text-white px-4 py-0 rounded">Hapus</button>
+                    `;
+                    wrapper.appendChild(row);
+                    deliveryIndex++;
+                  }
+
+                  function removeDeliveryRow(button) {
+                      button.parentElement.remove();
+                  }
                 </script>
         </div>
     </main>

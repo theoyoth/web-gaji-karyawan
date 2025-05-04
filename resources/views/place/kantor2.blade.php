@@ -24,7 +24,7 @@
                 <div class="w-full flex justify-between">
                     <a href="{{ route('header.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
                     <div class="flex gap-4">
-                        <a href="{{ route('user.createKantor') }}" class="inline-block my-4 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Buat baru +</a>
+                        <a href="{{ route('user.createKantor') }}?from=kantor2" class="inline-block my-4 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Buat baru +</a>
                         <a href="{{ route('print.kantor2') }}" class="inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Print Dokumen 📄</a>
                     </div>
                 </div>
@@ -41,10 +41,15 @@
                             <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
                         @endfor
                     </select>
-                    <button type="submit" class="px-4 py-2 text-white bg-blue-600  border">Filter</button>
+                    <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded border">Filter</button>
+
+                    {{-- Reset Filter Button --}}
+                    @if(request('bulan') || request('tahun'))
+                      <a href="{{ route('kantor2.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Reset</a>
+                    @endif
                 </form>
                 <div class="bg-gray-100">
-                    @if($users->flatMap->salaries->isNotEmpty())
+                    @if($users->filter(fn($user) => $user->salary)->isNotEmpty())
                         <!-- your table -->
                     @else
                         <p class="text-red-500 py-2 bg-gray-100 indent-2">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
@@ -52,65 +57,70 @@
                     <table class="min-w-full table-auto border-collapse text-[0.8rem]">
                         <thead>
                             <tr>
-                                <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[180px]">Nama</th>
-                                <!-- Gaji Pokok with 3 sub-columns -->
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
-                                <!-- Tunjangan -->
-                                <th colspan="2" class="py-2 border border-black bg-gray-500">Tunjangan</th>
-                                <!-- Jumlah Kotor -->
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Kotor</th>
-                                <!-- Potongan with 3 sub-columns -->
-                                <th colspan="3" class="py-2 border border-black bg-gray-500 text-center">Potongan</th>
-                                <!-- Jumlah Bersih -->
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Bersih</th>
-                                <!-- TTD -->
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[60px]">TTD</th>
-                                <th rowspan="2" class="py-2 border border-black bg-gray-500"></th>
+                              <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[180px]">Nama</th>
+                              <!-- Gaji Pokok with 3 sub-columns -->
+                              <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
+                              <!-- Tunjangan -->
+                              <th colspan="2" class="py-2 border border-black bg-gray-500">Tunjangan</th>
+                              <!-- Jumlah Kotor -->
+                              <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Gaji</th>
+                              <!-- Potongan with 3 sub-columns -->
+                              <th colspan="3" class="py-2 border border-black bg-gray-500 text-center">Potongan</th>
+                              <!-- Jumlah Bersih -->
+                              <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Bersih</th>
+                              <!-- TTD -->
+                              <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[60px]">TTD</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[50px]"></th>
                             </tr>
                             <tr>
-                                <!-- Sub-columns for tunjangan -->
-                                <th class="py-2 border border-black bg-gray-500 w-[120px]">Makan</th>
-                                <th class="py-2 border border-black bg-gray-500 w-[120px]">Hari tua</th>
-                               
-                                <!-- Sub-columns for Potongan -->
-                                <th class="py-2 border border-black bg-gray-500 w-[120px]">BPJS</th>
-                                <th class="py-2 border border-black bg-gray-500 w-[120px]">Tabungan hari tua</th>
-                                <th class="py-2 border border-black bg-gray-500">Kredit/kasbon</th>
+                              <!-- Sub-columns for tunjangan -->
+                              <th class="py-2 border border-black bg-gray-500 w-[120px]">Makan</th>
+                              <th class="py-2 border border-black bg-gray-500 w-[120px]">Hari tua</th>
+
+                              <!-- Sub-columns for Potongan -->
+                              <th class="py-2 border border-black bg-gray-500 w-[120px]">BPJS</th>
+                              <th class="py-2 border border-black bg-gray-500 w-[120px]">Tabungan hari tua</th>
+                              <th class="py-2 border border-black bg-gray-500">Kredit/kasbon</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php $no = 1; @endphp
                             @foreach($users as $user)
-                                @foreach ($user->salaries as $salary)
-                                    <tr>
-                                        <td class="text-center py-2 border border-gray-500">{{ $no++ }}</td>
-                                        <td class="text-center py-2 border border-gray-500 text-wrap">{{ $user->nama }}</td>
-                                        {{-- <td class="text-center py-2 border border-gray-500">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
-                                        <td class="text-center py-2 border border-gray-500">{{ $user->tanggal_diangkat->format('d F Y') }}</td> --}}
-                                        <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>
-                                        <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->tunjangan_makan, 0, ',', '.') }}</td>
-                                        <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td>
-                                        <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->tunjangan_retase, 0, ',', '.') }}</td>
-                                        <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->jumlah_kotor, 0, ',', '.') }}</td>
-                                        <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->potongan_bpjs, 0, ',', '.') }}</td>
-                                        <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td>
-                                        <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') }}</td>
-                                        <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->jumlah_bersih, 0, ',', '.') }}</td>
-                                        <td class="text-center py-2 border border-gray-500">
-                                            <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ 'ttd' . $user->nama }}" class="ttd w-20 h-20 object-contain">
-                                        </td>
-                                        <td class="text-center px-1 py-2 border border-gray-500">
-                                            <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="bg-red-500 py-1 px-2 rounded">
-                                                    <i class="fas fa-trash text-white"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                @if ($user->salary)
+                                  @php
+                                    $salary = $user->salary;
+                                  @endphp
+                                  <tr>
+                                    <td class="text-center py-2 border border-gray-500">{{ $no++ }}</td>
+                                    <td class="text-center py-2 border border-gray-500 text-wrap">{{ $user->nama }}</td>
+                                    {{-- <td class="text-center py-2 border border-gray-500">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
+                                    <td class="text-center py-2 border border-gray-500">{{ $user->tanggal_diangkat->format('d F Y') }}</td> --}}
+                                    <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>
+                                    <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->tunjangan_makan, 0, ',', '.') }}</td>
+                                    <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td>
+                                    <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->jumlah_gaji, 0, ',', '.') }}</td>
+                                    <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->potongan_bpjs, 0, ',', '.') }}</td>
+                                    <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td>
+                                    <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') }}</td>
+                                    <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->jumlah_bersih, 0, ',', '.') }}</td>
+                                    <td class="text-center py-2 border border-gray-500">
+                                      <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ 'ttd' . $user->nama }}" class="ttd w-20 h-20 object-contain">
+                                    </td>
+                                    <td class="text-center px-1 py-2 border border-gray-500">
+                                      <div class="flex flex-col gap-1 items-center">
+                                        <a href="{{ route('edit.kantor', $user->id) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
+                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
+                                          @csrf
+                                          @method('DELETE')
+                                          <button type="submit" class="bg-red-500 py-1 px-2 rounded">
+                                              <i class="fas fa-trash text-white"></i>
+                                          </button>
+                                        </form>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

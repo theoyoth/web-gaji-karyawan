@@ -42,9 +42,14 @@
                         @endfor
                     </select>
                     <button type="submit" class="px-4 py-2 text-white bg-blue-600  border">Filter</button>
+
+                    {{-- Reset Filter Button --}}
+                    @if(request('bulan') || request('tahun'))
+                      <a href="{{ route('awak12.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Reset</a>
+                    @endif
                 </form>
                 <div class="bg-gray-100">
-                    @if($users->flatMap->salaries->isNotEmpty())
+                    @if($users->filter(fn($user) => $user->salary)->isNotEmpty())
                         <!-- do nothing -->
                     @else
                         <p class="text-red-500 py-2 bg-gray-100 indent-2">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
@@ -92,9 +97,9 @@
                             @php $no = 1; @endphp
                             @foreach($users as $user)
                                 @if($user->salary)
-                                    @php 
-                                        $salary = $user->salary; 
-                                        $deliveryCount = $salary->deliveries->count(); 
+                                    @php
+                                        $salary = $user->salary;
+                                        $deliveryCount = $salary->deliveries->count();
                                     @endphp
                                     @foreach ($salary->deliveries as $index => $delivery)
                                         <tr>
