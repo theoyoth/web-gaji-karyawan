@@ -16,34 +16,38 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// home
 Route::get('/', [DaftarController::class, 'index'])->name('header.index');
+// users
+// create - form
 Route::get('/user/create/kantor', [UserController::class, 'create'])->name('user.createKantor');
 Route::get('/user/create/awak12', [UserController::class, 'createAwak12'])->name('user.createAwak12');
+// store
 Route::post('/user/create/kantor', [UserController::class, 'store'])->name('user.store');
 Route::post('/user/create/awak12', [UserController::class, 'storeAwak12'])->name('user.storeAwak12');
+// edit
+Route::get('/awak12/edit/user/{user}', [UserController::class, 'editPageAwak12'])->name('edit.awak12');
+Route::get('/kantor/edit/user/{user}', [UserController::class, 'editPageKantor'])->name('edit.kantor');
+// update
+Route::put('/awak12/update/user/{userId}', [UserController::class, 'updateAwak12'])->name('update.awak12');
+Route::put('/kantor/update/user/{userId}', [UserController::class, 'updateKantor'])->name('update.kantor');
+// delete
 Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
+// places
 Route::get('/kantor-1', [placeController::class, 'kantor1'])->name('kantor1.index');
 Route::get('/kantor-2', [placeController::class, 'kantor2'])->name('kantor2.index');
 Route::get('/awak12', [placeController::class, 'awak12'])->name('awak12.index');
-
+// filter
 Route::get('/kantor1/filter', [placeController::class, 'filterKantor1'])->name('filter.kantor1');
 Route::get('/kantor2/filter', [placeController::class, 'filterKantor2'])->name('filter.kantor2');
 Route::get('/awak12/filter', [placeController::class, 'filterAwak12'])->name('filter.awak12');
-
+// print
 Route::get('/print/awak12', [PrintController::class, 'awak12'])->name('print.awak12');
 Route::get('/print/kantor1', [PrintController::class, 'kantor1'])->name('print.kantor1');
 Route::get('/print/kantor2', [PrintController::class, 'kantor2'])->name('print.kantor2');
-
-Route::get('/print/awak12/filter', [PrintController::class, 'filterAwak12'])->name('filterprint.awak12');
-Route::get('/print/kantor1/filter', [PrintController::class, 'filterKantor1'])->name('filterprint.kantor1');
-Route::get('/print/kantor2/filter', [PrintController::class, 'filterKantor2'])->name('filterprint.kantor2');
-
-Route::get('/awak12/edit/user/{user}', [UserController::class, 'editPageAwak12'])->name('edit.awak12');
-Route::put('/awak12/update/user/{userId}', [UserController::class, 'updateAwak12'])->name('update.awak12');
-
-Route::get('/kantor/edit/user/{user}', [UserController::class, 'editPageKantor'])->name('edit.kantor');
-Route::put('/kantor/update/user/{userId}', [UserController::class, 'updateKantor'])->name('update.kantor');
-
+// filter - print
+Route::get('/print/awak12/filter', [PrintController::class, 'filterAwak12'])->name('print.awak12.filtered');
+Route::get('/print/kantor1/filter', [PrintController::class, 'filterKantor1'])->name('print.kantor1.filtered');
+Route::get('/print/kantor2/filter', [PrintController::class, 'filterKantor2'])->name('print.kantor2.filtered');
 

@@ -56,8 +56,7 @@
             background-color: #f4f4f4;
         }
         .ttd{
-            width:80px;
-            height: 35px;
+            width:50px;
         }
         .header-text{
             font-size: 2rem;
@@ -184,7 +183,7 @@
             <button class="print-button inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onclick="window.print()">🖨️ Print</button>
         </div>
 
-        <form method="GET" action="{{ route('filterprint.kantor1') }}">
+        <form method="GET" action="{{ route('print.kantor1.filtered') }}">
             <select name="bulan" required class="select-input">
                 <option value="">-- Pilih Bulan --</option>
                 @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
@@ -203,7 +202,7 @@
 
             {{-- Reset Filter Button --}}
             @if(request('bulan') || request('tahun'))
-              <a href="{{ route('filterprint.kantor1') }}" class="bg-gray-500 text-white px-3 py-1 rounded">Reset</a>
+              <a href="{{ route('print.kantor1.filtered') }}" class="bg-gray-500 text-white px-3 py-1 rounded">Reset</a>
             @endif
         </form>
 
