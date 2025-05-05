@@ -206,6 +206,22 @@
                     function removeDeliveryRow(button) {
                         button.parentElement.remove();
                     }
+
+                    // add shortcut to submit
+                    document.addEventListener('keydown', function (event) {
+                      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+                        event.preventDefault(); // prevent browser's default save dialog
+
+                        const form = document.querySelector('form');
+                        if (form) {
+                          form.submit();
+                        }
+                      }
+                      if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'a') {
+                        event.preventDefault(); // prevent browser's default save dialog
+                        addDeliveryRow();
+                      }
+                    });
                 </script>
         </div>
     </main>
