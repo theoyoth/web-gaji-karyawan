@@ -10,7 +10,7 @@
                 </div>
                 <div class="w-full m-auto">
                     <div class="flex gap-4">
-                        <a href="{{ route('awak12.index') }}" class="my-4 w-[200px] h-[100px] flex flex-col items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
+                        <a href="{{ route('awak12.index',['page' => 1]) }}" class="my-4 w-[200px] h-[100px] flex flex-col items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
                             <div class="text-blue-500 text-4xl mb-2">
                                 <i class="fas fa-users"></i>
                             </div>

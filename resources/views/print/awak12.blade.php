@@ -55,9 +55,10 @@
         th {
             background-color: #f4f4f4;
         }
-        .ttd{
-            width:80px;
-            height: 35px;
+        img{
+            width:60px;
+            height: 40px;
+            object-fit: contain;
         }
         .header-text{
             font-size: 2rem;
@@ -93,6 +94,12 @@
         .h-ttd{
             width: 50px;
         }
+        table{
+            padding:0;
+        }
+        .user-name{
+            text-transform: uppercase;
+        }
 
         /* Hide the print button during printing */
         @media print {
@@ -122,10 +129,7 @@
                 font-size: 12pt;
                 margin: 0;
             }
-            .ttd{
-                width:50px;
-                object-fit: contain;
-            }
+    
             .header-text{
                 font-size: 2rem;
                 text-align: center;
@@ -163,10 +167,14 @@
             .h-jumlah{
                 width: 100px;
             }
-            .h-ttd{
-                width: 50px;
+            img{
+                width:60px;
+                height: 40px;
+                object-fit: contain;
             }
-
+            .user-name{
+                text-transform: uppercase;
+            }
         }
     </style>
 </head>
@@ -218,7 +226,7 @@
           <thead>
             <tr>
               <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
-              <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[180px]">Nama</th>
+              <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[180px] h-name">Nama</th>
               <!-- Gaji Pokok with 3 sub-columns -->
               <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
               <!-- hari kerja -->
@@ -264,7 +272,7 @@
                   <tr>
                     @if($index === 0)
                       <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{ $no++ }}</td>
-                      <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$user->nama}}</td>
+                      <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500 user-name">{{$user->nama}}</td>
                       <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
                       <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$salary->hari_kerja}}</td>
                     @endif

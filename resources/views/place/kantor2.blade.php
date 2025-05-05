@@ -93,7 +93,7 @@
                                   @endphp
                                   <tr>
                                     <td class="text-center py-2 border border-gray-500">{{ $no++ }}</td>
-                                    <td class="text-center py-2 border border-gray-500 text-wrap">{{ $user->nama }}</td>
+                                    <td class="text-center py-2 border border-gray-500 text-wrap uppercase">{{ $user->nama }}</td>
                                     {{-- <td class="text-center py-2 border border-gray-500">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
                                     <td class="text-center py-2 border border-gray-500">{{ $user->tanggal_diangkat->format('d F Y') }}</td> --}}
                                     <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>

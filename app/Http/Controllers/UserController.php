@@ -193,7 +193,9 @@ class UserController extends Controller
 
         $salary->save(); // Save the updated jumlah_gaji
 
-        return redirect()->route('awak12.index')->with('success', 'user saved successfully!');
+        $page = request()->query('page');
+
+        return redirect()->route('awak12.index',['page' => $page])->with('success', 'user saved successfully!');
     }
 
     public function destroy($id){

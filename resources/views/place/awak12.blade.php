@@ -105,7 +105,7 @@
                                         <tr>
                                             @if($index === 0)
                                                 <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{ $no++ }}</td>
-                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$user->nama}}</td>
+                                                <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500 uppercase">{{$user->nama}}</td>
                                                 <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">Rp{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
                                                 <td rowspan="{{ $deliveryCount }}" class="text-center py-2 border border-gray-500">{{$salary->hari_kerja}}</td>
                                             @endif
@@ -144,6 +144,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Tailwind-styled pagination -->
+                    <div class="mt-4 flex justify-center">
+                        {{ $users->links() }}
+                    </div>
                 </div>
             </div>
         </div>

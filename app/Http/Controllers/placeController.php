@@ -13,7 +13,7 @@ class placeController extends Controller
         // Load users with their salaries, filtered by kantor
         $users = User::where('kantor', "kantor 1")
                     ->with('salary')
-                    ->get();
+                    ->paginate(15);
 
         return view('place.kantor1', compact('users'));
     }
@@ -22,15 +22,16 @@ class placeController extends Controller
         // Load users with their salaries, filtered by kantor
         $users = User::where('kantor', "kantor 2")
                     ->with('salary')
-                    ->get();
+                    ->paginate(15);
 
         return view('place.kantor2', compact('users'));
     }
-    public function awak12(){
+    public function awak12(Request $request){
+        $page = $request->query('page');
         // Load users with their salaries, filtered by kantor
         $users = User::where('kantor', "awak 1 dan awak 2")
                     ->with('salary.deliveries')
-                    ->get();
+                    ->paginate(15);
 
         return view('place.awak12', compact('users'));
     }

@@ -55,8 +55,10 @@
         th {
             background-color: #f4f4f4;
         }
-        .ttd{
-            width:50px;
+        img{
+            width:60px;
+            height: 40px;
+            object-fit: contain;
         }
         .header-text{
             font-size: 2rem;
@@ -92,6 +94,9 @@
         .h-ttd{
             width: 50px;
         }
+        table{
+            padding: 0;
+        }
 
         /* Hide the print button during printing */
         @media print {
@@ -120,10 +125,6 @@
             body {
                 font-size: 12pt;
                 margin: 0;
-            }
-            .ttd{
-                width:50px;
-                object-fit: contain;
             }
             .header-text{
                 font-size: 2rem;
@@ -164,6 +165,14 @@
             }
             .h-ttd{
                 width: 50px;
+            }
+            img{
+                width:60px;
+                height: 40px;
+                object-fit: contain;
+            }
+            table{
+                padding: 0;
             }
 
         }
