@@ -144,19 +144,19 @@
                             @endforeach
 														<tr>
 															<td class="text-center border border-gray-500"></td>
-															<td class="text-center border border-gray-500"></td>
-															<td class="text-center border border-gray-500"></td>
-															<td class="text-center border border-gray-500"></td>
-															<td class="text-center border border-gray-500"></td>
-															<td class="text-center border border-gray-500"></td>
-															<td class="text-center border border-gray-500"></td>
-															<td class="text-center border border-gray-500"><strong>Makan-{{ number_format($totalTunjanganMakan, 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Retase-{{ number_format($totalUpahRetase, 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Bersih-{{ number_format($totalJumlahBersih, 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>BPJS-{{ number_format($totalPotonganBPJS, 0) }}</strong></td>
-															<td class="text-center border border-gray-500"></td>
-															<td class="text-center border border-gray-500"></td>
-															<td class="text-center border border-gray-500"><strong>General-{{ number_format($totalGeneral, 0) }}</strong></td>
+															<td class="text-center border-b border-gray-500"><strong>TOTAL</strong></td>
+															<td class="text-center border-b border-b-gray-500"></td>
+															<td class="text-center border-b border-b-gray-500"></td>
+															<td class="text-center border-b border-b-gray-500"></td>
+															<td class="text-center border-b border-b-gray-500"></td>
+															<td class="text-center border-b border-gray-500"></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalTunjanganMakan'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalJumlahRetase'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalJumlahGaji'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganBpjs'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganHariTua'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganKreditKasbon'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalGeneral'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 														</tr>
