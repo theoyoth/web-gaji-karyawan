@@ -16,6 +16,9 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Left Column -->
                         <div class="space-y-4">
+                          {{-- send hidden page pagination number to backend --}}
+                          <input type="hidden" name="page" value="{{ request('page') }}">
+
                             <div>
                                 <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
                                 <input type="text" id="nama" name="nama" value="{{ old('nama',$user->nama) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
@@ -155,14 +158,15 @@
                                   </div>
 
                                   {{-- TTD --}}
+                                  <input type="hidden" name="delete_ttd" id="delete_ttd" value="0">
                                   <div class="mt-4">
-                                      <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
-                                      <canvas id="signature-pad" width="200" height="100" style="border: 1px solid #000;" data-image="{{ $salary->ttd ? asset('storage/ttd/' . $salary->ttd) : '' }}"></canvas>
-                                      <input type="hidden" name="ttd" id="ttd" value="{{ old('ttd', $salary->ttd ?? '') }}">
-                                      <p class="text-gray-500 text-xs mt-1">Gambar tanda tangan di atas</p>
-                                      <div class="flex mt-2">
-                                          <button type="button" id="clear" class="mr-4 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md">Clear</button>
-                                      </div>
+                                    <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
+                                    <canvas id="signature-pad" width="200" height="100" style="border: 1px solid #000;" data-image="{{ $salary->ttd ? asset('storage/ttd/' . $salary->ttd) : '' }}"></canvas>
+                                    <input type="hidden" name="ttd" id="ttd" value="{{ old('ttd', $salary->ttd ?? '') }}">
+                                    <p class="text-gray-500 text-xs mt-1">Gambar tanda tangan di atas</p>
+                                    <div class="flex mt-2">
+                                      <button type="button" id="clear" class="mr-4 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md" disabled>Clear</button>
+                                    </div>
                                   </div>
                                 </div>
                               @endif
@@ -181,6 +185,18 @@
                   const canvas = document.getElementById('signature-pad');
                   const signaturePad = new SignaturePad(canvas);
                   const ttdInput = document.getElementById('ttd');
+                  const clearBtn = document.getElementById('clear');
+
+                  // Disable clear button by default
+                  function disableClearButton() {
+                    clearBtn.disabled = true;
+                    clearBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                  }
+
+                  function enableClearButton() {
+                    clearBtn.disabled = false;
+                    clearBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                  }
 
                   // Load existing signature if available
                   const existingImage = canvas.dataset.image;
@@ -190,8 +206,17 @@
                     img.onload = () => {
                       const ctx = canvas.getContext('2d');
                       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                      enableClearButton(); 
                     };
+                  } else {
+                    disableClearButton();
                   }
+
+                  // Watch user drawing and enable clear
+                  signaturePad.onBegin = () => {
+                    if (signaturePad.isEmpty()) return;
+                    enableClearButton();
+                  };
 
                   // Submit form: set ttd input to base64 image
                   document.querySelector('form').addEventListener('submit', function () {
@@ -202,10 +227,13 @@
                     }
                   });
 
-                  // Clear signature
-                  document.getElementById('clear').addEventListener('click', function () {
+                  // Clear signature and delete signature
+                  const deleteTtdInput = document.getElementById('delete_ttd');
+                  clearBtn.addEventListener('click', function () {
                     signaturePad.clear();
                     ttdInput.value = '';
+                    deleteTtdInput.value = '1';
+                    disableClearButton(); // Re-disable after clearing
                   });
 
                   // setting for multiple input retase
