@@ -31,8 +31,34 @@ class placeController extends Controller
         $users = User::where('kantor', "awak 1 dan awak 2")
                     ->with('salary.deliveries')
                     ->paginate(15);
+        
+        // Initialize variables for total sums
+        $totalJumlahBersih = 0;
+        $totalTunjanganMakan = 0;
+        $totalUpahRetase = 0;
+        $totalPotonganBPJS = 0;
+        $totalGeneral = 0;
 
-        return view('place.awak12', compact('users'));
+        // Loop through users to calculate totals for the current page
+        foreach ($users as $user) {
+            $salary = $user->salary;
+            $upahRetase = $salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase);
+
+            // Calculate the totals for each field
+            $jumlahBersih = $salary->jumlah_gaji - $salary->potongan_bpjs; // Customize this formula if needed
+            $tunjanganMakan = $salary->tunjangan_makan;
+            $potonganBPJS = $salary->potongan_bpjs;
+
+            // Add to the running totals
+            $totalJumlahBersih += $jumlahBersih;
+            $totalTunjanganMakan += $tunjanganMakan;
+            $totalUpahRetase += $upahRetase;
+            $totalPotonganBPJS += $potonganBPJS;
+            $totalGeneral += $jumlahBersih + $tunjanganMakan + $upahRetase - $potonganBPJS;
+        }
+
+        // return view('place.awak12', compact('users'));
+        return view('place.awak12', compact('users', 'totalJumlahBersih', 'totalTunjanganMakan', 'totalUpahRetase', 'totalPotonganBPJS', 'totalGeneral'));
     }
 
 

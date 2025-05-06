@@ -92,22 +92,22 @@
                                     $salary = $user->salary;
                                 @endphp
                                 <tr>
-                                  <td class="text-center py-2 border border-gray-500">{{ $no++ }}</td>
-                                  <td class="text-center py-2 border border-gray-500 text-wrap uppercase">{{ $user->nama }}</td>
-                                  {{-- <td class="text-center py-2 border border-gray-500">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
-                                  <td class="text-center py-2 border border-gray-500">{{ $user->tanggal_diangkat->format('d F Y') }}</td> --}}
-                                  <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>
-                                  <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->tunjangan_makan, 0, ',', '.') }}</td>
-                                  <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td>
-                                  <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->jumlah_gaji, 0, ',', '.') }}</td>
-                                  <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->potongan_bpjs, 0, ',', '.') }}</td>
-                                  <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td>
-                                  <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') }}</td>
-                                  <td class="text-center py-2 border border-gray-500">Rp{{ number_format($salary->jumlah_bersih, 0, ',', '.') }}</td>
-                                  <td class="text-center py-2 border border-gray-500">
+                                  <td class="text-center py-1 border border-gray-500">{{ $no++ }}</td>
+                                  <td class="text-center py-1 border border-gray-500 text-wrap uppercase">{{ $user->nama }}</td>
+                                  {{-- <td class="text-center py-1 border border-gray-500">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
+                                  <td class="text-center py-1 border border-gray-500">{{ $user->tanggal_diangkat->format('d F Y') }}</td> --}}
+                                  <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>
+                                  <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->tunjangan_makan, 0, ',', '.') }}</td>
+                                  <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td>
+                                  <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->jumlah_gaji, 0, ',', '.') }}</td>
+                                  <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->potongan_bpjs, 0, ',', '.') }}</td>
+                                  <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td>
+                                  <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') }}</td>
+                                  <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->jumlah_bersih, 0, ',', '.') }}</td>
+                                  <td class="text-center py-1 border border-gray-500">
                                     <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ 'ttd' . $user->nama }}" class="ttd w-20 h-20 object-contain">
                                   </td>
-                                  <td class="text-center px-1 py-2 border border-gray-500">
+                                  <td class="text-center px-1 py-1 border border-gray-500">
                                     <div class="flex flex-col gap-1 items-center">
                                       <a href="{{ route('edit.kantor', ['user'=>$user->id, 'page'=>request()->get('page',1)]) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
                                       <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
