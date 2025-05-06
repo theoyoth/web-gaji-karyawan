@@ -18,6 +18,9 @@
                         $salary = $user->salary;
                       @endphp
                       @if($user->salary)
+                      {{-- send hidden page pagination number to backend --}}
+                      <input type="hidden" name="page" value="{{ request('page') }}">
+
                         <!-- Left Column -->
                         <div>
                           <div>
@@ -110,36 +113,38 @@
                           <div class="flex items-center">
                             <p class="block text-sm font-medium text-gray-700 mr-10">Potongan</p>
                             <div class="flex-1">
-                                <div class="mt-2">
-                                    <label for="potongan_bpjs" class="block text-sm font-medium text-gray-700">BPJS</label>
-                                    <input type="number" id="potongan_bpjs" name="potongan_bpjs" value="{{ old('potongan_bpjs',$salary->potongan_bpjs) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                    @error('potongan_bpjs')
-                                      <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="mt-2">
-                                    <label for="potongan_tabungan_hari_tua" class="block text-sm font-medium text-gray-700">Tabungan hari tua</label>
-                                    <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua',$salary->potongan_tabungan_hari_tua) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                    @error('potongan_tabungan_hari_tua')
-                                      <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="mt-2">
-                                    <label for="potongan_kredit_kasbon" class="block text-sm font-medium text-gray-700">Kredit/Kasbon</label>
-                                    <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon',$salary->potongan_kredit_kasbon) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                    @error('potongan_kredit_kasbon')
-                                      <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                    @enderror
-                                </div>
+                              <div class="mt-2">
+                                  <label for="potongan_bpjs" class="block text-sm font-medium text-gray-700">BPJS</label>
+                                  <input type="number" id="potongan_bpjs" name="potongan_bpjs" value="{{ old('potongan_bpjs',$salary->potongan_bpjs) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                  @error('potongan_bpjs')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                  @enderror
+                              </div>
+                              <div class="mt-2">
+                                  <label for="potongan_tabungan_hari_tua" class="block text-sm font-medium text-gray-700">Tabungan hari tua</label>
+                                  <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua',$salary->potongan_tabungan_hari_tua) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                  @error('potongan_tabungan_hari_tua')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                  @enderror
+                              </div>
+                              <div class="mt-2">
+                                <label for="potongan_kredit_kasbon" class="block text-sm font-medium text-gray-700">Kredit/Kasbon</label>
+                                <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon',$salary->potongan_kredit_kasbon) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                @error('potongan_kredit_kasbon')
+                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                              </div>
                             </div>
                           </div>
+                          {{-- TTD --}}
+                          <input type="hidden" name="delete_ttd" id="delete_ttd" value="0">
                           <div class="mt-4">
                               <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
                               <canvas id="signature-pad" width="200" height="100" style="border: 1px solid #000;" data-image="{{ $salary->ttd ? asset('storage/ttd/' . $salary->ttd) : '' }}"></canvas>
                               <input type="hidden" name="ttd" id="ttd" value="{{ old('ttd', $salary->ttd ?? '') }}">
                               <p class="text-gray-500 text-xs mt-1">Gambar tanda tangan di atas</p>
                               <div class="flex mt-2">
-                                  <button type="button" id="clear" class="mr-4 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md">Clear</button>
+                                <button type="button" disabled id="clear" class="mr-4 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md">Clear</button>
                               </div>
                           </div>
                         </div>
@@ -159,6 +164,18 @@
                   const canvas = document.getElementById('signature-pad');
                   const signaturePad = new SignaturePad(canvas);
                   const ttdInput = document.getElementById('ttd');
+                  const clearBtn = document.getElementById('clear');
+                  
+                  // Disable clear button by default
+                  function disableClearButton() {
+                    clearBtn.disabled = true;
+                    clearBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                  }
+
+                  function enableClearButton() {
+                    clearBtn.disabled = false;
+                    clearBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                  }
 
                   // Load existing signature if available
                   const existingImage = canvas.dataset.image;
@@ -168,8 +185,17 @@
                     img.onload = () => {
                       const ctx = canvas.getContext('2d');
                       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    };
+                      enableClearButton(); 
+                    }
+                  } else {
+                    disableClearButton();
                   }
+
+                  // Watch user drawing and enable clear
+                  signaturePad.onBegin = () => {
+                    if (signaturePad.isEmpty()) return;
+                    enableClearButton();
+                  };
 
                   // Submit form: set ttd input to base64 image
                   document.querySelector('form').addEventListener('submit', function () {
@@ -180,10 +206,13 @@
                     }
                   });
 
-                  // Clear signature
-                  document.getElementById('clear').addEventListener('click', function () {
+                  // Clear signature and delete signature
+                  const deleteTtdInput = document.getElementById('delete_ttd');
+                  clearBtn.addEventListener('click', function () {
                     signaturePad.clear();
                     ttdInput.value = '';
+                    deleteTtdInput.value = '1';
+                    disableClearButton();
                   });
 
                 </script>

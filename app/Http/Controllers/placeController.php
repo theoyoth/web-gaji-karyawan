@@ -27,7 +27,6 @@ class placeController extends Controller
         return view('place.kantor2', compact('users'));
     }
     public function awak12(Request $request){
-        $page = $request->query('page');
         // Load users with their salaries, filtered by kantor
         $users = User::where('kantor', "awak 1 dan awak 2")
                     ->with('salary.deliveries')

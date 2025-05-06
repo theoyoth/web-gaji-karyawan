@@ -109,7 +109,7 @@
                                   </td>
                                   <td class="text-center px-1 py-2 border border-gray-500">
                                     <div class="flex flex-col gap-1 items-center">
-                                      <a href="{{ route('edit.kantor', $user->id) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
+                                      <a href="{{ route('edit.kantor', ['user'=>$user->id, 'page'=>request()->get('page',1)]) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
                                       <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
                                       @csrf
                                       @method('DELETE')
