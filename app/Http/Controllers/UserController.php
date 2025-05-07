@@ -79,7 +79,7 @@ class UserController extends Controller
 		$salary->bulan = $request->input('bulan');
 		$salary->tahun = $request->input('tahun');
 		$salary->tunjangan_makan = $request->input('tunjangan_makan');
-		$salary->tunjangan_hari_tua = $request->input('tunjangan_hari_tua') ?: 0;
+		$salary->tunjangan_hari_tua = $request->input('tunjangan_hari_tua') ?? 0;
 
 		$salary->jumlah_gaji = $jumlah_gaji;
 

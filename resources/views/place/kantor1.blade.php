@@ -62,7 +62,7 @@
                               <!-- Gaji Pokok with 3 sub-columns -->
                               <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
                               <!-- Tunjangan -->
-                              <th colspan="2" class="py-2 border border-black bg-gray-500">Tunjangan</th>
+                              <th class="py-2 border border-black bg-gray-500">Tunjangan</th>
                               <!-- Jumlah Kotor -->
                               <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Gaji</th>
                               <!-- Potongan with 3 sub-columns -->
@@ -76,7 +76,7 @@
                             <tr>
                               <!-- Sub-columns for tunjangan -->
                               <th class="py-2 border border-black bg-gray-500 w-[120px]">Makan</th>
-                              <th class="py-2 border border-black bg-gray-500 w-[120px]">Hari tua</th>
+                              {{-- <th class="py-2 border border-black bg-gray-500 w-[120px]">Hari tua</th> --}}
 
                               <!-- Sub-columns for Potongan -->
                               <th class="py-2 border border-black bg-gray-500 w-[120px]">BPJS</th>
@@ -98,7 +98,7 @@
                                   <td class="text-center py-1 border border-gray-500">{{ $user->tanggal_diangkat->format('d F Y') }}</td> --}}
                                   <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>
                                   <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->tunjangan_makan, 0, ',', '.') }}</td>
-                                  <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td>
+                                  {{-- <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td> --}}
                                   <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->jumlah_gaji, 0, ',', '.') }}</td>
                                   <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->potongan_bpjs, 0, ',', '.') }}</td>
                                   <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td>
@@ -122,6 +122,32 @@
                                 </tr>
                               @endif
                             @endforeach
+                            {{-- total each page pagination --}}
+														<tr>
+															<td class="text-center border border-gray-500"></td>
+															<td colspan="2" class="border-b border-gray-500"><strong>TOTAL PER HALAMAN</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalTunjanganMakan'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalJumlahGaji'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganBpjs'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganHariTua'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganKreditKasbon'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalGeneral'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"></td>
+															<td class="text-center border border-gray-500"></td>
+														</tr>
+                            {{-- total all users salary --}}
+														<tr class="text-lg bg-emerald-300 text-gray-900 font-semibold">
+															<td class="text-center border border-gray-500"></td>
+															<td colspan="2" class="border-b border-gray-500"><strong>TOTAL SEMUA</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalTunjanganMakan'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalJumlahGaji'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganBpjs'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganHariTua'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalGeneral'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"></td>
+															<td class="text-center border border-gray-500"></td>
+														</tr>
                         </tbody>
                     </table>
                 </div>

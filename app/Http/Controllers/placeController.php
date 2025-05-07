@@ -10,30 +10,108 @@ class placeController extends Controller
 
     public function kantor1(Request $request){
 
-        // Load users with their salaries, filtered by kantor
-        $users = User::where('kantor', "kantor 1")
-                    ->with('salary')
-                    ->paginate(15);
+      // Load users with their salaries, filtered by kantor
+      $users = User::where('kantor', "kantor 1")
+                    ->with('salary');
+      
+      // Step 2: Clone for total calculation (all data)
+      $allUsers = (clone $users)->get();
 
-        return view('place.kantor1', compact('users'));
+      $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
+        $salary = $user->salary;
+        return [
+          'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+          'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+          'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+          'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+          'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+        ];
+      }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
+
+      // Step 3: Paginate the original query
+      $usersPaginate = $users->paginate(15);
+      // calculate total of data paginate
+      $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
+        $salary = $user->salary;
+
+        return [
+            'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+            'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+            'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+            'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+            'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+            'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+        ];
+      }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);     
+
+      return view('place.kantor1', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary]);
     }
 
     public function kantor2(){
-        // Load users with their salaries, filtered by kantor
-        $users = User::where('kantor', "kantor 2")
-                    ->with('salary')
-                    ->paginate(15);
+      // Load users with their salaries, filtered by kantor
+      $users = User::where('kantor', "kantor 2")
+                  ->with('salary');
 
-        return view('place.kantor2', compact('users'));
+      // Step 2: Clone for total calculation (all data)
+      $allUsers = (clone $users)->get();
+
+      $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
+        $salary = $user->salary;
+        return [
+          'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+          'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+          'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+          'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+          'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+        ];
+      }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
+
+      // Step 3: Paginate the original query
+      $usersPaginate = $users->paginate(15);
+      // calculate total of data paginate
+      $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
+        $salary = $user->salary;
+
+        return [
+            'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+            'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+            'totalJumlahRetase' => $totalValue['totalJumlahRetase'] + ($salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase) ?? 0),
+            'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+            'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+            'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+            'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+        ];
+      }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalJumlahRetase' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);      
+
+    return view('place.kantor2', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary]);
     }
     public function awak12(Request $request){
         // Load users with their salaries, filtered by kantor
         $users = User::where('kantor', "awak 1 dan awak 2")
-                    ->with('salary.deliveries')
-                    ->paginate(15);
+                    ->with('salary.deliveries');
 
-        // calculate total of data
-        $pageTotals = $users->reduce(function ($totalValue, $user) {
+        // Step 2: Clone for total calculation (all data)
+        $allUsers = (clone $users)->get();
+
+        $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
+          $salary = $user->salary;
+          return [
+            'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+            'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+            'totalJumlahRetase' => $totalValue['totalJumlahRetase'] + ($salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase) ?? 0),
+            'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+            'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+            'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+            'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+          ];
+        }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalJumlahRetase' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
+
+        // Step 3: Paginate the original query
+        $usersPaginate = $users->paginate(15);
+        // calculate total of data paginate
+        $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
           $salary = $user->salary;
 
           return [
@@ -47,7 +125,7 @@ class placeController extends Controller
           ];
         }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalJumlahRetase' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
 
-        return view('place.awak12', compact('users', 'pageTotals'));
+        return view('place.awak12', ['users'=>$usersPaginate, 'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary]);
       }
 
     // FILTER controller
