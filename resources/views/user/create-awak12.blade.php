@@ -7,7 +7,8 @@
             <a href="{{ route('awak12.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
               <- kembali
             </a>
-            <h1 class="text-3xl font-bold text-center">FORMULIR INPUT TRANSPORTIR AWAK 1 & AWAK 2</h1>
+            <h1 class="text-2xl font-bold text-center">FORMULIR INPUT TRANSPORTIR</h1>
+            <h1 class="text-2xl font-bold text-center">AWAK 1 & AWAK 2</h1>
             <div class="mt-8">
                 <form action="{{ route('user.storeAwak12') }}" method="POST">
                     @csrf

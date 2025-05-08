@@ -24,7 +24,7 @@
                 <div class="w-full flex justify-between">
                     <a href="{{ route('header.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
                     <div class="flex gap-4">
-                        <a href="{{ route('user.createKantor') }}?from=kantor2" class="inline-block my-4 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Buat baru +</a>
+                        <a href="{{ route('user.createKantor', ['from' => 'kantor 2']) }}" class="inline-block my-4 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Buat baru +</a>
                         <a href="{{ route('print.kantor2') }}" class="inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Print Dokumen 📄</a>
                     </div>
                 </div>
@@ -152,6 +152,10 @@
 														</tr>
                         </tbody>
                     </table>
+                    <!-- Tailwind-styled pagination -->
+										<div class="mt-4 flex justify-center">
+                      {{ $users->links() }}
+                    </div>
                 </div>
             </div>
         </div>

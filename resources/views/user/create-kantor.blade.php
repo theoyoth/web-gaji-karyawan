@@ -4,9 +4,9 @@
 <div class="container-fluid px-4">
     <main class="min-h-screen flex justify-center items-center">
         <div class="w-1/2 m-auto py-2 px-10 bg-gray-100 rounded-lg border border-black my-4">
-            @if(request('from') === 'kantor1')
+            @if(request('from') === 'kantor 1')
               <a href="{{ route('kantor1.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
-            @elseif(request('from') === 'kantor2')
+            @elseif(request('from') === 'kantor 2')
               <a href="{{ route('kantor2.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
             @endif
             <h1 class="text-4xl font-bold text-center">FORMULIR INPUT KANTOR</h1>
@@ -17,21 +17,21 @@
                         <!-- Left Column -->
                         <div class="space-y-4">
                             <div>
-                                <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                @error('nama')
-                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
+                              <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
+                              <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                              @error('nama')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                              @enderror
                             </div>
                             <div>
-                                <label for="kantor" class="block text-sm font-medium text-gray-700">Kantor</label>
+                              <label for="kantor" class="block text-sm font-medium text-gray-700">Kantor</label>
 
-                                <select name="kantor" id="kantor" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                    @foreach (['kantor 1','kantor 2'] as $kan)
-                                        <option value="{{ $kan }}" {{ request('kan') ? 'selected' : '' }}>{{ $kan }}</option>
-                                    @endforeach
-                                </select>
-                                @error('kantor')
+                              <select name="kantor" id="kantor" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                @foreach (['kantor 1','kantor 2'] as $kan)
+                                  <option value="{{ $kan }}" {{ request('from') === $kan ? 'selected' : '' }}>{{ $kan }}</option>
+                                @endforeach
+                              </select>
+                              @error('kantor')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                               @enderror
                             </div>
