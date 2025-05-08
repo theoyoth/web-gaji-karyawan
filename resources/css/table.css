@@ -1,0 +1,195 @@
+.link-button{
+  display: inline-block;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  background-color: #374151;
+  border-radius: 10px;
+  padding-inline: 16px;
+  padding-block: 10px;
+  text-decoration: none;
+  color:#eaeaea;
+  border:none;
+  outline: none;
+}
+
+.print-button{
+  display: inline-block;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  padding-inline: 16px;
+  padding-block: 10px;
+  text-decoration: none;
+  color:#eaeaea;
+  cursor: pointer;
+  background-color: #2563eb;
+  border:none;
+  outline: none;
+}
+.print-button:hover{
+  background-color: #1d4ed8;
+
+}
+.link-hover:hover{
+  background-color: #1f2937;
+}
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+.header-text{
+  font-size: 2rem;
+  text-align: center;
+  line-height: 10px;
+}
+.header-subtext {
+  font-size: 1.5rem;
+  text-align:center;
+  line-height: 14px;
+}
+.empty-list{
+color:red;
+background-color:#f3f4f6;
+border-radius:10px;
+padding-inline: 10px;
+padding-block: 8px;
+}
+.select-input{
+padding-block:10px;
+padding-inline: 16px;
+cursor: pointer;
+}
+form{
+margin-bottom: 10px;
+}
+table{
+  font-size: 0.8rem;
+}
+th,td{
+  border-color:black;
+}
+.h-ttd{
+  width: 50px;
+}
+img{
+  width:60px;
+  height: 40px;
+  object-fit: contain;
+}
+.small-text{
+color:red;
+font-size: 1rem;
+text-align: center;
+}
+.subtext{
+font-size: 1.5rem;
+text-align: center;
+line-height: 10px;
+}
+.kop-surat{
+border-bottom: 1px solid black;
+}
+
+/* Hide the print button during printing */
+@media print {
+  .print-button,.link-button {
+      display: none;
+  }
+
+  body {
+      margin: 0;
+      padding: 0;
+  }
+
+  table {
+      width: 100%;
+      page-break-after: always;
+  }
+  th {
+      background-color: #f4f4f4;
+      border-color:black;
+      font-size: 10px;
+  }
+  td{
+      border-color:black;
+      font-size: 10px;
+  }
+  body {
+      font-size: 12pt;
+      margin: 0;
+  }
+
+  .header-text{
+      font-size: 2rem;
+      text-align: center;
+      line-height: 10px;
+  }
+  .header-subtext {
+      font-size: 1.5rem;
+      text-align:center;
+      line-height: 14px;
+  }
+  .empty-list{
+    display:none;
+  }
+  form{
+    display:none;
+  }
+  .h-name{
+      width:150px;
+  }
+  .h-lahir{
+      width:100px;
+  }
+  .h-t-diangkat{
+      width:100px;
+  }
+  .h-tunjangan{
+      width:100px;
+  }
+  .h-potongan{
+      width:100px;
+  }
+  .h-gaji-pokok{
+      width: 100px;
+  }
+  .h-jumlah{
+      width: 100px;
+  }
+  .h-ttd{
+      width: 50px;
+  }
+  img{
+      width:60px;
+      height: 40px;
+      object-fit: contain;
+  }
+  table{
+      padding:0;
+  }
+  .small-text{
+    color:red;
+    font-size: 1rem;
+    text-align: center;
+  }
+  .subtext{
+    font-size: 1.5rem;
+    text-align: center;
+    line-height: 10px;
+  }
+  .kop-surat{
+    border-bottom: 1px solid black;
+  }
+
+}
