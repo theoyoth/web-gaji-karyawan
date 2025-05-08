@@ -100,6 +100,19 @@
         .user-name{
             text-transform: uppercase;
         }
+        .small-text{
+          color:red;
+          font-size: 1rem;
+          text-align: center;
+        }
+        .subtext{
+          font-size: 1.5rem;
+          text-align: center;
+          line-height: 10px;
+        }
+        .kop-surat{
+          border-bottom: 1px solid black;
+        }
 
         /* Hide the print button during printing */
         @media print {
@@ -168,23 +181,41 @@
                 width: 100px;
             }
             img{
-                width:60px;
-                height: 40px;
-                object-fit: contain;
+              width:60px;
+              height: 40px;
+              object-fit: contain;
             }
             .user-name{
-                text-transform: uppercase;
+              text-transform: uppercase;
+            }
+            .small-text{
+              color:red;
+              font-size: 1rem;
+              text-align: center;
+            }
+            .subtext{
+              font-size: 1.5rem;
+              text-align: center;
+              line-height: 10px;
+            }
+            .kop-surat{
+              border-bottom: 1px solid black;
             }
         }
     </style>
 </head>
 <body>
     <div class="px-4">
+      <div class="kop-surat">
+        <h1 class="header-text">PT.GUNUNG SELATAN</h3>
+        <h1 class="header-subtext">KONTRAKTOR & LEVERANSIR</h1>
+        <h1 class="header-subtext">NABIRE - PAPUA</h1>
+        <h1 class="small-text">Alamat: Jln. R.E.Martadinata No.216, Telp: (0984) 21722, Bank: Mandiri & BPD</h1>
+      </div>
       <div>
-          <h1 class="header-text text-2xl font-bold text-center">PT.GUNUNG SELATAN</h3>
-          <h1 class="header-subtext text-xl font-bold text-center">GAJI KARYAWAN TRANSPORTIR AWAK 1 DAN AWAK 2</h3>
-          {{-- <h1 class="header-subtext text-xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3> --}}
-          <h1 class="header-subtext text-xl font-bold text-center">BULAN : April 2025</h3>
+        {{-- <h1 class="header-subtext">GAJI KARYAWAN TRANSPORTIR AWAK 1 DAN AWAK 2</h3> --}}
+        <h1 class="subtext">DAFTAR :  GAJI KARYAWAN & KARYAWATI PT. GUNUNG SELATAN </h1>
+        <h1 class="subtext">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
       </div>
 
 
