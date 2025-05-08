@@ -161,6 +161,7 @@
 															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 														</tr>
+                            @if ($totalUsersSalary)
                             {{-- total all users salary --}}
 														<tr class="text-lg bg-emerald-300 text-gray-900 font-semibold">
 															<td class="text-center border border-gray-500"></td>
@@ -179,6 +180,8 @@
 															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 														</tr>
+                            <tr></tr>
+                            @endif
 												</tbody>
 										</table>
 										<!-- Tailwind-styled pagination -->

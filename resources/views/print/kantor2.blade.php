@@ -4,191 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @vite('resources/css/table.css')
     <title>Print User Details</title>
-    <style>
-        .link-button{
-            display: inline-block;
-            margin-top: 16px;
-            margin-bottom: 16px;
-            background-color: #374151;
-            border-radius: 10px;
-            padding-inline: 16px;
-            padding-block: 10px;
-            text-decoration: none;
-            color:#eaeaea;
-            border:none;
-            outline: none;
-        }
-
-        .print-button{
-            display: inline-block;
-            margin-top: 16px;
-            margin-bottom: 16px;
-            border-radius: 10px;
-            padding-inline: 16px;
-            padding-block: 10px;
-            text-decoration: none;
-            color:#eaeaea;
-            cursor: pointer;
-            background-color: #2563eb;
-            border:none;
-            outline: none;
-        }
-        .print-button:hover{
-            background-color: #1d4ed8;
-
-        }
-        .link-hover:hover{
-            background-color: #1f2937;
-        }
-      /* Table Styles */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f4f4f4;
-        }
-     
-        .header-text{
-            font-size: 2rem;
-            text-align: center;
-            line-height: 10px;
-        }
-        .header-subtext {
-            font-size: 1.5rem;
-            text-align:center;
-            line-height: 14px;
-        }
-        .empty-list{
-          color:red;
-          background-color:#f3f4f6;
-          border-radius:10px;
-          padding-inline: 10px;
-          padding-block: 8px;
-        }
-        .select-input{
-          padding-block:10px;
-          padding-inline: 16px;
-          cursor: pointer;
-        }
-        form{
-          margin-bottom: 10px;
-        }
-        table{
-            font-size: 0.8rem;
-        }
-        th,td{
-            border-color:black;
-        }
-        .h-ttd{
-            width: 50px;
-        }
-        img{
-            width:60px;
-            height: 40px;
-            object-fit: contain;
-        }
-
-        /* Hide the print button during printing */
-        @media print {
-            .print-button,.link-button {
-                display: none;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-            }
-
-            table {
-                width: 100%;
-                page-break-after: always;
-            }
-            th {
-                background-color: #f4f4f4;
-                border-color:black;
-                font-size: 10px;
-            }
-            td{
-                border-color:black;
-                font-size: 10px;
-            }
-            body {
-                font-size: 12pt;
-                margin: 0;
-            }
-         
-            .header-text{
-                font-size: 2rem;
-                text-align: center;
-                line-height: 10px;
-            }
-            .header-subtext {
-                font-size: 1.5rem;
-                text-align:center;
-                line-height: 14px;
-            }
-            .empty-list{
-              display:none;
-            }
-            form{
-              display:none;
-            }
-            .h-name{
-                width:150px;
-            }
-            .h-lahir{
-                width:100px;
-            }
-            .h-t-diangkat{
-                width:100px;
-            }
-            .h-tunjangan{
-                width:100px;
-            }
-            .h-potongan{
-                width:100px;
-            }
-            .h-gaji-pokok{
-                width: 100px;
-            }
-            .h-jumlah{
-                width: 100px;
-            }
-            .h-ttd{
-                width: 50px;
-            }
-            img{
-                width:60px;
-                height: 40px;
-                object-fit: contain;
-            }
-            table{
-                padding:0;
-            }
-
-        }
-    </style>
 </head>
 <body>
     <div class="px-4">
-        <div>
+        {{-- <div>
             <h1 class="header-text text-2xl font-bold text-center">PT.GUNUNG SELATAN</h3>
             <h1 class="header-subtext text-xl font-bold text-center">DAFTAR :  GAJI KARYAWAN KANTOR 2</h3>
             <h1 class="header-subtext text-xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
+        </div> --}}
+        <div class="kop-surat">
+          <h1 class="header-text">PT.GUNUNG SELATAN</h3>
+          <h1 class="header-subtext">KONTRAKTOR & LEVERANSIR</h1>
+          <h1 class="header-subtext">NABIRE - PAPUA</h1>
+          <h1 class="small-text">Alamat: Jln. R.E.Martadinata No.216, Telp: (0984) 21722, Bank: Mandiri & BPD</h1>
+        </div>
+        <div>
+          <h1 class="subtext">DAFTAR :  GAJI KARYAWAN & KARYAWATI KANTOR 2</h1>
+          <h1 class="subtext">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
         </div>
 
 
-        <div class="w-full flex gap-4">
-            <a href="{{ route('kantor2.index') }}" class="link-button inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- Kembali</a>
-            <button class="print-button inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onclick="window.print()">🖨️ Print</button>
+        <div>
+            <a href="{{ route('kantor2.index') }}" class="link-button"><- Kembali</a>
+            <button class="print-button" onclick="window.print()">🖨️ Print</button>
         </div>
 
         <form method="GET" action="{{ route('print.kantor2.filtered') }}" class="mb-4">
@@ -210,51 +50,51 @@
 
           {{-- Reset Filter Button --}}
           @if(request('bulan') || request('tahun'))
-            <a href="{{ route('print.kantor2.filtered') }}" class="bg-gray-500 text-white px-3 py-1 rounded">Reset</a>
+            <a href="{{ route('print.kantor2.filtered') }}">Reset</a>
           @endif
         </form>
 
-        <div class="bg-gray-100">
+        <div>
           @if($users->filter(fn($user) => $user->salary)->isNotEmpty())
               <!-- your table -->
           @else
-              <p class="text-red-500 mt-4 empty-list">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
+              <p class="empty-list">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
           @endif
-          <table class="min-w-full table-auto border-collapse">
+          <table class="table-auto border-collapse">
             <thead>
               <tr>
-                <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
-                <th rowspan="2" class="py-2 border border-black bg-gray-500 h-name">Nama</th>
+                <th rowspan="2">No.</th>
+                <th rowspan="2" class="h-name">Nama</th>
                 {{-- <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th>
                 <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th> --}}
 
                 <!-- Gaji Pokok with 3 sub-columns -->
-                <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
+                <th rowspan="2">Gaji Pokok</th>
 
                 <!-- Tunjangan -->
-                <th colspan="2" class="py-2 border border-black bg-gray-500">Tunjangan</th>
+                <th colspan="2">Tunjangan</th>
 
                 <!-- Jumlah Kotor -->
-                <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Gaji</th>
+                <th rowspan="2">Jumlah Gaji</th>
 
                 <!-- Potongan with 3 sub-columns -->
-                <th colspan="3" class="py-2 border border-black bg-gray-500 text-center">Potongan</th>
+                <th colspan="3">Potongan</th>
 
                 <!-- Jumlah Bersih -->
-                <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Bersih</th>
+                <th rowspan="2">Jumlah Bersih</th>
 
                 <!-- TTD -->
-                <th rowspan="2" class="py-2 border border-black bg-gray-500 h-ttd">TTD</th>
+                <th rowspan="2" class="h-ttd">TTD</th>
               </tr>
               <tr>
                 <!-- Sub-columns for tunjangan -->
-                <th class="py-2 border border-black bg-gray-500 h-tunjangan">Makan</th>
-                <th class="py-2 border border-black bg-gray-500 h-tunjangan">Hari tua</th>
+                <th class="h-tunjangan">Makan</th>
+                <th class="h-tunjangan">Hari tua</th>
 
                 <!-- Sub-columns for Potongan -->
-                <th class="py-2 border border-black bg-gray-500 h-potongan">BPJS</th>
-                <th class="py-2 border border-black bg-gray-500 h-potongan">Tabungan hari tua</th>
-                <th class="py-2 border border-black bg-gray-500 h-potongan">Kredit/kasbon</th>
+                <th class="h-potongan">BPJS</th>
+                <th class="h-potongan">Tabungan hari tua</th>
+                <th class="h-potongan">Kredit/kasbon</th>
               </tr>
             </thead>
             <tbody>
@@ -265,21 +105,21 @@
                 @endphp
                 @if ($user->salary)
                   <tr>
-                    <td class="px-4 py-2 border border-gray-300">{{ $no++ }}</td>
-                    <td class="px-4 py-2 border border-gray-300">{{$user->nama}}</td>
-                    {{-- <td class="px-4 py-2 border border-gray-300">{{$user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
-                    <td class="px-4 py-2 border border-gray-300">{{$user->tanggal_diangkat->format('d F Y')}}</td> --}}
+                    <td>{{ $no++ }}</td>
+                    <td>{{$user->nama}}</td>
+                    {{-- <td>{{$user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
+                    <td>{{$user->tanggal_diangkat->format('d F Y')}}</td> --}}
 
-                    <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
-                    <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
-                    <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
-                    <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
-                    <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
-                    <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
-                    <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
-                    <td class="px-4 py-2 border border-gray-300">Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
-                    <td class="px-4 py-2 border border-gray-300">
-                      <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd w-20 h-20">
+                    <td>Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
+                    <td>Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
+                    <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
+                    <td>Rp.{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
+                    <td>Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
+                    <td>Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
+                    <td>Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
+                    <td>Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
+                    <td>
+                      <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd">
                     </td>
                   </tr>
                 @endif
