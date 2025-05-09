@@ -185,16 +185,23 @@
                     img.onload = () => {
                       const ctx = canvas.getContext('2d');
                       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                      enableClearButton(); 
                     }
+                    enableClearButton(); 
                   } else {
                     disableClearButton();
                   }
 
-                  // Watch user drawing and enable clear
+                  // Watch user drawing and disable clear
                   signaturePad.onBegin = () => {
                     if (signaturePad.isEmpty()) return;
-                    enableClearButton();
+                    disabledClearButton();
+                  };
+
+                  // Watch user drawing and enable clear
+                  signaturePad.onEnd = () => {
+                    if (!signaturePad.isEmpty()) {
+                      enableClearButton();
+                    }
                   };
 
                   // Submit form: set ttd input to base64 image

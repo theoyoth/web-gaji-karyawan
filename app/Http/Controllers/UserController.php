@@ -150,7 +150,6 @@ class UserController extends Controller
 		$user = new User();
 		$salary = new Salary();
 
-
 		// input data
 		$user->nama = Str::title($request->input('nama'));
 		$user->kantor = $request->input('kantor');
