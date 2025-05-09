@@ -52,7 +52,7 @@
 
             {{-- Reset Filter Button --}}
             @if(request('bulan') || request('tahun'))
-              <a href="{{ route('print.kantor1.filtered') }}" class="bg-gray-500 text-white px-3 py-1 rounded">Reset</a>
+              <a href="{{ route('print.kantor1.filtered') }}" class="select-input btn-reset">Reset</a>
             @endif
         </form>
 
@@ -76,8 +76,8 @@
                 <!-- Tunjangan -->
                 <th>Tunjangan</th>
 
-                <!-- Jumlah Kotor -->
-                <th rowspan="2">Jumlah Kotor</th>
+                <!-- Jumlah Gaji -->
+                <th rowspan="2">Jumlah Gaji</th>
 
                 <!-- Potongan with 3 sub-columns -->
                 <th colspan="3">Potongan</th>
@@ -128,6 +128,18 @@
                   </tr>
                 @endif
               @endforeach
+              <tr class="row-total">
+                <td></td>
+                <td colspan="2"><strong>TOTAL</strong></td>
+                <td>Rp.{{number_format($totalUsersSalary['totalTunjanganMakan'], 0)}}</td>
+                {{-- <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
+                <td>Rp.{{number_format($totalUsersSalary['totalJumlahGaji'], 0)}}</td>
+                <td>Rp.{{number_format($totalUsersSalary['totalPotonganBpjs'], 0)}}</td>
+                <td>Rp.{{number_format($totalUsersSalary['totalPotonganHariTua'], 0)}}</td>
+                <td>Rp.{{number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0)}}</td>
+                <td>Rp.{{number_format($totalUsersSalary['totalGeneral'], 0)}}</td>
+                <td></td>
+              </tr>
             </tbody>
           </table>
         </div>

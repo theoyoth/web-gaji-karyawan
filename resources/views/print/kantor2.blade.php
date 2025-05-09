@@ -50,7 +50,7 @@
 
           {{-- Reset Filter Button --}}
           @if(request('bulan') || request('tahun'))
-            <a href="{{ route('print.kantor2.filtered') }}">Reset</a>
+            <a href="{{ route('print.kantor2.filtered') }}" class="select-input btn-reset">Reset</a>
           @endif
         </form>
 
@@ -72,7 +72,7 @@
                 <th rowspan="2">Gaji Pokok</th>
 
                 <!-- Tunjangan -->
-                <th colspan="2">Tunjangan</th>
+                <th>Tunjangan</th>
 
                 <!-- Jumlah Kotor -->
                 <th rowspan="2">Jumlah Gaji</th>
@@ -89,7 +89,7 @@
               <tr>
                 <!-- Sub-columns for tunjangan -->
                 <th class="h-tunjangan">Makan</th>
-                <th class="h-tunjangan">Hari tua</th>
+                {{-- <th class="h-tunjangan">Hari tua</th> --}}
 
                 <!-- Sub-columns for Potongan -->
                 <th class="h-potongan">BPJS</th>
@@ -112,7 +112,7 @@
 
                     <td>Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
                     <td>Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
+                    {{-- <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
                     <td>Rp.{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
                     <td>Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
                     <td>Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
@@ -124,6 +124,18 @@
                   </tr>
                 @endif
               @endforeach
+              <tr class="row-total">
+                <td></td>
+                <td colspan="2"><strong>TOTAL</strong></td>
+                <td>Rp.{{number_format($totalUsersSalary['totalTunjanganMakan'], 0)}}</td>
+                {{-- <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
+                <td>Rp.{{number_format($totalUsersSalary['totalJumlahGaji'], 0)}}</td>
+                <td>Rp.{{number_format($totalUsersSalary['totalPotonganBpjs'], 0)}}</td>
+                <td>Rp.{{number_format($totalUsersSalary['totalPotonganHariTua'], 0)}}</td>
+                <td>Rp.{{number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0)}}</td>
+                <td>Rp.{{number_format($totalUsersSalary['totalGeneral'], 0)}}</td>
+                <td></td>
+              </tr>
             </tbody>
           </table>
         </div>

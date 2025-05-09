@@ -46,7 +46,7 @@
 
         {{-- Reset Filter Button --}}
         @if(request('bulan') || request('tahun'))
-          <a href="{{ route('print.awak12.filtered') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Reset</a>
+          <a href="{{ route('print.awak12.filtered') }}" class="select-input btn-reset">Reset</a>
         @endif
       </form>
 
@@ -132,6 +132,19 @@
                   @endforeach
                 @endif
               @endforeach
+              <tr class="row-total">
+                <td></td>
+                <td colspan="6"><strong>TOTAL</strong></td>
+                <td><strong>Rp.{{number_format($totalUsersSalary['totalTunjanganMakan'], 0)}}</strong></td>
+                {{-- <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
+                <td><strong>Rp.{{number_format($totalUsersSalary['totalJumlahRetase'], 0)}}</strong></td>
+                <td><strong>Rp.{{number_format($totalUsersSalary['totalJumlahGaji'], 0)}}</strong></td>
+                <td><strong>Rp.{{number_format($totalUsersSalary['totalPotonganBpjs'], 0)}}</strong></td>
+                <td><strong>Rp.{{number_format($totalUsersSalary['totalPotonganHariTua'], 0)}}</strong></td>
+                <td><strong>Rp.{{number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0)}}</strong></td>
+                <td><strong>Rp.{{number_format($totalUsersSalary['totalGeneral'], 0)}}</strong></td>
+                <td></td>
+              </tr>
           </tbody>
         </table>
       </div>

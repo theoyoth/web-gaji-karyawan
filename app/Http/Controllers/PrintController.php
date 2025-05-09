@@ -14,24 +14,64 @@ class PrintController extends Controller
                     ->with('salary')
                     ->get();
 
-        return view('print.kantor1', compact('users'));
+        $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
+        $salary = $user->salary;
+
+        return [
+          'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+          'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+          'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+          'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+          'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+        ];
+        }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
+
+        return view('print.kantor1', ['users' => $users, 'totalUsersSalary' => $totalUsersSalary]);
     }
 
     public function kantor2(){
-        // Load users with their salaries, filtered by kantor
-        $users = User::where('kantor', "kantor 2")
-                    ->with('salary')
-                    ->get();
+      // Load users with their salaries, filtered by kantor
+      $users = User::where('kantor', "kantor 2")
+                  ->with('salary')
+                  ->get();
 
-        return view('print.kantor2', compact('users'));
+      $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
+      $salary = $user->salary;
+
+      return [
+        'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+        'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+        'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+        'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+        'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+        'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+      ];
+      }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
+
+      return view('print.kantor2', ['users' => $users, 'totalUsersSalary' => $totalUsersSalary]);
     }
     public function awak12(){
-        // Load users with their salaries, filtered by kantor
-        $users = User::where('kantor', "awak 1 dan awak 2")
-                    ->with('salary')
-                    ->get();
+      // Load users with their salaries, filtered by kantor
+      $users = User::where('kantor', "awak 1 dan awak 2")
+                  ->with('salary')
+                  ->get();
 
-        return view('print.awak12', compact('users'));
+      $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
+        $salary = $user->salary;
+        return [
+          'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+          'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+          'totalJumlahRetase' => $totalValue['totalJumlahRetase'] + ($salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase) ?? 0),
+          'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+          'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+          'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+        ];
+      }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalJumlahRetase' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
+
+
+      return view('print.awak12', ['users' => $users, 'totalUsersSalary' => $totalUsersSalary]);
     }
 
 
@@ -58,7 +98,20 @@ class PrintController extends Controller
       }])
       ->get();
 
-      return view('print.kantor1', compact('users', 'month', 'year'));
+      $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
+        $salary = $user->salary;
+
+        return [
+          'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+          'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+          'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+          'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+          'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+        ];
+      }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
+
+      return view('print.kantor1', ['users' => $users, 'month' => $month, 'year' => $year,'totalUsersSalary'=>$totalUsersSalary]);
   }
 
   public function filterKantor2(Request $request){
@@ -83,7 +136,20 @@ class PrintController extends Controller
       }])
       ->get();
 
-      return view('print.kantor2', compact('users', 'month', 'year'));
+      $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
+        $salary = $user->salary;
+
+        return [
+          'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+          'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+          'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+          'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+          'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+        ];
+      }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
+
+      return view('print.kantor2', ['users' => $users, 'month' => $month, 'year' => $year,'totalUsersSalary'=>$totalUsersSalary]);
   }
 
   public function filterAwak12(Request $request){
@@ -108,6 +174,21 @@ class PrintController extends Controller
       }])
       ->get();
 
-      return view('print.awak12', compact('users', 'month', 'year'));
+      $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
+        $salary = $user->salary;
+
+        return [
+          'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+          'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+          'totalJumlahRetase' => $totalValue['totalJumlahRetase'] + ($salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase) ?? 0),
+          'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+          'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+          'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+        ];
+      }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalJumlahRetase' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
+
+
+      return view('print.awak12', ['users' => $users, 'month' => $month, 'year' => $year,'totalUsersSalary'=>$totalUsersSalary]);
   }
 }

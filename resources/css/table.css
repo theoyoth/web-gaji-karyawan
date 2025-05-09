@@ -39,7 +39,7 @@ table {
   border-collapse: collapse;
 }
 th, td {
-  padding: 8px;
+  padding: 5px;
   text-align: center;
   border: 1px solid #ddd;
 }
@@ -99,6 +99,12 @@ line-height: 10px;
 }
 .kop-surat{
 border-bottom: 1px solid black;
+}
+.row-total{
+  background-color: rgb(0, 212, 146);
+}
+.btn-reset{
+  border:1px solid black;
 }
 
 /* Hide the print button during printing */
@@ -184,12 +190,18 @@ border-bottom: 1px solid black;
     text-align: center;
   }
   .subtext{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     text-align: center;
     line-height: 10px;
   }
   .kop-surat{
     border-bottom: 1px solid black;
+  }
+  .row-total{
+    background-color: rgb(0, 212, 146);
+  }
+  .select-input{
+    display: none;
   }
 
 }
