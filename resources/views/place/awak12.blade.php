@@ -31,23 +31,26 @@
 								</div>
 								<section class="flex justify-between items-start">
                   <form method="GET" action="{{ route('filter.awak12') }}" class="mb-4">
-                      <select name="bulan" required class="px-4 py-2 shadow-md">
-                          <option value="">-- Pilih Bulan --</option>
-                          @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
-                              <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
-                          @endforeach
-                      </select>
-                      <select name="tahun" required class="px-4 py-2 shadow-md">
-                          <option value="">-- Pilih Tahun --</option>
-                          @for ($y = 2020; $y <= now()->year; $y++)
-                              <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
-                          @endfor
-                      </select>
-                      <button type="submit" class="px-4 py-2 text-white bg-blue-600 border">Filter</button>
-                      {{-- Reset Filter Button --}}
-                      @if(request('bulan') || request('tahun'))
-                        <a href="{{ route('awak12.index') }}" class="bg-gray-500 text-white px-4 py-2">Reset</a>
-                      @endif
+                      <fieldset  class="border border-gray-300 p-2 rounded-md">
+                        <legend class="text-xs">Filter</legend>
+                        <select name="bulan" required class="px-4 py-2 shadow-md">
+                            <option value="">-- Pilih Bulan --</option>
+                            @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
+                                <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
+                            @endforeach
+                        </select>
+                        <select name="tahun" required class="px-4 py-2 shadow-md">
+                            <option value="">-- Pilih Tahun --</option>
+                            @for ($y = 2020; $y <= now()->year; $y++)
+                                <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                            @endfor
+                        </select>
+                        <button type="submit" class="px-4 py-2 text-white bg-blue-600 border">Filter</button>
+                        {{-- Reset Filter Button --}}
+                        @if(request('bulan') || request('tahun'))
+                          <a href="{{ route('awak12.index') }}" class="bg-gray-500 text-white px-4 py-2">Reset</a>
+                        @endif
+                      </fieldset>
                   </form>
                   <form method="GET" action="{{ route('search.awak12') }}" class="mb-2 flex gap-x-2 items-center">
                     <input 
