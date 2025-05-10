@@ -6,7 +6,7 @@
 						<div class="bg-zinc-100 rounded-lg mt-4 px-1 pt-4 min-h-screen min-w-screen backdrop-blur-md bg-white/65 border border-white/30 shadow-lg">
 								<div>
 										{{-- <h1 class="text-4xl font-bold text-center">DAFTAR :  GAJI KARYAWAN TRANSPORTIR AWAK 1 DAN AWAK 2</h3> --}}
-										<h1 class="text-4xl font-bold text-center">DAFTAR :  GAJI KARYAWAN & KARYAWATI PT. GUNUNG SELATAN</h3>
+										<h1 class="text-4xl font-bold text-center">DAFTAR :  GAJI TRANSPORTIR AWAK 1 & AWAK 2 PT. GUNUNG SELATAN</h3>
 								</div>
 								<div>
 										<h1 class="text-2xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
@@ -29,31 +29,44 @@
 												<a href="{{ route('print.awak12') }}" class="inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Print Dokumen 📄</a>
 										</div>
 								</div>
-								<form method="GET" action="{{ route('filter.awak12') }}" class="mb-4">
-										<select name="bulan" required class="px-4 py-2 shadow-md">
-												<option value="">-- Pilih Bulan --</option>
-												@foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
-														<option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
-												@endforeach
-										</select>
-										<select name="tahun" required class="px-4 py-2 shadow-md">
-												<option value="">-- Pilih Tahun --</option>
-												@for ($y = 2020; $y <= now()->year; $y++)
-														<option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
-												@endfor
-										</select>
-										<button type="submit" class="px-4 py-2 text-white bg-blue-600  border">Filter</button>
+								<section class="flex justify-between items-start">
+                  <form method="GET" action="{{ route('filter.awak12') }}" class="mb-4">
+                      <select name="bulan" required class="px-4 py-2 shadow-md">
+                          <option value="">-- Pilih Bulan --</option>
+                          @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
+                              <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
+                          @endforeach
+                      </select>
+                      <select name="tahun" required class="px-4 py-2 shadow-md">
+                          <option value="">-- Pilih Tahun --</option>
+                          @for ($y = 2020; $y <= now()->year; $y++)
+                              <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                          @endfor
+                      </select>
+                      <button type="submit" class="px-4 py-2 text-white bg-blue-600 border">Filter</button>
+                      {{-- Reset Filter Button --}}
+                      @if(request('bulan') || request('tahun'))
+                        <a href="{{ route('awak12.index') }}" class="bg-gray-500 text-white px-4 py-2">Reset</a>
+                      @endif
+                  </form>
+                  <form method="GET" action="{{ route('search.awak12') }}" class="mb-2 flex gap-x-2 items-center">
+                    <input 
+                      type="text" 
+                      name="search" 
+                      value="{{ request('search') }}" 
+                      class="outline-1 w-full px-2 py-2 border-2 border-gray-300 shadow-md" 
+                      placeholder="cari nama"
+                    />
+                    <button type="submit" class="px-4 py-2 text-white bg-blue-600 border">
+                      cari
+                    </button>
+                  </form>
+                </section>
 
-										{{-- Reset Filter Button --}}
-										@if(request('bulan') || request('tahun'))
-											<a href="{{ route('awak12.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Reset</a>
-										@endif
-								</form>
 								<div class="bg-gray-100">
-										@if($users->filter(fn($user) => $user->salary)->isNotEmpty())
+										@if($users->isEmpty())
 												<!-- do nothing -->
-										@else
-												<p class="text-red-500 py-2 bg-gray-100 indent-2">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
+											<p class="text-red-500 py-2 bg-gray-100 indent-2">Tidak ada data karyawan yang ditemukan.</p>
 										@endif
 										<table class="min-w-full table-auto border-collapse text-[0.8rem]">
 												<thead>

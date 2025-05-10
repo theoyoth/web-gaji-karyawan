@@ -129,9 +129,7 @@ class placeController extends Controller
         return view('place.awak12', ['users'=>$usersPaginate, 'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary]);
       }
 
-
       // FILTER controller
-
       public function filterKantor1(Request $request){
         $month = $request->input('bulan');
         $year = $request->input('tahun');
@@ -198,8 +196,7 @@ class placeController extends Controller
         'totalGeneral' => 0
       ]);
 
-
-        return view('place.kantor1', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary,'month'=>$month,'year'=>$year]);
+      return view('place.kantor1', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary,'month'=>$month,'year'=>$year]);
     }
 
     public function filterKantor2(Request $request){

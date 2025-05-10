@@ -28,31 +28,44 @@
                         <a href="{{ route('print.kantor1') }}" class="inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Print Dokumen 📄</a>
                     </div>
                 </div>
-                <form method="GET" action="{{ route('filter.kantor1') }}" class="mb-4">
-                    <select name="bulan" required class="px-4 py-2 shadow-md">
-                        <option value="">-- Pilih Bulan --</option>
-                        @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
-                            <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
-                        @endforeach
-                    </select>
-                    <select name="tahun" required class="px-4 py-2 shadow-md">
-                        <option value="">-- Pilih Tahun --</option>
-                        @for ($y = 2020; $y <= now()->year; $y++)
-                            <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
-                        @endfor
-                    </select>
-                    <button type="submit" class="px-4 py-2 text-white bg-blue-600  border">Filter</button>
-
-                    {{-- Reset Filter Button --}}
-                    @if(request('bulan') || request('tahun'))
-                      <a href="{{ route('kantor1.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Reset</a>
-                    @endif
-                </form>
+                <section class="flex justify-between items-start">
+                  <form method="GET" action="{{ route('filter.kantor1') }}" class="mb-4">
+                      <select name="bulan" required class="px-4 py-2 shadow-md">
+                          <option value="">-- Pilih Bulan --</option>
+                          @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
+                              <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
+                          @endforeach
+                      </select>
+                      <select name="tahun" required class="px-4 py-2 shadow-md">
+                          <option value="">-- Pilih Tahun --</option>
+                          @for ($y = 2020; $y <= now()->year; $y++)
+                              <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                          @endfor
+                      </select>
+                      <button type="submit" class="px-4 py-2 text-white bg-blue-600  border">Filter</button>
+                      {{-- Reset Filter Button --}}
+                      @if(request('bulan') || request('tahun'))
+                        <a href="{{ route('kantor1.index') }}" class="bg-gray-500 text-white px-4 py-2">Reset</a>
+                      @endif
+                  </form>
+                  <form method="GET" action="{{ route('search.kantor') }}" class="mb-2 flex gap-x-2 items-center">
+                    <input type="hidden" name="kantor" value="kantor 1">
+                    <input
+                      type="text"
+                      name="search"
+                      value="{{ request('search') }}"
+                      class="outline-1 w-full px-2 py-2 border-2 border-gray-300 shadow-md"
+                      placeholder="cari nama"
+                    />
+                    <button type="submit" class="px-4 py-2 text-white bg-blue-600 border">
+                      cari
+                    </button>
+                  </form>
+                </section>
                 <div class="bg-gray-100">
-                    @if($users->filter(fn($user) => $user->salary)->isNotEmpty())
+                    @if($users->isEmpty())
                         <!-- your table -->
-                    @else
-                        <p class="text-red-500 py-2 bg-gray-100 indent-2">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
+                      <p class="text-red-500 py-2 bg-gray-100 indent-2">Tidak ada data karyawan yang ditemukan.</p>
                     @endif
                     <table class="min-w-full table-auto border-collapse text-[0.8rem]">
                         <thead>

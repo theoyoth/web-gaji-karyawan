@@ -50,3 +50,7 @@ Route::get('/print/kantor-2', [PrintController::class, 'kantor2'])->name('print.
 Route::get('/print/awak-1-2/filter', [PrintController::class, 'filterAwak12'])->name('print.awak12.filtered');
 Route::get('/print/kantor-1/filter', [PrintController::class, 'filterKantor1'])->name('print.kantor1.filtered');
 Route::get('/print/kantor-2/filter', [PrintController::class, 'filterKantor2'])->name('print.kantor2.filtered');
+// search
+Route::get('/search/awak-1-2', [UserController::class, 'searchUserAwak12'])->name('search.awak12');
+Route::get('/search/kantor', [UserController::class, 'searchUserKantor'])->name('search.kantor');
+// Route::get('/search/kantor-2', [UserController::class, 'filterKantor2'])->name('print.kantor2.filtered');
