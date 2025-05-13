@@ -46,23 +46,26 @@
                             @endfor
                         </select>
                         <button type="submit" class="px-4 py-2 text-white bg-blue-600 border">Filter</button>
+                      </fieldset>
                         {{-- Reset Filter Button --}}
                         @if(request('bulan') || request('tahun'))
                           <a href="{{ route('awak12.index') }}" class="bg-gray-500 text-white px-4 py-2">Reset</a>
                         @endif
-                      </fieldset>
                   </form>
-                  <form method="GET" action="{{ route('search.awak12') }}" class="mb-2 flex gap-x-2 items-center">
-                    <input 
-                      type="text" 
-                      name="search" 
-                      value="{{ request('search') }}" 
-                      class="outline-1 w-full px-2 py-2 border-2 border-gray-300 shadow-md" 
-                      placeholder="cari nama"
-                    />
-                    <button type="submit" class="px-4 py-2 text-white bg-blue-600 border">
-                      cari
-                    </button>
+                  <form method="GET" action="{{ route('search.awak12') }}" class="mb-2">
+                    <fieldset  class="border border-gray-300 p-2 rounded-md flex gap-x-2 items-center">
+                      <legend class="text-xs">Search</legend>
+                      <input 
+                        type="text" 
+                        name="search" 
+                        value="{{ request('search') }}" 
+                        class="outline-1 w-full px-2 py-2 border-2 border-gray-300 shadow-md" 
+                        placeholder="cari nama"
+                      />
+                      <button type="submit" class="px-4 py-2 text-white bg-blue-600 border">
+                        cari
+                      </button>
+                    </fieldset>
                   </form>
                 </section>
 
