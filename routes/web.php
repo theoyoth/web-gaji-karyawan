@@ -54,3 +54,5 @@ Route::get('/print/kantor-2/filter', [PrintController::class, 'filterKantor2'])-
 Route::get('/search/awak-1-2', [UserController::class, 'searchUserAwak12'])->name('search.awak12');
 Route::get('/search/kantor', [UserController::class, 'searchUserKantor'])->name('search.kantor');
 // Route::get('/search/kantor-2', [UserController::class, 'filterKantor2'])->name('print.kantor2.filtered');
+
+Route::get('/export-xls', [UserController::class, 'exportXls'])->name('print.excel.awak12');

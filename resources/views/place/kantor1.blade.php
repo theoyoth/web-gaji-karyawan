@@ -22,10 +22,12 @@
                     </script>
                 @endif
                 <div class="w-full flex justify-between">
-                    <a href="{{ route('header.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
+                    <a href="{{ route('header.index') }}" class="inline-block my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
                     <div class="flex gap-4">
-                        <a href="{{ route('user.createKantor', ['from' => 'kantor 1']) }}" class="inline-block my-4 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Buat baru +</a>
-                        <a href="{{ route('print.kantor1') }}" class="inline-block my-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Print Dokumen 📄</a>
+                        <a href="{{ route('user.createKantor', ['from' => 'kantor 1']) }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-plus mr-2"></i>Buat baru</a>
+                        <a href="{{ route('print.kantor1') }}" class="flex items-center my-4 px-4 py-2 border-2 border-gray-700 text-gray-700 rounded-md hover:bg-gray-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
+
+                        {{-- <a href="{{ route('print.excel.awak12') }}" class="flex items-center my-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"><i class="fas fa-file-excel mr-2"></i>Export</a> --}}
                     </div>
                 </div>
                 <section class="flex justify-between items-start">
