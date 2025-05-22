@@ -200,7 +200,7 @@ class UserController extends Controller
 		$allUsers = User::where('kantor', "awak 1 dan awak 2")->get()->count();
 		$lastPage = ceil($allUsers / 15);
 
-		return redirect()->route('awak12.index',['page' => $lastPage])->with('success', 'user saved successfully!');
+		return redirect()->route('awak12.index',['bulan' => $request->input('bulan'), 'tahun' => $request->input('tahun'), 'page' => $lastPage])->with('success', 'user saved successfully!');
 	}
 
 	public function destroy($id){
@@ -274,10 +274,10 @@ class UserController extends Controller
 
 			// Save new signature
 			Storage::disk('public')->put('ttd/' . $fileName, base64_decode($imageData));
-			
+
 			// Update the database with the new signature file name
 			$salary->ttd = $fileName;
-			
+
 		}
 
 		// Reload deliveries relation to access them
@@ -400,7 +400,7 @@ class UserController extends Controller
         'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
       ];
     }, ['totalJumlahGaji' => 0, 'totalJumlahRetase' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0, 'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
-    
+
     // Calculate paginate users total
     $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
       $salary = $user->salary;
@@ -453,7 +453,7 @@ class UserController extends Controller
         'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
       ];
     }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0, 'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
-    
+
     // Calculate paginate users total
     $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
       $salary = $user->salary;
