@@ -37,11 +37,12 @@ Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.dest
 // places
 Route::get('/kantor-1', [placeController::class, 'kantor1'])->name('kantor1.index');
 Route::get('/kantor-2', [placeController::class, 'kantor2'])->name('kantor2.index');
-Route::get('/awak-1-2', [placeController::class, 'awak12'])->name('awak12.index');
+Route::get('/awak-1-2', [placeController::class, 'filterbyMonthAwak12'])->name('awak12.index');
 // filter
 Route::get('/kantor-1/filter', [placeController::class, 'filterKantor1'])->name('filter.kantor1');
 Route::get('/kantor-2/filter', [placeController::class, 'filterKantor2'])->name('filter.kantor2');
 Route::get('/awak-1-2/filter', [placeController::class, 'filterAwak12'])->name('filter.awak12');
+Route::get('/awak-1-2/filter', [placeController::class, 'filterbyMonthAwak12'])->name('filterbymonth.awak12');
 // print
 Route::get('/print/awak-1-2', [PrintController::class, 'awak12'])->name('print.awak12');
 Route::get('/print/kantor-1', [PrintController::class, 'kantor1'])->name('print.kantor1');

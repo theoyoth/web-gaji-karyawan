@@ -5,6 +5,7 @@
         <div class="min-h-screen">
             <img src="/image/pattern-bw.jpg" alt="building" class="fixed top-0 left-0 -z-[10] opacity-10 h-screen w-full object-cover">
             <div class="bg-zinc-100 rounded-lg mt-4 px-1 pt-4 min-h-screen backdrop-blur-md bg-white/65 border border-white/30 shadow-lg">
+              <a href="{{ route('header.index') }}" class="max-w-max flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
                 <div>
                     <h1 class="text-4xl font-bold text-center">DAFTAR :  GAJI KARYAWAN KANTOR 2</h3>
                 </div>
@@ -22,17 +23,8 @@
                     }, 4000);
                     </script>
                 @endif
-                <div class="w-full flex justify-between">
-                    <a href="{{ route('header.index') }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
-                    <div class="flex gap-4">
-                        <a href="{{ route('user.createKantor', ['from' => 'kantor 2']) }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-plus mr-2"></i>Buat baru</a>
-                        <a href="{{ route('print.kantor2') }}" class="flex items-center my-4 px-4 py-2 border-2 border-gray-700 text-gray-700 rounded-md hover:bg-gray-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
-
-                        {{-- <a href="{{ route('print.excel.awak12') }}" class="flex items-center my-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"><i class="fas fa-file-excel mr-2"></i>Export</a> --}}
-                    </div>
-                </div>
-                <section class="flex justify-between items-start">
-                  <form method="GET" action="{{ route('filter.kantor2') }}" class="mb-4">
+                <section class="flex justify-between items-center">
+                  {{-- <form method="GET" action="{{ route('filter.kantor2') }}" class="mb-4">
                     <fieldset  class="border border-gray-300 p-2 rounded-md">
                       <legend class="text-xs">Filter</legend>
                       <select name="bulan" required class="px-4 py-2 shadow-md">
@@ -48,12 +40,12 @@
                           @endfor
                       </select>
                       <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded border">Filter</button>
-                    </fieldset>
+                    </fieldset> --}}
                       {{-- Reset Filter Button --}}
-                      @if(request('bulan') || request('tahun'))
+                      {{-- @if(request('bulan') || request('tahun'))
                         <a href="{{ route('kantor2.index') }}" class="bg-gray-500 text-white px-4 py-2">Reset</a>
                       @endif
-                  </form>
+                  </form> --}}
                   <form method="GET" action="{{ route('search.kantor') }}" class="mb-2">
                     <fieldset  class="border border-gray-300 p-2 rounded-md flex gap-x-2 items-center">
                       <legend class="text-xs">Search</legend>
@@ -70,7 +62,39 @@
                       </button>
                     </fieldset>
                   </form>
+                  <div class="flex gap-4">
+                        <a href="{{ route('user.createKantor', ['from' => 'kantor 2']) }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-plus mr-2"></i>Buat baru</a>
+                        <a href="{{ route('print.kantor2') }}" class="flex items-center my-4 px-4 py-2 border-2 border-gray-700 text-gray-700 rounded-md hover:bg-gray-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
+
+                        {{-- <a href="{{ route('print.excel.awak12') }}" class="flex items-center my-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"><i class="fas fa-file-excel mr-2"></i>Export</a> --}}
+                    </div>
                 </section>
+                @php
+                  $months = [
+                      'Januari',
+                      'Februari',
+                      'Maret',
+                      'April',
+                      'Mei',
+                      'Juni',
+                      'Juli',
+                      'Agustus',
+                      'September',
+                      'Oktober',
+                      'November',
+                      'Desember',
+                  ];
+                @endphp
+                <div class="flex flex-wrap space-x-2 border-b border-b-gray-300 border-t border-gray-300 py-2 mb-2">
+                  {{-- Loop through months --}}
+                  @foreach ($months as $name)
+                    <a href="{{ route('filterbymonth.awak12', ['bulan' => $name, 'tahun' => 2025]) }}"
+                      class="text-sm px-4 py-1 border rounded hover:shadow-md {{ request('bulan') == $name ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-800' }}">
+                        <i class="fas fa-calendar-alt text-sm mr-1"></i>
+                        {{ $name }}
+                    </a>
+                  @endforeach
+                </div>
                 <div class="bg-gray-100">
                     @if($users->isEmpty())
                         <!-- your table -->

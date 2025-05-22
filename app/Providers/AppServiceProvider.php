@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+      \Carbon\Carbon::setLocale('id');
         // Get the current local IP address (for example purposes, or use logic to detect IP)
       $ip = request()->ip();
 
