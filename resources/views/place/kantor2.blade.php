@@ -23,7 +23,7 @@
                     </script>
                 @endif
                 <div class="w-full flex justify-between">
-                    <a href="{{ route('header.index') }}" class="inline-block my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
+                    <a href="{{ route('header.index') }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
                     <div class="flex gap-4">
                         <a href="{{ route('user.createKantor', ['from' => 'kantor 2']) }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-plus mr-2"></i>Buat baru</a>
                         <a href="{{ route('print.kantor2') }}" class="flex items-center my-4 px-4 py-2 border-2 border-gray-700 text-gray-700 rounded-md hover:bg-gray-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
@@ -79,31 +79,31 @@
                     <table class="min-w-full table-auto border-collapse text-[0.8rem]">
                         <thead>
                             <tr>
-                              <th rowspan="2" class="py-2 w-5 border border-black bg-gray-500">No.</th>
-                              <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[180px]">Nama</th>
+                              <th rowspan="2" class="py-2 w-5 border border-black bg-gray-300">No.</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[180px]">Nama</th>
                               <!-- Gaji Pokok with 3 sub-columns -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-500 text-center">Gaji Pokok</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300 text-center">Gaji Pokok</th>
                               <!-- Tunjangan -->
-                              <th class="py-2 border border-black bg-gray-500">Tunjangan</th>
+                              <th class="py-2 border border-black bg-gray-300">Tunjangan</th>
                               <!-- Jumlah Kotor -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Gaji</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji</th>
                               <!-- Potongan with 3 sub-columns -->
-                              <th colspan="3" class="py-2 border border-black bg-gray-500 text-center">Potongan</th>
+                              <th colspan="3" class="py-2 border border-black bg-gray-300 text-center">Potongan</th>
                               <!-- Jumlah Bersih -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-500">Jumlah Bersih</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Bersih</th>
                               <!-- TTD -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[60px]">TTD</th>
-                              <th rowspan="2" class="py-2 border border-black bg-gray-500 w-[50px]"></th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[60px]">TTD</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[50px]"></th>
                             </tr>
                             <tr>
                               <!-- Sub-columns for tunjangan -->
-                              <th class="py-2 border border-black bg-gray-500 w-[120px]">Makan</th>
-                              {{-- <th class="py-2 border border-black bg-gray-500 w-[120px]">Hari tua</th> --}}
+                              <th class="py-2 border border-black bg-gray-300 w-[120px]">Makan</th>
+                              {{-- <th class="py-2 border border-black bg-gray-300 w-[120px]">Hari tua</th> --}}
 
                               <!-- Sub-columns for Potongan -->
-                              <th class="py-2 border border-black bg-gray-500 w-[120px]">BPJS</th>
-                              <th class="py-2 border border-black bg-gray-500 w-[120px]">Tabungan hari tua</th>
-                              <th class="py-2 border border-black bg-gray-500">Kredit/kasbon</th>
+                              <th class="py-2 border border-black bg-gray-300 w-[120px]">BPJS</th>
+                              <th class="py-2 border border-black bg-gray-300 w-[120px]">Tabungan hari tua</th>
+                              <th class="py-2 border border-black bg-gray-300">Kredit/kasbon</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -159,7 +159,7 @@
 															<td class="text-center border border-gray-500"></td>
 														</tr>
                             {{-- total all users salary --}}
-														<tr class="text-lg bg-emerald-300 text-gray-900 font-semibold">
+														<tr class="text-lg bg-gray-300 text-gray-900 font-semibold">
 															<td class="text-center border border-gray-500"></td>
 															<td class="border-b border-gray-500"><strong>TOTAL SEMUA</strong></td>
 															<td class="text-center border-b border-gray-500"></td>

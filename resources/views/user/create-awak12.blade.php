@@ -149,7 +149,7 @@
                             {{-- TTD --}}
                             <div class="mt-4">
                                 <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
-                                <canvas id="signature-pad" width="200" height="100" style="border: 1px solid #000;"></canvas>
+                                <canvas id="signature-pad" width="200" height="100" class="bg-white border-2 shadow-sm border-gray-200 active:border-gray-600"></canvas>
                                 <input type="hidden" name="ttd" id="ttd">
                                 <p class="text-gray-500 text-xs mt-1">Gambar tanda tangan di atas</p>
                                 <div class="flex mt-2">
