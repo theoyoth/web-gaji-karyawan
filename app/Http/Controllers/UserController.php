@@ -197,10 +197,21 @@ class UserController extends Controller
 
 		$salary->save(); // Save the updated jumlah_gaji
 
-		$allUsers = User::where('kantor', "awak 1 dan awak 2")->get()->count();
+    $bulan = $request->input('bulan');
+    $tahun = $request->input('tahun');
+
+		$allUsers = User::where('kantor', 'awak 1 dan awak 2') // Filter by kantor
+    ->whereHas('salary', function ($q) use ($bulan, $tahun) {
+        // Filter salaries by bulan (month) and tahun (year)
+        if ($bulan && $tahun) {
+            $q->where('bulan', $bulan)
+              ->where('tahun', $tahun);
+        }
+    })->get()->count();
+
 		$lastPage = ceil($allUsers / 15);
 
-		return redirect()->route('awak12.index',['bulan' => $request->input('bulan'), 'tahun' => $request->input('tahun'), 'page' => $lastPage])->with('success', 'user saved successfully!');
+		return redirect()->route('awak12.index',['bulan' => $bulan, 'tahun' => $tahun, 'page' => $lastPage])->with('success', 'user saved successfully!');
 	}
 
 	public function destroy($id){
@@ -304,10 +315,22 @@ class UserController extends Controller
 				]);
 			}
 		}
+    
+    $bulan = $request->input('bulan');
+    $tahun = $request->input('tahun');
 
-		$page = $request->input('page', 1);
+    $allUsers = User::where('kantor', 'awak 1 dan awak 2') // Filter by kantor
+    ->whereHas('salary', function ($q) use ($bulan, $tahun) {
+        // Filter salaries by bulan (month) and tahun (year)
+        if ($bulan && $tahun) {
+            $q->where('bulan', $bulan)
+              ->where('tahun', $tahun);
+        }
+    })->get()->count();
 
-		return redirect()->route('awak12.index',['page'=>$page])->with('success', 'User updated successfully!');
+		$lastPage = ceil($allUsers / 15);
+
+		return redirect()->route('awak12.index',['bulan' => $bulan, 'tahun' => $tahun, 'page' => $lastPage])->with('success', 'User updated successfully!');
 	}
 
 	public function updateKantor(Request $request, $userId){
