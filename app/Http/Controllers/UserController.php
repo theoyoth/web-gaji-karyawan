@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Delivery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Exports\Awak12Export;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -508,37 +510,11 @@ class UserController extends Controller
     }
   }
 
-  // public function exportXls()
-  // {
-  //   $users = User::where('kantor', "awak 1 dan awak 2")
-  //               ->with('salary.deliveries')
-  //               ->get();
+  public function exportAwak12(Request $request)
+  {
+    $month = $request->input('bulan');
+    $year = $request->input('tahun');
 
-  //   $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
-  //       $salary = $user->salary;
-  //       return [
-  //           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
-  //           'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
-  //           'totalJumlahRetase' => $totalValue['totalJumlahRetase'] + ($salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase) ?? 0),
-  //           'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
-  //           'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
-  //           'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
-  //           'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
-  //       ];
-  //   }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalJumlahRetase' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
-
-  //   $filename = "awak12_data.xls";
-
-  //   $headers = [
-  //       "Content-type" => "application/vnd.ms-excel",
-  //       "Content-Disposition" => "attachment; filename=$filename",
-  //       "Pragma" => "no-cache",
-  //       "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-  //       "Expires" => "0"
-  //   ];
-
-  //   $content = view('print.print-excel-awak12', compact('users', 'totalUsersSalary'))->render();
-
-  //   return response($content, 200, $headers);
-  // }
+    return Excel::download(new Awak12Export($month, $year), "awak12_{$month}_{$year}.xlsx");
+  }
 }

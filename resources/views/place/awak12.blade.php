@@ -10,7 +10,7 @@
 										<h1 class="text-4xl font-bold text-center">DAFTAR :  GAJI TRANSPORTIR AWAK 1 & AWAK 2 PT. GUNUNG SELATAN</h3>
 								</div>
 								<div>
-										<h1 class="text-2xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
+										<h1 class="text-2xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h1>
 								</div>
 								@if(session('success'))
 										<div id="success-msg" class="bg-green-100 text-green-800 p-2 rounded">
@@ -69,6 +69,10 @@
                     <a href="{{ route('print.awak12') }}" class="flex items-center my-4 px-4 py-2 border-2 border-gray-700 text-gray-700 rounded-md hover:bg-gray-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
 
                     {{-- <a href="{{ route('print.excel.awak12') }}" class="flex items-center my-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"><i class="fas fa-file-excel mr-2"></i>Export</a> --}}
+                    <a href="{{ route('export.awak12', ['bulan' => request('bulan'), 'tahun' => request('tahun')]) }}"
+                      class="flex items-center my-4 px-4 py-2 bg-green-600 text-gray-200 rounded-md hover:bg-green-700">
+                        <i class="fas fa-file-excel mr-2"></i>Excel
+                    </a>
                   </div>
                 </div>
 

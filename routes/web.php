@@ -6,6 +6,7 @@ use App\Http\Controllers\PrintController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,4 +57,4 @@ Route::get('/search/awak-1-2', [UserController::class, 'searchUserAwak12'])->nam
 Route::get('/search/kantor', [UserController::class, 'searchUserKantor'])->name('search.kantor');
 // Route::get('/search/kantor-2', [UserController::class, 'filterKantor2'])->name('print.kantor2.filtered');
 
-Route::get('/export-xls', [UserController::class, 'exportXls'])->name('print.excel.awak12');
+Route::get('/export-awak12', [UserController::class, 'exportAwak12'])->name('export.awak12');

@@ -48,24 +48,24 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="bulan" class="block text-sm font-medium text-gray-700">Bulan</label>
-                                <select name="bulan" value="{{ old('bulan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500">
-                                    <option value="Januari">Januari</option>
-                                    <option value="Februari">Februari</option>
-                                    <option value="Maret">Maret</option>
-                                    <option value="April">April</option>
-                                    <option value="Mei">Mei</option>
-                                    <option value="Juni">Juni</option>
-                                    <option value="Juli">Juli</option>
-                                    <option value="Agustus">Agustus</option>
-                                    <option value="September">September</option>
-                                    <option value="Oktober">Oktober</option>
-                                    <option value="November">November</option>
-                                    <option value="Desember">Desember</option>
-                                </select>
-                                @error('bulan')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
+                              <label for="bulan" class="block text-sm font-medium text-gray-700">Bulan</label>
+                              <select name="bulan" value="{{ old('bulan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500">
+                                  <option value="Januari" {{ request('bulan') === 'Januari' ? 'selected' : '' }}>Januari</option>
+                                  <option value="Februari" {{ request('bulan') === 'Februari' ? 'selected' : '' }}>Februari</option>
+                                  <option value="Maret" {{ request('bulan') === 'Maret' ? 'selected' : '' }}>Maret</option>
+                                  <option value="April" {{ request('bulan') === 'April' ? 'selected' : '' }}>April</option>
+                                  <option value="Mei" {{ request('bulan') === 'Mei' ? 'selected' : '' }}>Mei</option>
+                                  <option value="Juni" {{ request('bulan') === 'Juni' ? 'selected' : '' }}>Juni</option>
+                                  <option value="Juli" {{ request('bulan') === 'Juli' ? 'selected' : '' }}>Juli</option>
+                                  <option value="Agustus" {{ request('bulan') === 'Juli' ? 'Agustus' : '' }}>Agustus</option>
+                                  <option value="September" {{ request('bulan') === 'September' ? 'selected' : '' }}>September</option>
+                                  <option value="Oktober" {{ request('bulan') === 'Oktober' ? 'selected' : '' }}>Oktober</option>
+                                  <option value="November" {{ request('bulan') === 'November' ? 'selected' : '' }}>November</option>
+                                  <option value="Desember" {{ request('bulan') === 'Desember' ? 'selected' : '' }}>Desember</option>
+                              </select>
+                              @error('bulan')
+                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                              @enderror
                             </div>
                             <div>
                                 <label for="tahun" class="block text-sm font-medium text-gray-700">Tahun</label>

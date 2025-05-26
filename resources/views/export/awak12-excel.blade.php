@@ -63,7 +63,7 @@
       @endif
     @endforeach
 
-    <tr>
+    {{-- <tr>
       <td></td>
       <td colspan="6"><strong>TOTAL</strong></td>
       <td><strong>Rp{{ number_format($totalUsersSalary['totalTunjanganMakan'], 0, ',', '.') }}</strong></td>
@@ -74,6 +74,6 @@
       <td><strong>Rp{{ number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0, ',', '.') }}</strong></td>
       <td><strong>Rp{{ number_format($totalUsersSalary['totalGeneral'], 0, ',', '.') }}</strong></td>
       <td></td>
-    </tr>
+    </tr> --}}
   </tbody>
 </table>
