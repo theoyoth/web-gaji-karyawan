@@ -4,7 +4,11 @@
 <div class="container-fluid px-4">
     <main class="min-h-screen flex justify-center items-center">
         <div class="w-1/2 m-auto py-2 px-10 bg-gray-100 rounded-lg border border-black my-4">
-            <a href="{{ route('kantor1.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
+            @php
+              $bul = $user->salary->bulan;
+              $tah = $user->salary->tahun;
+            @endphp
+            <a href="{{ route('kantor1.index',['bulan' => $bul, 'tahun' => $tah, 'page' => request('page')]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
               <- kembali
             </a>
             <h1 class="text-3xl font-bold text-center">EDIT KANTOR 1 & KANTOR 2</h1>
@@ -165,7 +169,7 @@
                   const signaturePad = new SignaturePad(canvas);
                   const ttdInput = document.getElementById('ttd');
                   const clearBtn = document.getElementById('clear');
-                  
+
                   // Disable clear button by default
                   function disableClearButton() {
                     clearBtn.disabled = true;
@@ -186,7 +190,7 @@
                       const ctx = canvas.getContext('2d');
                       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                     }
-                    enableClearButton(); 
+                    enableClearButton();
                   } else {
                     disableClearButton();
                   }

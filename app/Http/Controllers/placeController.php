@@ -440,14 +440,14 @@ class placeController extends Controller
           // Filter salaries by bulan (month) and tahun (year)
           if ($month && $year) {
               $q->where('bulan', $month)
-                    ->where('tahun', $year);
+                ->where('tahun', $year);
           }
       })
       ->with(['salary' => function ($q) use ($month, $year) {
           // Also filter the eager-loaded salaries by bulan and tahun
           if ($month && $year) {
               $q->where('bulan', $month)
-                    ->where('tahun', $year);
+                ->where('tahun', $year);
           }
       }]);
 

@@ -13,19 +13,19 @@
                       @php
                         $monthName = \Carbon\Carbon::now()->translatedFormat('F');
                       @endphp
-                        <a href="{{ route('awak12.index',['bulan' => $monthName, 'tahun' => 2025 , 'page' => 1]) }}" class="my-4 w-[200px] h-[100px] flex flex-col items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
+                        <a href="{{ route('awak12.index',['bulan' => $monthName, 'tahun' => 2025, 'page' => 1]) }}" class="my-4 w-[200px] h-[100px] flex flex-col items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
                             <div class="text-blue-500 text-4xl mb-2">
                                 <i class="fas fa-users"></i>
                             </div>
                             <div class="text-center font-semibold text-white">AWAK 1 & AWAK 2</div>
                         </a>
-                        <a href="{{ route('kantor1.index',['bulan' => $monthName ,'tahun' => 2025 ,'page' => 1]) }}" class="my-4 w-[200px] h-[100px] flex items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
+                        <a href="{{ route('kantor1.index',['bulan' => $monthName ,'tahun' => 2025,'page' => 1]) }}" class="my-4 w-[200px] h-[100px] flex items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
                             <div class="text-green-500 text-4xl mb-2">
                                 <i class="fas fa-building"></i>
                             </div>
                             <div class="text-center font-semibold text-white ml-2">KANTOR 1</div>
                         </a>
-                        <a href="{{ route('kantor2.index',['bulan' => $monthName ,'tahun' => 2025 ,'page' => 1]) }}" class="my-4 w-[200px] h-[100px] flex items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
+                        <a href="{{ route('kantor2.index',['bulan' => $monthName ,'tahun' => 2025,'page' => 1]) }}" class="my-4 w-[200px] h-[100px] flex items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
                             <div class="text-purple-500 text-4xl mb-2">
                                 <i class="fas fa-building"></i>
                             </div>

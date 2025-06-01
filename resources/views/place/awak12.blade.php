@@ -96,7 +96,7 @@
                 <div class="flex flex-wrap space-x-2 border-b border-b-gray-300 border-t border-gray-300 py-2 mb-2">
                   {{-- Loop through months --}}
                   @foreach ($months as $name)
-                    <a href="{{ route('filterbymonth.awak12', ['bulan' => $name, 'tahun' => 2025]) }}"
+                    <a href="{{ route('filterbymonth.awak12', ['bulan' => $name, 'tahun' => 2025, 'page' => 1]) }}"
                       class="text-sm px-4 py-1 border rounded hover:shadow-md {{ request('bulan') == $name ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-800' }}">
                         <i class="fas fa-calendar-alt text-sm mr-1"></i>
                         {{ $name }}
@@ -182,7 +182,7 @@
 																					</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">
 																						<div class="flex flex-col gap-1 items-center">
-																							<a href="{{ route('edit.awak12', ['user' => $user->id, 'page' => request()->get('page', 1)]) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
+																							<a href="{{ route('edit.awak12', ['user' => $user->id, 'page' => request('page',1)]) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
 																							<form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
 																								@csrf
 																								@method('DELETE')
