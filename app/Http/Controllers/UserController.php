@@ -67,7 +67,7 @@ class UserController extends Controller
 
 
 		// input data
-		$user->nama = Str::title($request->input('nama'));
+		$user->nama = $request->input('nama');
 		$user->kantor = $request->input('kantor');
 		$user->tempat_lahir = Str::title($request->input('tempat_lahir')) ?: null;
 		$user->tanggal_lahir = $request->input('tanggal_lahir') ?: null;
@@ -94,16 +94,36 @@ class UserController extends Controller
 		$salary->save();
 		$salary->refresh();
 
-		$allUsersKantor1 = User::where('kantor', "kantor 1")->get()->count();
-		$allUsersKantor2 = User::where('kantor', "kantor 2")->get()->count();
+    // to count how many page for pagination
+    $bulan = $request->input('bulan');
+    $tahun = $request->input('tahun');
+
+		$allUsersKantor1 = User::where('kantor', "kantor 1")
+    ->whereHas('salary', function ($q) use ($bulan, $tahun) {
+        // Filter salaries by bulan (month) and tahun (year)
+        if ($bulan && $tahun) {
+            $q->where('bulan', $bulan)
+              ->where('tahun', $tahun);
+        }
+    })->get()->count();
+
+		$allUsersKantor2 = User::where('kantor', "kantor 2")
+    ->whereHas('salary', function ($q) use ($bulan, $tahun) {
+        // Filter salaries by bulan (month) and tahun (year)
+        if ($bulan && $tahun) {
+            $q->where('bulan', $bulan)
+              ->where('tahun', $tahun);
+        }
+    })->get()->count();
+
 		$lastPageKantor1 = ceil($allUsersKantor1 / 15);
 		$lastPageKantor2 = ceil($allUsersKantor2 / 15);
 
 		if($user->kantor === 'kantor 1'){
-			return redirect()->route('kantor1.index',['page'=>$lastPageKantor1])->with('success', 'user saved successfully!');
+			return redirect()->route('filterbymonth.kantor',['bulan' => $request->input('bulan'), 'tahun' => $request->input('tahun'),'kantor' => $request->input('kantor'),'page'=>$lastPageKantor1])->with('success', 'user saved successfully!');
 		}
 		else if($user->kantor === 'kantor 2'){
-			return redirect()->route('kantor2.index',['page'=>$lastPageKantor2])->with('success', 'user saved successfully!');
+			return redirect()->route('filterbymonth.kantor',['bulan' => $request->input('bulan'), 'tahun' => $request->input('tahun'),'kantor' => $request->input('kantor'),'page'=>$lastPageKantor2])->with('success', 'user saved successfully!');
 		}
 		else{
 			return redirect()->route('header.index')->with('success', 'user saved successfully!');
@@ -153,7 +173,7 @@ class UserController extends Controller
 		$salary = new Salary();
 
 		// input data
-		$user->nama = Str::title($request->input('nama'));
+		$user->nama = $request->input('nama');
 		$user->kantor = $request->input('kantor');
 
 		$user->save();
@@ -305,7 +325,7 @@ class UserController extends Controller
 				]);
 			}
 		}
-    
+
 		// Reload deliveries relation to access them
 		$salary->load('deliveries');
 
@@ -317,8 +337,8 @@ class UserController extends Controller
 
 		$salary->save();
 
-		
-    
+
+
     $bulan = $request->input('bulan');
     $tahun = $request->input('tahun');
 
@@ -390,10 +410,10 @@ class UserController extends Controller
 	  $page = $request->input('page', 1);
 
 	  if($request->input('kantor') === 'kantor 1'){
-		  return redirect()->route('kantor1.index',['page'=>$page])->with('success', 'user updated successfully!');
+		  return redirect()->route('filterbymonth.kantor',['bulan' => $request->input('bulan'), 'tahun' => $request->input('tahun'),'kantor' => $request->input('kantor'), 'page'=>$page])->with('success', 'user updated successfully!');
 	  }
 	  else if($request->input('kantor') === 'kantor 2'){
-		  return redirect()->route('kantor2.index',['page'=>$page])->with('success', 'user updated successfully!');
+		  return redirect()->route('filterbymonth.kantor',['bulan' => $request->input('bulan'), 'tahun' => $request->input('tahun'),'kantor' => $request->input('kantor'),'page'=>$page])->with('success', 'user updated successfully!');
 	  }
 	}
 

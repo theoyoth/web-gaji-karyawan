@@ -454,7 +454,7 @@ class placeController extends Controller
       // Step 2: Clone for total calculation (all data)
       $allUsers = (clone $query)->get();
       // Step 3: Paginate the original query
-      $usersPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun']));
+      $usersPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun','kantor']));
 
       $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
         $salary = $user->salary;

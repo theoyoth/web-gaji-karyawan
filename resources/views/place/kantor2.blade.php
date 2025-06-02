@@ -63,8 +63,8 @@
                     </fieldset>
                   </form>
                   <div class="flex gap-4">
-                        <a href="{{ route('user.createKantor', ['from' => 'kantor 2']) }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-plus mr-2"></i>Buat baru</a>
-                        <a href="{{ route('print.kantor2') }}" class="flex items-center my-4 px-4 py-2 border-2 border-gray-700 text-gray-700 rounded-md hover:bg-gray-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
+                        <a href="{{ route('user.createKantor', ['from' => 'kantor 2','bulan' => request('bulan'),'tahun' => request('tahun')]) }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-plus mr-2"></i>Buat baru</a>
+                        <a href="{{ route('print.kantor2.filtered',['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 1']) }}" class="flex items-center my-4 px-4 py-2 border-2 border-gray-700 text-gray-700 rounded-md hover:bg-gray-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
 
                         {{-- <a href="{{ route('print.excel.awak12') }}" class="flex items-center my-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"><i class="fas fa-file-excel mr-2"></i>Export</a> --}}
                     </div>
@@ -104,17 +104,17 @@
                         <thead>
                             <tr>
                               <th rowspan="2" class="py-2 w-5 border border-black bg-gray-300">No.</th>
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[180px]">Nama</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[200px]">Nama</th>
                               <!-- Gaji Pokok with 3 sub-columns -->
                               <th rowspan="2" class="py-2 border border-black bg-gray-300 text-center">Gaji Pokok</th>
                               <!-- Tunjangan -->
                               <th class="py-2 border border-black bg-gray-300">Tunjangan</th>
                               <!-- Jumlah Kotor -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Kotor</th>
                               <!-- Potongan with 3 sub-columns -->
                               <th colspan="3" class="py-2 border border-black bg-gray-300 text-center">Potongan</th>
                               <!-- Jumlah Bersih -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Bersih</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Bersih</th>
                               <!-- TTD -->
                               <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[60px]">TTD</th>
                               <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[50px]"></th>
@@ -139,7 +139,7 @@
                                   @endphp
                                   <tr>
                                     <td class="text-center py-1 border border-gray-500">{{ $no++ }}</td>
-                                    <td class="text-center py-1 border border-gray-500 text-wrap uppercase">{{ $user->nama }}</td>
+                                    <td class="text-left py-1 border border-gray-500 text-wrap">{{ $user->nama }}</td>
                                     {{-- <td class="text-center py-1 border border-gray-500">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
                                     <td class="text-center py-1 border border-gray-500">{{ $user->tanggal_diangkat->format('d F Y') }}</td> --}}
                                     <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>
@@ -151,7 +151,11 @@
                                     <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') }}</td>
                                     <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->jumlah_bersih, 0, ',', '.') }}</td>
                                     <td class="text-center py-1 border border-gray-500">
-                                      <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ 'ttd' . $user->nama }}" class="ttd w-20 h-20 object-contain">
+                                      @if ($salary->ttd && file_exists(public_path('storage/ttd' . $salary->ttd)) )
+                                        <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ 'ttd' . $user->nama }}" class="ttd w-20 h-20 object-contain">
+                                      @else
+                                        <p>-</p>
+                                      @endif
                                     </td>
                                     <td class="text-center px-1 py-1 border border-gray-500">
                                       <div class="flex flex-col gap-1 items-center">

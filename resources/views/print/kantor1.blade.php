@@ -23,13 +23,13 @@
         </div>
         <div>
           <h1 class="subtext">DAFTAR :  GAJI KARYAWAN & KARYAWATI KANTOR 1</h1>
-          <h1 class="subtext">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
+          <h1 class="subtext">BULAN : {{ request('bulan') ?? '' }} {{ request('tahun') ?? '' }}</h3>
         </div>
 
 
 
         <div>
-            <a href="{{ route('kantor1.index') }}" class="link-button inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- Kembali</a>
+            <a href="{{ route('filterbymonth.kantor',['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 1']) }}" class="link-button inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- Kembali</a>
             <button class="print-button" onclick="window.print()">🖨️ Print</button>
         </div>
 

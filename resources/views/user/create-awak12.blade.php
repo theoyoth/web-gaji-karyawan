@@ -17,7 +17,7 @@
                         <div class="space-y-4">
                             <div>
                                 <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false">
                                 @error('nama')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror

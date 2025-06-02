@@ -100,13 +100,13 @@
                                       <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                {{-- <div class="mt-2">
+                                <div class="mt-2">
                                     <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">Hari tua</label>
                                     <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                     @error('tunjangan_hari_tua')
                                       <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                     @enderror
-                                </div> --}}
+                                </div>
                             </div>
                           </div>
 

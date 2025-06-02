@@ -96,7 +96,7 @@
                 <div class="flex flex-wrap space-x-2 border-b border-b-gray-300 border-t border-gray-300 py-2 mb-2">
                   {{-- Loop through months --}}
                   @foreach ($months as $name)
-                    <a href="{{ route('filterbymonth.awak12', ['bulan' => $name, 'tahun' => 2025, 'page' => 1]) }}"
+                    <a href="{{ route('awak12.index', ['bulan' => $name, 'tahun' => 2025, 'page' => 1]) }}"
                       class="text-sm px-4 py-1 border rounded hover:shadow-md {{ request('bulan') == $name ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-800' }}">
                         <i class="fas fa-calendar-alt text-sm mr-1"></i>
                         {{ $name }}
@@ -127,11 +127,11 @@
 																<!-- jumlah ur -->
 																<th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah UR</th>
 																<!-- Jumlah Kotor -->
-																<th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji</th>
+																<th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Kotor</th>
 																<!-- Potongan with 3 sub-columns -->
 																<th colspan="3" class="py-2 border border-black bg-gray-300 text-center">Potongan</th>
 																<!-- Jumlah Bersih -->
-																<th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Bersih</th>
+																<th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Bersih</th>
 																<!-- TTD -->
 																<th rowspan="2" class="py-2 border border-black bg-gray-300 w-[50px]">TTD</th>
 																<th rowspan="2" class="py-2 border border-black bg-gray-300 w-[50px]"></th>

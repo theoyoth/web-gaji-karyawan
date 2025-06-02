@@ -27,7 +27,7 @@
 
 
         <div>
-            <a href="{{ route('kantor2.index') }}" class="link-button"><- Kembali</a>
+            <a href="{{ route('filterbymonth.kantor',['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 2']) }}" class="link-button"><- Kembali</a>
             <button class="print-button" onclick="window.print()">🖨️ Print</button>
         </div>
 
@@ -106,7 +106,7 @@
                 @if ($user->salary)
                   <tr>
                     <td>{{ $no++ }}</td>
-                    <td>{{$user->nama}}</td>
+                    <td class="td-nama">{{$user->nama}}</td>
                     {{-- <td>{{$user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
                     <td>{{$user->tanggal_diangkat->format('d F Y')}}</td> --}}
 
@@ -119,7 +119,7 @@
                     <td>Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
                     <td>Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
                     <td>
-                      <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd">
+                      {{-- <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd"> --}}
                     </td>
                   </tr>
                 @endif
