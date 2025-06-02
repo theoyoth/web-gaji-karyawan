@@ -125,7 +125,7 @@
                       <td rowspan="{{ $deliveryCount }}">Rp{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
                       <td rowspan="{{ $deliveryCount }}">Rp{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
                       <td rowspan="{{ $deliveryCount }}">
-                          <img src="{{ file_exists(public_path('storage/ttd/' . $user->nama . '.png')) ? asset('storage/ttd/' . $user->nama . '.png') : '' }}" alt="ttd">
+                          {{-- <img src="{{ file_exists(public_path('storage/ttd/' . $user->nama . '.png')) ? asset('storage/ttd/' . $user->nama . '.png') : '' }}" alt="ttd"> --}}
                       </td>
                     @endif
                   </tr>

@@ -4,11 +4,9 @@
 <div class="container-fluid px-4">
     <main class="min-h-screen flex justify-center items-center">
         <div class="w-1/2 m-auto py-2 px-10 bg-gray-100 rounded-lg border border-black my-4">
-            @if(request('from') === 'kantor 1')
-              <a href="{{ route('kantor1.index', ['bulan' => request('bulan')]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
-            @elseif(request('from') === 'kantor 2')
-              <a href="{{ route('kantor2.index') }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
-            @endif
+          
+            <a href="{{ route('filterbymonth.kantor', ['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => request('from')]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
+         
             <h1 class="text-4xl font-bold text-center">FORMULIR INPUT KANTOR</h1>
             <div class="mt-8">
                 <form action="{{ route('user.store') }}" method="POST">
@@ -73,18 +71,18 @@
                             <div>
                                 <label for="bulan" class="block text-sm font-medium text-gray-700">Bulan</label>
                                 <select name="bulan" value="{{ old('bulan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500">
-                                    <option value="Januari">Januari</option>
-                                    <option value="Februari">Februari</option>
-                                    <option value="Maret">Maret</option>
-                                    <option value="April">April</option>
-                                    <option value="Mei">Mei</option>
-                                    <option value="Juni">Juni</option>
-                                    <option value="Juli">Juli</option>
-                                    <option value="Agustus">Agustus</option>
-                                    <option value="September">September</option>
-                                    <option value="Oktober">Oktober</option>
-                                    <option value="November">November</option>
-                                    <option value="Desember">Desember</option>
+                                    <option value="Januari" {{ request('bulan') === 'Januari' ? 'selected' : '' }}>Januari</option>
+                                    <option value="Februari" {{ request('bulan') === 'Februari' ? 'selected' : '' }}>Februari</option>
+                                    <option value="Maret" {{ request('bulan') === 'Maret' ? 'selected' : '' }}>Maret</option>
+                                    <option value="April" {{ request('bulan') === 'April' ? 'selected' : '' }}>April</option>
+                                    <option value="Mei" {{ request('bulan') === 'Mei' ? 'selected' : '' }}>Mei</option>
+                                    <option value="Juni" {{ request('bulan') === 'Juni' ? 'selected' : '' }}>Juni</option>
+                                    <option value="Juli" {{ request('bulan') === 'Juli' ? 'selected' : '' }}>Juli</option>
+                                    <option value="Agustus" {{ request('bulan') === 'Juli' ? 'Agustus' : '' }}>Agustus</option>
+                                    <option value="September" {{ request('bulan') === 'September' ? 'selected' : '' }}>September</option>
+                                    <option value="Oktober" {{ request('bulan') === 'Oktober' ? 'selected' : '' }}>Oktober</option>
+                                    <option value="November" {{ request('bulan') === 'November' ? 'selected' : '' }}>November</option>
+                                    <option value="Desember" {{ request('bulan') === 'Desember' ? 'selected' : '' }}>Desember</option>
                                 </select>
                                 @error('bulan')
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -112,7 +110,7 @@
                                       @enderror
                                   </div>
                                   <div class="mt-2">
-                                      <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">Hari tua</label>
+                                      <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">BPJS</label>
                                       <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                       @error('tunjangan_hari_tua')
                                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

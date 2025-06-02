@@ -74,7 +74,7 @@
                 <th rowspan="2" >Gaji Pokok</th>
 
                 <!-- Tunjangan -->
-                <th>Tunjangan</th>
+                <th colspan="2">Tunjangan</th>
 
                 <!-- Jumlah Gaji -->
                 <th rowspan="2">Jumlah Gaji</th>
@@ -91,8 +91,8 @@
               <tr>
                 <!-- Sub-columns for tunjangan -->
                 <th class="h-tunjangan">Makan</th>
-                {{-- <th class="py-2 border border-black bg-gray-500 h-tunjangan">Hari tua</th>
-                <th class="py-2 border border-black bg-gray-500 h-tunjangan">Retase</th> --}}
+                <th class="py-2 border border-black bg-gray-500 h-tunjangan">BPJS</th>
+                {{-- <th class="py-2 border border-black bg-gray-500 h-tunjangan">Retase</th> --}}
 
                 <!-- Sub-columns for Potongan -->
                 <th class="h-potongan">BPJS</th>
@@ -109,13 +109,13 @@
                 @if ($user->salary)
                   <tr>
                     <td>{{ $no++ }}</td>
-                    <td>{{$user->nama}}</td>
+                    <td class="td-nama">{{$user->nama}}</td>
                     {{-- <td>{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
                     {{-- <td>{{$user->tanggal_diangkat->format('d F Y')}}</td> --}}
 
                     <td>Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
                     <td>Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
-                    {{-- <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
+                    <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
                     {{-- <td>Rp.{{number_format($salary->tunjangan_retase, 0, ',', '.')}}</td> --}}
                     <td>Rp.{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
                     <td>Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
@@ -123,7 +123,7 @@
                     <td>Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
                     <td>Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
                     <td>
-                      <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd">
+                      {{-- <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd"> --}}
                     </td>
                   </tr>
                 @endif
@@ -133,6 +133,7 @@
                 <td colspan="2"><strong>TOTAL</strong></td>
                 <td>Rp.{{number_format($totalUsersSalary['totalTunjanganMakan'], 0)}}</td>
                 {{-- <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
+                <td></td>
                 <td>Rp.{{number_format($totalUsersSalary['totalJumlahGaji'], 0)}}</td>
                 <td>Rp.{{number_format($totalUsersSalary['totalPotonganBpjs'], 0)}}</td>
                 <td>Rp.{{number_format($totalUsersSalary['totalPotonganHariTua'], 0)}}</td>

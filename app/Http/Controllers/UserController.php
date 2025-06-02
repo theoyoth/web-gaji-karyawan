@@ -292,19 +292,7 @@ class UserController extends Controller
 			$salary->ttd = $fileName;
 
 		}
-
-		// Reload deliveries relation to access them
-		$salary->load('deliveries');
-
-		// Calculate total gaji
-		$salary->jumlah_gaji = $salary->gaji_pokok
-			+ $salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase)
-			+ ($salary->tunjangan_makan ?? 0)
-			+ ($salary->tunjangan_hari_tua ?? 0);
-
-		$salary->save();
-
-		// Delete old deliveries
+    // Delete old deliveries
 		$salary->deliveries()->delete();
 
 		// Add new deliveries
@@ -317,6 +305,19 @@ class UserController extends Controller
 				]);
 			}
 		}
+    
+		// Reload deliveries relation to access them
+		$salary->load('deliveries');
+
+		// Calculate total gaji
+		$salary->jumlah_gaji = $salary->gaji_pokok
+			+ $salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase)
+			+ ($salary->tunjangan_makan ?? 0)
+			+ ($salary->tunjangan_hari_tua ?? 0);
+
+		$salary->save();
+
+		
     
     $bulan = $request->input('bulan');
     $tahun = $request->input('tahun');

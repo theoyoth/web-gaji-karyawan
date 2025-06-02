@@ -62,7 +62,7 @@
                     </fieldset>
                   </form>
                   <div class="flex gap-4">
-                    <a href="{{ route('user.createKantor', ['from' => 'kantor 1']) }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-plus mr-2"></i>Buat baru</a>
+                    <a href="{{ route('user.createKantor', ['from' => 'kantor 1','bulan' => request('bulan'),'tahun' => request('tahun')]) }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-plus mr-2"></i>Buat baru</a>
                     <a href="{{ route('print.kantor1') }}" class="flex items-center my-4 px-4 py-2 border-2 border-gray-700 text-gray-700 rounded-md hover:bg-gray-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
 
                     {{-- <a href="{{ route('print.excel.awak12') }}" class="flex items-center my-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"><i class="fas fa-file-excel mr-2"></i>Export</a> --}}
@@ -107,26 +107,26 @@
                               <!-- Gaji Pokok with 3 sub-columns -->
                               <th rowspan="2" class="py-2 border border-black bg-gray-300 text-center">Gaji Pokok</th>
                               <!-- Tunjangan -->
-                              <th class="py-2 border border-black bg-gray-300">Tunjangan</th>
+                              <th colspan="2" class="py-2 border border-black bg-gray-300">Tunjangan</th>
                               <!-- Jumlah Kotor -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Kotor</th>
                               <!-- Potongan with 3 sub-columns -->
                               <th colspan="3" class="py-2 border border-black bg-gray-300 text-center">Potongan</th>
                               <!-- Jumlah Bersih -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Bersih</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Bersih</th>
                               <!-- TTD -->
                               <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[60px]">TTD</th>
                               <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[50px]"></th>
                             </tr>
                             <tr>
                               <!-- Sub-columns for tunjangan -->
-                              <th class="py-2 border border-black bg-gray-300 w-[120px]">Makan</th>
-                              {{-- <th class="py-2 border border-black bg-gray-300 w-[120px]">Hari tua</th> --}}
+                              <th class="py-2 border border-black bg-gray-300 w-[150px]">Makan</th>
+                              <th class="py-2 border border-black bg-gray-300 w-[150px]">BPJS</th>
 
                               <!-- Sub-columns for Potongan -->
                               <th class="py-2 border border-black bg-gray-300 w-[120px]">BPJS</th>
                               <th class="py-2 border border-black bg-gray-300 w-[120px]">Tabungan hari tua</th>
-                              <th class="py-2 border border-black bg-gray-300">Kredit/kasbon</th>
+                              <th class="py-2 border border-black bg-gray-300 w-[120px]">Kredit/kasbon</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -143,7 +143,7 @@
                                   <td class="text-center py-1 border border-gray-500">{{ $user->tanggal_diangkat->format('d F Y') }}</td> --}}
                                   <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>
                                   <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->tunjangan_makan, 0, ',', '.') }}</td>
-                                  {{-- <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td> --}}
+                                  <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td>
                                   <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->jumlah_gaji, 0, ',', '.') }}</td>
                                   <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->potongan_bpjs, 0, ',', '.') }}</td>
                                   <td class="text-center py-1 border border-gray-500">Rp{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td>
@@ -172,6 +172,7 @@
 															<td class="text-center border border-gray-500"></td>
 															<td colspan="2" class="border-b border-gray-500"><strong>TOTAL PER HALAMAN</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalTunjanganMakan'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalJumlahGaji'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganBpjs'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganHariTua'], 0) }}</strong></td>
@@ -185,6 +186,7 @@
 															<td class="text-center border border-gray-500"></td>
 															<td colspan="2" class="border-b border-gray-500"><strong>TOTAL SEMUA</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalTunjanganMakan'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalJumlahGaji'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganBpjs'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganHariTua'], 0) }}</strong></td>
