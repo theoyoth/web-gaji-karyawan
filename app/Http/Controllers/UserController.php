@@ -419,12 +419,31 @@ class UserController extends Controller
 
   public function searchUserAwak12(Request $request){
     $search = $request->input('search'); // Get search term from the request
+    $month = $request->input('bulan');
+    $year = $request->input('tahun');
 
-    $users = User::where('kantor', 'awak 1 dan awak 2') // Filter by kantor (if needed)
-                  ->when($search, function ($query, $search) {
-                    // If there's a search term, filter by the user's name
-                    return $query->where('nama', 'like', '%' . $search . '%');
-                  })->with('salary');
+    // $users = User::where('kantor', 'awak 1 dan awak 2') // Filter by kantor (if needed)
+    //               ->when($search, function ($query, $search) {
+    //                 // If there's a search term, filter by the user's name
+    //                 return $query->where('nama', 'like', '%' . $search . '%');
+    //               })->with('salary');
+
+    $users = User::where('kantor', 'awak 1 dan awak 2')
+    ->when($search, function ($query, $search) {
+        $query->where('nama', 'like', '%' . $search . '%');
+    })
+    ->when($month && $year, function ($query) use ($month, $year) {
+        $query->whereHas('salary', function ($q) use ($month, $year) {
+            $q->where('bulan', $month)
+              ->where('tahun', $year);
+        });
+    })
+    ->with(['salary' => function ($q) use ($month, $year) {
+        if ($month && $year) {
+            $q->where('bulan', $month)
+              ->where('tahun', $year);
+        }
+    }]);
 
     // Clone for total calculation (all data)
     $allUsers = (clone $users)->get();
