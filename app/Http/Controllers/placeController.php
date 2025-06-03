@@ -503,4 +503,78 @@ class placeController extends Controller
         return view('place.kantor2', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary,'month'=>$month,'year'=>$year]);
       }
     }
+
+  public function filterbyMonthOperatorHelper(Request $request){
+    $month = $request->input('bulan');
+    $year = $request->input('tahun');
+    $kantor = 'operator dan helper';
+
+    $query = User::where('kantor', $kantor) // Filter by kantor (from users table)
+    ->whereHas('salary', function ($q) use ($month, $year) {
+        // Filter salaries by bulan (month) and tahun (year)
+        if ($month && $year) {
+            $q->where('bulan', $month)
+              ->where('tahun', $year);
+        }
+    })
+    ->with(['salary' => function ($q) use ($month, $year) {
+        // Also filter the eager-loaded salaries by bulan and tahun
+        if ($month && $year) {
+            $q->where('bulan', $month)
+              ->where('tahun', $year);
+        }
+    }]);
+
+    // Step 2: Clone for total calculation (all data)
+    $allUsers = (clone $query)->get();
+    // Step 3: Paginate the original query
+    $usersPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun','kantor']));
+
+    $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
+      $salary = $user->salary;
+      return [
+        'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+        'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+        'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+        'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+        'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+        'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+      ];
+    }, [
+      'totalJumlahGaji' => 0,
+      'totalTunjanganMakan' => 0,
+      'totalPotonganBpjs' => 0,
+      'totalPotonganHariTua' => 0,
+      'totalPotonganKreditKasbon' => 0,
+      'totalGeneral' => 0
+    ]);
+
+    // calculate total of data paginate
+    $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
+      $salary = $user->salary;
+
+      return [
+          'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
+          'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
+          'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
+          'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+          'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
+          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+      ];
+    }, [
+      'totalJumlahGaji' => 0,
+      'totalTunjanganMakan' => 0,
+      'totalPotonganBpjs' => 0,
+      'totalPotonganHariTua' => 0,
+      'totalPotonganKreditKasbon' => 0,
+      'totalGeneral' => 0
+    ]);
+
+    if($kantor === 'kantor 1'){
+      return view('place.kantor1', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary,'month'=>$month,'year'=>$year]);
+    }
+    else if($kantor === 'kantor 2'){
+      return view('place.kantor2', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary,'month'=>$month,'year'=>$year]);
+    }
+  }
 }
