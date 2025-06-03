@@ -45,18 +45,25 @@ th, td {
 }
 
 th {
-  background-color: #f4f4f4;
+  background-color: #f3f3f3;
 }
 
 .header-text{
   font-size: 2rem;
   text-align: center;
   line-height: 10px;
+  color:#538DD5;
 }
 .header-subtext {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   text-align:center;
   line-height: 14px;
+}
+h1.header-subtext:nth-of-type(2) {
+  color: red;
+}
+.header-subtext{
+  color:#538DD5;
 }
 .empty-list{
 color:red;
@@ -104,11 +111,20 @@ line-height: 10px;
 border-bottom: 1px solid black;
 }
 .row-total{
-  background-color: rgb(0, 212, 146);
+  background-color: #f3f3f3;
   font-weight: bold;
 }
 .btn-reset{
   border:1px solid black;
+}
+.logo-gunsel{
+  width:80px;
+  height: 90px;
+}
+.logo-container{
+  position: absolute;
+  left:10%;
+  top:1%;
 }
 
 /* Hide the print button during printing */
@@ -141,12 +157,12 @@ border-bottom: 1px solid black;
   }
 
   .header-text{
-      font-size: 2rem;
+      font-size: 1.8rem;
       text-align: center;
       line-height: 10px;
   }
   .header-subtext {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       text-align:center;
       line-height: 14px;
   }
@@ -193,7 +209,7 @@ border-bottom: 1px solid black;
   }
   .small-text{
     color:red;
-    font-size: 1rem;
+    font-size: 0.8rem;
     text-align: center;
   }
   .subtext{
@@ -205,7 +221,7 @@ border-bottom: 1px solid black;
     border-bottom: 1px solid black;
   }
   .row-total{
-    background-color: rgb(0, 212, 146);
+    background-color: #f3f3f3;
   }
   .select-input{
     display: none;

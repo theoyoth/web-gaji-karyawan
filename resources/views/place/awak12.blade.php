@@ -68,7 +68,7 @@
                   </form>
                   <div class="flex gap-4">
                     <a href="{{ route('user.createAwak12',['bulan' => request('bulan'),'tahun' => request('tahun')]) }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-plus mr-2"></i>Buat baru</a>
-                    <a href="{{ route('print.awak12') }}" class="flex items-center my-4 px-4 py-2 border-2 border-gray-700 text-gray-700 rounded-md hover:bg-gray-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
+                    <a href="{{ route('print.awak12.filtered', ['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 1']) }}" class="flex items-center my-4 px-4 py-2 border-2 border-gray-700 text-gray-700 rounded-md hover:bg-gray-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
 
                     {{-- <a href="{{ route('print.excel.awak12') }}" class="flex items-center my-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"><i class="fas fa-file-excel mr-2"></i>Export</a> --}}
                     <a href="{{ route('export.awak12', ['bulan' => request('bulan'), 'tahun' => request('tahun')]) }}"
@@ -162,7 +162,7 @@
 																			<tr>
 																				@if($index === 0)
 																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">{{ $no++ }}</td>
-																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500 uppercase">{{$user->nama}}</td>
+																					<td rowspan="{{ $deliveryCount }}" class="text-left border border-gray-500 uppercase">{{$user->nama}}</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">Rp{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">{{$salary->hari_kerja}}</td>
 																				@endif
@@ -180,7 +180,11 @@
 																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">Rp{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">Rp{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">
+                                            @if ($salary->ttd && file_exists(public_path('storage/ttd' . $salary->ttd)))
 																							<img src="{{ file_exists(public_path('storage/ttd/' . $user->nama . '.png')) ? asset('storage/ttd/' . $user->nama . '.png') : '' }}" alt="ttd" class="w-20 h-20 object-contain">
+                                            @else
+                                              <p>-</p>
+                                            @endif
 																					</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">
 																						<div class="flex flex-col gap-1 items-center">

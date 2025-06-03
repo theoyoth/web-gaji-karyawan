@@ -9,6 +9,9 @@
 </head>
 <body>
     <div class="px-4">
+      <div class="logo-container">
+        <img src="/image/gunsel.jpg" alt="logo gunsel" class="logo-gunsel">
+      </div>
       <div class="kop-surat">
         <h1 class="header-text">PT.GUNUNG SELATAN</h3>
         <h1 class="header-subtext">KONTRAKTOR & LEVERANSIR</h1>
@@ -23,7 +26,7 @@
 
 
       <div>
-          <a href="{{ route('awak12.index') }}" class="link-button"><- Kembali</a>
+          <a href="{{ route('awak12.index', ['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 1']) }}" class="link-button"><- Kembali</a>
           <button class="print-button" onclick="window.print()">🖨️ Print</button>
       </div>
 

@@ -14,6 +14,9 @@
             <h1 class="header-subtext text-xl font-bold text-center">DAFTAR :  GAJI KARYAWAN KANTOR 2</h3>
             <h1 class="header-subtext text-xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
         </div> --}}
+        <div class="logo-container">
+          <img src="/image/gunsel.jpg" alt="logo gunsel" class="logo-gunsel">
+        </div>
         <div class="kop-surat">
           <h1 class="header-text">PT.GUNUNG SELATAN</h3>
           <h1 class="header-subtext">KONTRAKTOR & LEVERANSIR</h1>
@@ -24,7 +27,6 @@
           <h1 class="subtext">DAFTAR :  GAJI KARYAWAN & KARYAWATI KANTOR 2</h1>
           <h1 class="subtext">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
         </div>
-
 
         <div>
             <a href="{{ route('filterbymonth.kantor',['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 2']) }}" class="link-button"><- Kembali</a>

@@ -15,6 +15,9 @@
             <h1 class="header-subtext text-xl font-bold text-center">DAFTAR :  GAJI KARYAWAN KANTOR 1</h3>
             <h1 class="header-subtext text-xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
         </div> --}}
+        <div class="logo-container">
+          <img src="/image/gunsel.jpg" alt="logo gunsel" class="logo-gunsel">
+        </div>
         <div class="kop-surat">
           <h1 class="header-text">PT.GUNUNG SELATAN</h3>
           <h1 class="header-subtext">KONTRAKTOR & LEVERANSIR</h1>
