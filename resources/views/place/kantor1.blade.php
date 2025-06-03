@@ -49,6 +49,8 @@
                     <fieldset  class="border border-gray-300 p-2 rounded-md flex gap-x-2 items-center">
                       <legend class="text-xs">Search</legend>
                       <input type="hidden" name="kantor" value="kantor 1">
+                      <input type="hidden" name="bulan" value="{{ request('bulan') }}">
+                      <input type="hidden" name="tahun" value="{{ request('tahun') }}">
                       <input
                         type="text"
                         name="search"
