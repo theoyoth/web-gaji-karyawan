@@ -14,16 +14,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('salaries', function (Blueprint $table) {
-            // Rename column instead of copying data and dropping
-            if (Schema::hasColumn('salaries', 'tunjangan_hari_tua') && !Schema::hasColumn('salaries', 'tunjangan_bpjs')) {
-                $table->renameColumn('tunjangan_hari_tua', 'tunjangan_bpjs');
-            }
-
-            // Add profil_pic if it doesn't exist
-            if (!Schema::hasColumn('salaries', 'profil_pic')) {
-                $table->string('profil_pic')->nullable()->after('ttd');
-            }
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('foto_profil')->nullable()->after('kantor');
         });
     }
 
@@ -34,16 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('salaries', function (Blueprint $table) {
-            // Rename back
-            if (Schema::hasColumn('salaries', 'tunjangan_bpjs') && !Schema::hasColumn('salaries', 'tunjangan_hari_tua')) {
-                $table->renameColumn('tunjangan_bpjs', 'tunjangan_hari_tua');
-            }
-
-            // Drop profil_pic if exists
-            if (Schema::hasColumn('salaries', 'profil_pic')) {
-                $table->dropColumn('profil_pic');
-            }
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('foto_profil');
         });
     }
 };

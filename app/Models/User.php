@@ -15,6 +15,7 @@ class User extends Model
         'tempat_lahir',
         'tanggal_lahir',
         'tanggal_diangkat',
+        'foto_profil',
     ];
 
     protected $casts = [

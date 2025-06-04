@@ -42,6 +42,7 @@ class UserController extends Controller
 			'potongan_kredit_kasbon' => 'required|numeric',
 
 			'ttd' => 'nullable|string',
+      'foto_profil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
 		]);
 
 		// store image in storage folder
@@ -153,6 +154,7 @@ class UserController extends Controller
 			'deliveries.*.tarif_retase' => 'required|numeric',
 
 			'ttd' => 'nullable|string',
+      'foto_profil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
 
 		]);
 

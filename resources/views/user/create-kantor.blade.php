@@ -9,7 +9,7 @@
 
             <h1 class="text-4xl font-bold text-center">FORMULIR INPUT KANTOR</h1>
             <div class="mt-8">
-                <form action="{{ route('user.store') }}" method="POST">
+                <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Left Column -->
@@ -132,13 +132,13 @@
                                       <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div class="mt-2">
+                                {{-- <div class="mt-2">
                                     <label for="potongan_tabungan_hari_tua" class="block text-sm font-medium text-gray-700">Tabungan hari tua</label>
                                     <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                     @error('potongan_tabungan_hari_tua')
                                       <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                     @enderror
-                                </div>
+                                </div> --}}
                                 <div class="mt-2">
                                     <label for="potongan_kredit_kasbon" class="block text-sm font-medium text-gray-700">Kredit/Kasbon</label>
                                     <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
@@ -155,6 +155,14 @@
                               <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                           </div> --}}
+                          {{-- Foto profil --}}
+                          <div>
+                            <label for="foto" class="block text-sm font-medium text-gray-700">Foto</label>
+                            <input type="file" id="foto" name="foto" accept="image/*" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                            @error('photo')
+                              <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                          </div>
                           {{-- TTD --}}
                           <div class="mt-4">
                               <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
