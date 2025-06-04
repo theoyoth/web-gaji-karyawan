@@ -71,7 +71,7 @@
                 <th rowspan="2">No.</th>
                 <th rowspan="2" class="h-name">Nama</th>
                 {{-- <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th> --}}
-                {{-- <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th> --}}
+                <th rowspan="2" class="py-2 border border-black bg-gray-500">Masuk kerja</th>
 
                 <!-- Gaji Pokok with 3 sub-columns -->
                 <th rowspan="2" class="h-gaji-pokok">Gaji Pokok (Rp.)</th>
@@ -114,7 +114,10 @@
                     <td>{{ $no++ }}</td>
                     <td class="td-nama">{{$user->nama}}</td>
                     {{-- <td>{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
-                    {{-- <td>{{$user->tanggal_diangkat->format('d F Y')}}</td> --}}
+                    <td class="h-masuk-kerja">
+                      {{-- {{$user->tanggal_diangkat->format('d F Y')}} --}}
+
+                    </td>
 
                     <td>
                       {{-- {{number_format($salary->gaji_pokok, 0, ',', '.')}} --}}
@@ -175,6 +178,7 @@
                   {{-- {{number_format($totalUsersSalary['totalGeneral'], 0)}} --}}
 
                 </td>
+                <td></td>
                 <td></td>
               </tr>
             </tbody>

@@ -106,6 +106,7 @@
                             <tr>
                               <th rowspan="2" class="py-2 w-5 border border-black bg-gray-300">No.</th>
                               <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[200px]">Nama</th>
+                              <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[200px]">Masuk kerja</th>
                               <!-- Gaji Pokok with 3 sub-columns -->
                               <th rowspan="2" class="py-2 border border-black bg-gray-300 text-center">Gaji Pokok (Rp.)</th>
                               <!-- Tunjangan -->
@@ -141,8 +142,10 @@
                                 <tr>
                                   <td class="text-center py-1 border border-gray-500">{{ $no++ }}</td>
                                   <td class="text-left py-1 border border-gray-500 text-wrap">{{ $user->nama }}</td>
-                                  {{-- <td class="text-center py-1 border border-gray-500">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
-                                  <td class="text-center py-1 border border-gray-500">{{ $user->tanggal_diangkat->format('d F Y') }}</td> --}}
+                                  {{-- <td class="text-center py-1 border border-gray-500">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
+                                  <td class="text-center py-1 border border-gray-500">
+                                    {{-- {{ $user->tanggal_diangkat->format('d F Y') }} --}}
+                                  </td>
                                   <td class="text-center py-1 border border-gray-500">{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>
                                   <td class="text-center py-1 border border-gray-500">{{ number_format($salary->tunjangan_makan, 0, ',', '.') }}</td>
                                   <td class="text-center py-1 border border-gray-500">{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td>

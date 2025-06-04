@@ -86,7 +86,7 @@ th,td{
   border-color:black;
 }
 .h-ttd{
-  width: 120px;
+  width: 100px;
 }
 img{
   width:60px;
@@ -133,6 +133,9 @@ border-bottom: 1px solid black;
 }
 .h-tunjangan{
   width:60px;
+}
+.h-masuk-kerja{
+  width: 100px;
 }
 .ttd-center{
   text-align: center;
@@ -208,7 +211,7 @@ border-bottom: 1px solid black;
       width: 100px;
   }
   .h-ttd{
-      width: 120px;
+      width: 80px;
   }
   img{
       width:60px;
@@ -239,6 +242,9 @@ border-bottom: 1px solid black;
   }
   .select-input{
     display: none;
+  }
+  .h-masuk-kerja{
+    width: 100px;
   }
   .ttd-center{
     text-align: center;
