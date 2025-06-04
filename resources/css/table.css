@@ -40,7 +40,6 @@ table {
 }
 th, td {
   padding: 5px;
-  text-align: center;
   border: 1px solid #ddd;
 }
 
@@ -87,16 +86,16 @@ th,td{
   border-color:black;
 }
 .h-ttd{
-  width: 50px;
+  width: 120px;
 }
 img{
   width:60px;
   height: 40px;
   object-fit: contain;
 }
- .td-nama{
-    text-align: left;
-  }
+.td-nama{
+  text-align: left;
+}
 .small-text{
 color:red;
 font-size: 1rem;
@@ -125,6 +124,21 @@ border-bottom: 1px solid black;
   position: absolute;
   left:10%;
   top:1%;
+}
+.h-gaji-pokok{
+  width: 120px;
+}
+.h-potongan{
+  width:60px;
+}
+.h-tunjangan{
+  width:60px;
+}
+.ttd-center{
+  text-align: center;
+}
+.ttd-left{
+  text-align: left;
 }
 
 /* Hide the print button during printing */
@@ -182,19 +196,19 @@ border-bottom: 1px solid black;
       width:100px;
   }
   .h-tunjangan{
-      width:100px;
+      width:60px;
   }
   .h-potongan{
-      width:100px;
+      width:60px;
   }
   .h-gaji-pokok{
-      width: 100px;
+      width: 120px;
   }
   .h-jumlah{
       width: 100px;
   }
   .h-ttd{
-      width: 50px;
+      width: 120px;
   }
   img{
       width:60px;
@@ -226,5 +240,10 @@ border-bottom: 1px solid black;
   .select-input{
     display: none;
   }
-
+  .ttd-center{
+    text-align: center;
+  }
+  .ttd-left{
+    text-align: left;
+  }
 }

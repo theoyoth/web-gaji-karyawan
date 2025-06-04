@@ -74,19 +74,19 @@
                 {{-- <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th> --}}
 
                 <!-- Gaji Pokok with 3 sub-columns -->
-                <th rowspan="2" >Gaji Pokok</th>
+                <th rowspan="2" class="h-gaji-pokok">Gaji Pokok (Rp.)</th>
 
                 <!-- Tunjangan -->
                 <th colspan="2">Tunjangan</th>
 
                 <!-- Jumlah Gaji -->
-                <th rowspan="2">Jumlah Gaji</th>
+                <th rowspan="2">Jumlah Gaji Kotor (Rp.)</th>
 
                 <!-- Potongan with 3 sub-columns -->
-                <th colspan="3">Potongan</th>
+                <th colspan="2">Potongan</th>
 
                 <!-- Jumlah Bersih -->
-                <th rowspan="2">Jumlah Bersih</th>
+                <th rowspan="2">Jumlah Gaji Bersih (Rp.)</th>
 
                 <!-- TTD -->
                 <th rowspan="2" class="h-ttd">TTD</th>
@@ -99,12 +99,12 @@
 
                 <!-- Sub-columns for Potongan -->
                 <th class="h-potongan">BPJS</th>
-                <th class="h-potongan">Tabungan hari tua</th>
+                {{-- <th class="h-potongan">Tabungan hari tua</th> --}}
                 <th class="h-potongan">Kredit/kasbon</th>
               </tr>
             </thead>
             <tbody>
-              @php $no = 1; @endphp
+              @php $no = 1;$num = 1;@endphp
               @foreach($users as $user)
                 @php
                   $salary = $user->salary;
@@ -116,32 +116,65 @@
                     {{-- <td>{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
                     {{-- <td>{{$user->tanggal_diangkat->format('d F Y')}}</td> --}}
 
-                    <td>Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td>
-                    {{-- <td>Rp.{{number_format($salary->tunjangan_retase, 0, ',', '.')}}</td> --}}
-                    <td>Rp.{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
                     <td>
-                      {{-- <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd"> --}}
+                      {{-- {{number_format($salary->gaji_pokok, 0, ',', '.')}} --}}
+
                     </td>
+                    <td>
+                      {{-- {{number_format($salary->tunjangan_makan, 0, ',', '.')}} --}}
+
+                    </td>
+                    <td>
+                      {{-- {{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}} --}}
+                    </td>
+                    {{-- <td>{{number_format($salary->tunjangan_retase, 0, ',', '.')}}</td> --}}
+                    <td>
+                      {{-- {{number_format($salary->jumlah_gaji, 0, ',', '.')}} --}}
+                    </td>
+                    <td>
+                      {{-- {{number_format($salary->potongan_bpjs, 0, ',', '.')}} --}}
+                    </td>
+                    {{-- <td>{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td> --}}
+                    <td>
+                      {{-- {{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}} --}}
+                    </td>
+                    <td>
+                      {{-- {{number_format($salary->jumlah_bersih, 0, ',', '.')}} --}}
+                    </td>
+                    @if($num % 2 == 0)
+                      <td class="ttd-center">
+                        {{ $num++ }}.
+                        {{-- <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd"> --}}
+                      </td>
+                    @else
+                      <td class="ttd-left">{{ $num++ }}.</td>
+                    @endif
                   </tr>
                 @endif
               @endforeach
               <tr class="row-total">
                 <td></td>
                 <td colspan="2"><strong>TOTAL</strong></td>
-                <td>Rp.{{number_format($totalUsersSalary['totalTunjanganMakan'], 0)}}</td>
-                {{-- <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
+                <td>
+                  {{-- {{number_format($totalUsersSalary['totalTunjanganMakan'], 0)}} --}}
+                </td>
+                {{-- <td>{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
                 <td></td>
-                <td>Rp.{{number_format($totalUsersSalary['totalJumlahGaji'], 0)}}</td>
-                <td>Rp.{{number_format($totalUsersSalary['totalPotonganBpjs'], 0)}}</td>
-                <td>Rp.{{number_format($totalUsersSalary['totalPotonganHariTua'], 0)}}</td>
-                <td>Rp.{{number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0)}}</td>
-                <td>Rp.{{number_format($totalUsersSalary['totalGeneral'], 0)}}</td>
+                <td>
+                  {{-- {{number_format($totalUsersSalary['totalJumlahGaji'], 0)}} --}}
+                </td>
+                <td>
+                  {{-- {{number_format($totalUsersSalary['totalPotonganBpjs'], 0)}} --}}
+
+                </td>
+                {{-- <td>{{number_format($totalUsersSalary['totalPotonganHariTua'], 0)}}</td> --}}
+                <td>
+                  {{-- {{number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0)}} --}}
+                </td>
+                <td>
+                  {{-- {{number_format($totalUsersSalary['totalGeneral'], 0)}} --}}
+
+                </td>
                 <td></td>
               </tr>
             </tbody>
