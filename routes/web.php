@@ -45,6 +45,7 @@ Route::get('/awak-1-2', [placeController::class, 'filterbyMonthAwak12'])->name('
 // Route::get('/awak-1-2/filter', [placeController::class, 'filterAwak12'])->name('filter.awak12');
 // Route::get('/awak-1-2/filter', [placeController::class, 'filterbyMonthAwak12'])->name('filterbymonth.awak12');
 Route::get('/kantor', [placeController::class, 'filterbyMonthKantor'])->name('filterbymonth.kantor');
+Route::get('/operator-helper', [placeController::class, 'filterbyMonthOperatorHelper'])->name('filterbymonth.operatorhelper');
 
 // print
 Route::get('/print/awak-1-2', [PrintController::class, 'awak12'])->name('print.awak12');
