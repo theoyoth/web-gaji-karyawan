@@ -9,6 +9,15 @@
 
             <h1 class="text-4xl font-bold text-center">FORMULIR INPUT KANTOR</h1>
             <div class="mt-8">
+              @if ($errors->any())
+                <div class="bg-red-100 text-red-700 border border-red-400 px-4 py-2 rounded mb-4">
+                  <ul class="list-disc pl-5">
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                </div>
+              @endif
                 <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -109,13 +118,13 @@
                                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                       @enderror
                                   </div>
-                                  <div class="mt-2">
+                                  {{-- <div class="mt-2">
                                       <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">BPJS</label>
                                       <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                       @error('tunjangan_hari_tua')
                                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                       @enderror
-                                  </div>
+                                  </div> --}}
                               </div>
                             </div>
                         </div>
@@ -156,13 +165,13 @@
                             @enderror
                           </div> --}}
                           {{-- Foto profil --}}
-                          <div>
-                            <label for="foto" class="block text-sm font-medium text-gray-700">Foto</label>
-                            <input type="file" id="foto" name="foto" accept="image/*" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                            @error('photo')
+                          {{-- <div>
+                            <label for="foto_profil" class="block text-sm font-medium text-gray-700">Foto</label>
+                            <input type="file" id="foto_profil" name="foto_profil" accept="image/*" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                            @error('foto_profil')
                               <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
-                          </div>
+                          </div> --}}
                           {{-- TTD --}}
                           <div class="mt-4">
                               <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>

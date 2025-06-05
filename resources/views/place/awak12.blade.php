@@ -124,16 +124,16 @@
 																<th colspan="2" class="py-2 border border-black bg-gray-300 text-center">Jumlah Retase</th>
 																<!-- tarif retase -->
 																<th rowspan="2" class="py-2 border border-black bg-gray-300 text-center">Tarif Retase</th>
-																<!-- Tunjangan -->
-																<th class="py-2 border border-black bg-gray-300">Tunjangan</th>
+																<!-- Tunjangan makan -->
+																<th rowspan="2" class="py-2 border border-black bg-gray-300">Uang Makan (Rp.)</th>
 																<!-- jumlah ur -->
-																<th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah UR</th>
+																<th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah UR (Rp.)</th>
 																<!-- Jumlah Kotor -->
-																<th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Kotor</th>
+																<th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Kotor (Rp.)</th>
 																<!-- Potongan with 3 sub-columns -->
-																<th colspan="3" class="py-2 border border-black bg-gray-300 text-center">Potongan</th>
+																<th colspan="2" class="py-2 border border-black bg-gray-300 text-center">Potongan</th>
 																<!-- Jumlah Bersih -->
-																<th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Bersih</th>
+																<th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Bersih (Rp.)</th>
 																<!-- TTD -->
 																<th rowspan="2" class="py-2 border border-black bg-gray-300 w-[50px]">TTD</th>
 																<th rowspan="2" class="py-2 border border-black bg-gray-300 w-[50px]"></th>
@@ -143,11 +143,11 @@
 																<th class="py-2 border border-black bg-gray-300 w-[120px]"></th>
 																<th class="py-2 border border-black bg-gray-300 w-[150px]"></th>
 																<!-- Sub-columns for tunjangan -->
-																<th class="py-2 border border-black bg-gray-300 w-[120px]">Makan</th>
+																{{-- <th class="py-2 border border-black bg-gray-300 w-[120px]">Makan (Rp.)</th> --}}
 																<!-- Sub-columns for Potongan -->
-																<th class="py-2 border border-black bg-gray-300 w-[120px]">BPJS</th>
-																<th class="py-2 border border-black bg-gray-300 w-[120px]">Tabungan hari tua</th>
-																<th class="py-2 border border-black bg-gray-300">Kredit/kasbon</th>
+																<th class="py-2 border border-black bg-gray-300 w-[120px]">BPJS (Rp.)</th>
+																{{-- <th class="py-2 border border-black bg-gray-300 w-[120px]">Tabungan hari tua</th> --}}
+																<th class="py-2 border border-black bg-gray-300">Kredit/kasbon (Rp.)</th>
 														</tr>
 												</thead>
 												<tbody>
@@ -168,16 +168,16 @@
 																				@endif
 																				<td class="text-center py-1 border border-gray-500">{{ $delivery->jumlah_retase }}</td>
 																				<td class="text-center py-1 border border-gray-500">{{ $delivery->kota }}</td>
-																				<td class="text-center py-1 border border-gray-500">Rp{{ number_format($delivery->tarif_retase, 0, ',', '.') }}</td>
+																				<td class="text-center py-1 border border-gray-500">{{ number_format($delivery->tarif_retase, 0, ',', '.') }}</td>
 																				@if($index === 0)
-																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">Rp{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
+																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
 																				@endif
-																					<td class="text-center py-1 border border-gray-500">Rp{{number_format($delivery->jumlah_ur, 0, ',', '.')}}</td>
+																					<td class="text-center py-1 border border-gray-500">{{number_format($delivery->jumlah_ur, 0, ',', '.')}}</td>
 																				@if($index === 0)
-																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">Rp{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
-																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">Rp{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
-																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">Rp{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
-																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">Rp{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
+																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
+																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
+																					{{-- <td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td> --}}
+																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: ''}}</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">Rp{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">
                                             @if ($salary->ttd && file_exists(public_path('storage/ttd' . $salary->ttd)))
@@ -206,18 +206,17 @@
                             {{-- total each page pagination --}}
 														<tr>
 															<td class="text-center border border-gray-500"></td>
-															<td colspan="2" class="border-b border-gray-500"><strong>TOTAL PER HALAMAN</strong></td>
+															<td colspan="3" class="border-b border-gray-500"><strong>TOTAL PER HALAMAN</strong></td>
 															<td class="text-center border-b border-b-gray-500"></td>
 															<td class="text-center border-b border-b-gray-500"></td>
 															<td class="text-center border-b border-b-gray-500"></td>
-															<td class="text-center border-b border-gray-500"></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalTunjanganMakan'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalJumlahRetase'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalJumlahGaji'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganBpjs'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganHariTua'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganKreditKasbon'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalGeneral'], 0) }}</strong></td>
+															{{-- <td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganHariTua'], 0) }}</strong></td> --}}
+															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalPotonganKreditKasbon'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalGeneral'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 														</tr>
@@ -225,18 +224,17 @@
                             {{-- total all users salary --}}
 														<tr class="text-lg bg-gray-300 text-gray-900 font-semibold">
 															<td class="text-center border border-gray-500"></td>
-															<td colspan="2" class="border-b border-gray-500"><strong>TOTAL SEMUA</strong></td>
+															<td colspan="3" class="border-b border-gray-500"><strong>TOTAL SEMUA</strong></td>
 															<td class="text-center border-b border-b-gray-500"></td>
 															<td class="text-center border-b border-b-gray-500"></td>
 															<td class="text-center border-b border-b-gray-500"></td>
-															<td class="text-center border-b border-gray-500"></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalTunjanganMakan'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalJumlahRetase'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalJumlahGaji'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganBpjs'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganHariTua'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalGeneral'], 0) }}</strong></td>
+															{{-- <td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganHariTua'], 0) }}</strong></td> --}}
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalGeneral'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 														</tr>

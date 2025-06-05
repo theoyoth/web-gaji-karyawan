@@ -86,7 +86,10 @@ th,td{
   border-color:black;
 }
 .h-ttd{
-  width: 100px;
+  width: 70px;
+}
+.h-empty{
+  width: 70px;
 }
 img{
   width:60px;
@@ -126,16 +129,31 @@ border-bottom: 1px solid black;
   top:1%;
 }
 .h-gaji-pokok{
-  width: 120px;
+  width: 150px;
 }
+.h-name{
+  width: 250px;
+}
+.h-no{
+  width: 20px;
+}
+.h-hari-kerja{
+    width:50px;
+  }
 .h-potongan{
   width:60px;
 }
 .h-tunjangan{
-  width:60px;
+  width:100px;
+}
+.h-total-gaji{
+  width: 150px;
 }
 .h-masuk-kerja{
   width: 100px;
+}
+.h-gaji-bersih{
+  width: 150px;
 }
 .ttd-center{
   text-align: center;
@@ -199,10 +217,13 @@ border-bottom: 1px solid black;
       width:100px;
   }
   .h-tunjangan{
-      width:60px;
+      width:80px;
   }
   .h-potongan{
       width:60px;
+  }
+  .h-hari-kerja{
+    width:50px;
   }
   .h-gaji-pokok{
       width: 120px;
@@ -211,7 +232,13 @@ border-bottom: 1px solid black;
       width: 100px;
   }
   .h-ttd{
-      width: 80px;
+      width: 50px;
+  }
+  .h-total-gaji{
+    width: 150px;
+  }
+  .h-empty{
+    width: 70px;
   }
   img{
       width:60px;

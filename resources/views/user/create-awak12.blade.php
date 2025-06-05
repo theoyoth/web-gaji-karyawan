@@ -14,7 +14,7 @@
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Left Column -->
-                        <div class="space-y-4">
+                        <div class="space-y-2">
                             <div>
                                 <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
                                 <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false">
@@ -37,6 +37,13 @@
                                 <label for="gaji_pokok" class="block text-sm font-medium text-gray-700">Gaji pokok</label>
                                 <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                 @error('gaji_pokok')
+                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Masa Kerja</label>
+                                <input type="text" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                @error('tanggal_diangkat')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -107,13 +114,13 @@
                                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                       @enderror
                                   </div>
-                                  <div class="mt-2">
+                                  {{-- <div class="mt-2">
                                       <label for="potongan_tabungan_hari_tua" class="block text-sm font-medium text-gray-700">Tabungan hari tua</label>
                                       <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                       @error('potongan_tabungan_hari_tua')
                                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                       @enderror
-                                  </div>
+                                  </div> --}}
                                   <div class="mt-2">
                                       <label for="potongan_kredit_kasbon" class="block text-sm font-medium text-gray-700">Kredit/Kasbon</label>
                                       <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
@@ -146,13 +153,13 @@
                               <button type="button" onclick="addDeliveryRow()" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded mt-4">+ Tambah Pengiriman</button>
                             </div>
 
-                            <div>
+                            {{-- <div>
                               <label for="photo" class="block text-sm font-medium text-gray-700">Foto</label>
                               <input type="file" id="photo" name="photo" accept="image/*" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                               @error('photo')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                               @enderror
-                            </div>
+                            </div> --}}
                             {{-- TTD --}}
                             <div class="mt-4">
                                 <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>

@@ -8,7 +8,7 @@
               $bul = $user->salary->bulan;
               $tah = $user->salary->tahun;
             @endphp
-            <a href="{{ route('kantor1.index',['bulan' => $bul, 'tahun' => $tah, 'page' => request('page')]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
+            <a href="{{ route('filterbymonth.kantor',['bulan' => $bul, 'tahun' => $tah, 'kantor' => request('from') ,'page' => request('page')]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
               <- kembali
             </a>
             <h1 class="text-3xl font-bold text-center">EDIT KANTOR 1 & KANTOR 2</h1>
@@ -26,7 +26,7 @@
                       <input type="hidden" name="page" value="{{ request('page') }}">
 
                         <!-- Left Column -->
-                        <div>
+                        <div class="space-y-2">
                           <div>
                               <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
                               <input type="text" id="nama" name="nama" value="{{ old('nama',$user->nama) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
@@ -42,6 +42,13 @@
                                   @endforeach
                               </select>
                               @error('kantor')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                              @enderror
+                          </div>
+                          <div>
+                              <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Masuk Kerja</label>
+                              <input type="text" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat',$user->tanggal_diangkat) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                              @error('tanggal_diangkat')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                               @enderror
                           </div>
@@ -100,13 +107,13 @@
                                       <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div class="mt-2">
+                                {{-- <div class="mt-2">
                                     <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">Hari tua</label>
                                     <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                     @error('tunjangan_hari_tua')
                                       <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                     @enderror
-                                </div>
+                                </div> --}}
                             </div>
                           </div>
 
@@ -124,13 +131,13 @@
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                   @enderror
                               </div>
-                              <div class="mt-2">
+                              {{-- <div class="mt-2">
                                   <label for="potongan_tabungan_hari_tua" class="block text-sm font-medium text-gray-700">Tabungan hari tua</label>
                                   <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua',$salary->potongan_tabungan_hari_tua) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                   @error('potongan_tabungan_hari_tua')
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                   @enderror
-                              </div>
+                              </div> --}}
                               <div class="mt-2">
                                 <label for="potongan_kredit_kasbon" class="block text-sm font-medium text-gray-700">Kredit/Kasbon</label>
                                 <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon',$salary->potongan_kredit_kasbon) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">

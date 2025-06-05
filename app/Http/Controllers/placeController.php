@@ -19,15 +19,21 @@ class placeController extends Controller
 
       $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
         $salary = $user->salary;
+        // if tabungan_hari_tua is needed, put it back in total general
         return [
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
           'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
           'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
-          'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+          // 'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
           'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
-          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_kredit_kasbon) ?? 0),
         ];
-      }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
+      }, ['totalJumlahGaji' => 0, 
+      'totalTunjanganMakan' => 0, 
+      'totalPotonganBpjs' => 0,
+      // 'totalPotonganHariTua' => 0, 
+      'totalPotonganKreditKasbon' => 0, 
+      'totalGeneral' => 0]);
 
       // Step 3: Paginate the original query
       $usersPaginate = $users->paginate(15);
@@ -39,11 +45,16 @@ class placeController extends Controller
             'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
             'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
             'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
-            'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+            // 'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
             'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
-            'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+            'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_kredit_kasbon) ?? 0),
         ];
-      }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
+      }, ['totalJumlahGaji' => 0, 
+      'totalTunjanganMakan' => 0, 
+      'totalPotonganBpjs' => 0,
+      // 'totalPotonganHariTua' => 0, 
+      'totalPotonganKreditKasbon' => 0, 
+      'totalGeneral' => 0]);
 
       return view('place.kantor1', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary]);
     }
@@ -459,18 +470,20 @@ class placeController extends Controller
       $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
         $salary = $user->salary;
         return [
+          'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
           'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
           'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
-          'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+          // 'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
           'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
-          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+          'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - (($salary->potongan_bpjs ?? 0) + ($salary->potongan_kredit_kasbon ?? 0))),
         ];
       }, [
+        'totalGajiPokok' => 0,
         'totalJumlahGaji' => 0,
         'totalTunjanganMakan' => 0,
         'totalPotonganBpjs' => 0,
-        'totalPotonganHariTua' => 0,
+        // 'totalPotonganHariTua' => 0,
         'totalPotonganKreditKasbon' => 0,
         'totalGeneral' => 0
       ]);
@@ -480,18 +493,20 @@ class placeController extends Controller
         $salary = $user->salary;
 
         return [
+            'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
             'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
             'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
             'totalPotonganBpjs' => $totalValue['totalPotonganBpjs'] + ($salary->potongan_bpjs ?? 0),
-            'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
+            // 'totalPotonganHariTua' => $totalValue['totalPotonganHariTua'] + ($salary->potongan_hari_tua ?? 0),
             'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
-            'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_hari_tua + $salary->potongan_kredit_kasbon) ?? 0),
+            'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_kredit_kasbon) ?? 0),
         ];
       }, [
+        'totalGajiPokok' => 0,
         'totalJumlahGaji' => 0,
         'totalTunjanganMakan' => 0,
         'totalPotonganBpjs' => 0,
-        'totalPotonganHariTua' => 0,
+        // 'totalPotonganHariTua' => 0,
         'totalPotonganKreditKasbon' => 0,
         'totalGeneral' => 0
       ]);

@@ -1,1 +1,1 @@
-
+import '../css/table.css';

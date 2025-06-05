@@ -68,40 +68,33 @@
           <table class="min-w-full table-auto border-collapse">
             <thead>
               <tr>
-                <th rowspan="2">No.</th>
+                <th rowspan="2" class="h-no">No.</th>
                 <th rowspan="2" class="h-name">Nama</th>
                 {{-- <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th> --}}
                 <th rowspan="2" class="py-2 border border-black bg-gray-500">Masuk kerja</th>
 
                 <!-- Gaji Pokok with 3 sub-columns -->
                 <th rowspan="2" class="h-gaji-pokok">Gaji Pokok (Rp.)</th>
-
-                <!-- Tunjangan -->
-                <th colspan="2">Tunjangan</th>
+                <th class="h-empty"></th>
+                <th rowspan="2" class="h-hari-kerja">Hari Kerja</th>
+                <!-- Sub-columns for tunjangan -->
+                <th class="h-tunjangan">Uang Makan (Rp.)</th>
 
                 <!-- Jumlah Gaji -->
-                <th rowspan="2">Jumlah Gaji Kotor (Rp.)</th>
+                <th rowspan="2" class="h-total-gaji">Total Gaji (Rp.)</th>
 
-                <!-- Potongan with 3 sub-columns -->
-                <th colspan="2">Potongan</th>
+                 <!-- Sub-columns for Potongan -->
+                <th class="h-potongan">Kredit/kasbon</th>
+                <th class="h-potongan">BPJS (Rp.)</th>
+                {{-- <th class="h-potongan">Tabungan hari tua</th> --}}
 
                 <!-- Jumlah Bersih -->
-                <th rowspan="2">Jumlah Gaji Bersih (Rp.)</th>
+                <th rowspan="2" class="h-gaji-bersih">Jumlah Gaji Bersih (Rp.)</th>
 
                 <!-- TTD -->
                 <th rowspan="2" class="h-ttd">TTD</th>
               </tr>
-              <tr>
-                <!-- Sub-columns for tunjangan -->
-                <th class="h-tunjangan">Makan</th>
-                <th class="py-2 border border-black bg-gray-500 h-tunjangan">BPJS</th>
-                {{-- <th class="py-2 border border-black bg-gray-500 h-tunjangan">Retase</th> --}}
 
-                <!-- Sub-columns for Potongan -->
-                <th class="h-potongan">BPJS</th>
-                {{-- <th class="h-potongan">Tabungan hari tua</th> --}}
-                <th class="h-potongan">Kredit/kasbon</th>
-              </tr>
             </thead>
             <tbody>
               @php $no = 1;$num = 1;@endphp
@@ -115,34 +108,35 @@
                     <td class="td-nama">{{$user->nama}}</td>
                     {{-- <td>{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
                     <td class="h-masuk-kerja">
-                      {{-- {{$user->tanggal_diangkat->format('d F Y')}} --}}
+                      {{$user->tanggal_diangkat}}
 
                     </td>
 
                     <td>
-                      {{-- {{number_format($salary->gaji_pokok, 0, ',', '.')}} --}}
+                      {{number_format($salary->gaji_pokok, 0, ',', '.')}}
 
                     </td>
+                    <td></td>
+                    <td>{{$salary->hari_kerja}}</td>
                     <td>
-                      {{-- {{number_format($salary->tunjangan_makan, 0, ',', '.')}} --}}
-
+                      {{number_format($salary->tunjangan_makan, 0, ',', '.') ?: ''}}
                     </td>
-                    <td>
-                      {{-- {{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}} --}}
-                    </td>
+                    {{-- <td>
+                      {{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}
+                    </td> --}}
                     {{-- <td>{{number_format($salary->tunjangan_retase, 0, ',', '.')}}</td> --}}
                     <td>
-                      {{-- {{number_format($salary->jumlah_gaji, 0, ',', '.')}} --}}
+                      {{number_format($salary->jumlah_gaji, 0, ',', '.')}}
                     </td>
                     <td>
-                      {{-- {{number_format($salary->potongan_bpjs, 0, ',', '.')}} --}}
+                      {{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: ''}}
+                    </td>
+                    <td>
+                      {{number_format($salary->potongan_bpjs, 0, ',', '.') ?: ''}}
                     </td>
                     {{-- <td>{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td> --}}
                     <td>
-                      {{-- {{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}} --}}
-                    </td>
-                    <td>
-                      {{-- {{number_format($salary->jumlah_bersih, 0, ',', '.')}} --}}
+                      {{number_format($salary->jumlah_bersih, 0, ',', '.')}}
                     </td>
                     @if($num % 2 == 0)
                       <td class="ttd-center">
@@ -178,6 +172,7 @@
                   {{-- {{number_format($totalUsersSalary['totalGeneral'], 0)}} --}}
 
                 </td>
+                <td></td>
                 <td></td>
                 <td></td>
               </tr>

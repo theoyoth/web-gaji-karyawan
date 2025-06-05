@@ -20,7 +20,7 @@ class User extends Model
 
     protected $casts = [
         'tanggal_lahir' => 'date',
-        'tanggal_diangkat' => 'date',
+        'tanggal_diangkat' => 'string',
     ];
 
     public function salary(){

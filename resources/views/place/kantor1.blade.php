@@ -104,32 +104,27 @@
                     <table class="min-w-full table-auto border-collapse text-[0.8rem]">
                         <thead>
                             <tr>
-                              <th rowspan="2" class="py-2 w-5 border border-black bg-gray-300">No.</th>
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[200px]">Nama</th>
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[200px]">Masuk kerja</th>
+                              <th  class="py-2 w-5 border border-black bg-gray-300">No.</th>
+                              <th  class="py-2 border border-black bg-gray-300 w-[200px]">Nama</th>
+                              <th  class="py-2 border border-black bg-gray-300 w-[150px]">Masuk kerja</th>
                               <!-- Gaji Pokok with 3 sub-columns -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300 text-center">Gaji Pokok (Rp.)</th>
+                              <th  class="py-2 border border-black bg-gray-300 text-center">Gaji Pokok (Rp.)</th>
+                              <th  class="py-2 border border-black bg-gray-300 text-center">Hari Kerja</th>
                               <!-- Tunjangan -->
-                              <th colspan="2" class="py-2 border border-black bg-gray-300">Tunjangan</th>
-                              <!-- Jumlah Kotor -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Kotor</th>
-                              <!-- Potongan with 3 sub-columns -->
-                              <th colspan="3" class="py-2 border border-black bg-gray-300 text-center">Potongan</th>
-                              <!-- Jumlah Bersih -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300">Jumlah Gaji Bersih</th>
-                              <!-- TTD -->
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[60px]">TTD</th>
-                              <th rowspan="2" class="py-2 border border-black bg-gray-300 w-[50px]"></th>
-                            </tr>
-                            <tr>
                               <!-- Sub-columns for tunjangan -->
-                              <th class="py-2 border border-black bg-gray-300 w-[150px]">Makan</th>
-                              <th class="py-2 border border-black bg-gray-300 w-[150px]">BPJS</th>
-
-                              <!-- Sub-columns for Potongan -->
-                              <th class="py-2 border border-black bg-gray-300 w-[120px]">BPJS</th>
-                              <th class="py-2 border border-black bg-gray-300 w-[120px]">Tabungan hari tua</th>
-                              <th class="py-2 border border-black bg-gray-300 w-[120px]">Kredit/kasbon</th>
+                              <th class="py-2 border border-black bg-gray-300 w-[150px]">Uang Makan</th>
+                              <!-- Jumlah Kotor -->
+                              <th  class="py-2 border border-black bg-gray-300">Total Gaji</th>
+                              {{-- <th class="py-2 border border-black bg-gray-300 w-[150px]">BPJS</th> --}}
+                               <!-- Sub-columns for Potongan -->
+                               <th class="py-2 border border-black bg-gray-300 w-[120px]">Kredit/kasbon</th>
+                               <th class="py-2 border border-black bg-gray-300 w-[120px]">BPJS</th>
+                              {{-- <th class="py-2 border border-black bg-gray-300 w-[120px]">Tabungan hari tua</th> --}}
+                              <!-- Jumlah Bersih -->
+                              <th  class="py-2 border border-black bg-gray-300">Jumlah Gaji Bersih</th>
+                              <!-- TTD -->
+                              <th  class="py-2 border border-black bg-gray-300 w-[60px]">TTD</th>
+                              <th  class="py-2 border border-black bg-gray-300 w-[50px]"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,18 +136,24 @@
                                 @endphp
                                 <tr>
                                   <td class="text-center py-1 border border-gray-500">{{ $no++ }}</td>
-                                  <td class="text-left py-1 border border-gray-500 text-wrap">{{ $user->nama }}</td>
+                                  <td class="text-left py-1 border border-gray-500 text-wrap w-[250px]">
+                                    {{-- @if ($user->foto_profil)
+                                      <img src="{{ asset('storage/' . $user->foto_profil) }}" alt="Foto Profil" width="70" height="70" class="object-cover">
+                                    @endif --}}
+                                    {{ $user->nama }}
+                                  </td>
                                   {{-- <td class="text-center py-1 border border-gray-500">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
                                   <td class="text-center py-1 border border-gray-500">
-                                    {{-- {{ $user->tanggal_diangkat->format('d F Y') }} --}}
+                                    {{ $user->tanggal_diangkat }}
                                   </td>
                                   <td class="text-center py-1 border border-gray-500">{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>
+                                  <td class="text-center py-1 border border-gray-500">{{ $salary->hari_kerja }}</td>
                                   <td class="text-center py-1 border border-gray-500">{{ number_format($salary->tunjangan_makan, 0, ',', '.') }}</td>
-                                  <td class="text-center py-1 border border-gray-500">{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td>
+                                  {{-- <td class="text-center py-1 border border-gray-500">{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td> --}}
                                   <td class="text-center py-1 border border-gray-500">{{ number_format($salary->jumlah_gaji, 0, ',', '.') }}</td>
-                                  <td class="text-center py-1 border border-gray-500">{{ number_format($salary->potongan_bpjs, 0, ',', '.') }}</td>
-                                  <td class="text-center py-1 border border-gray-500">{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td>
                                   <td class="text-center py-1 border border-gray-500">{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') }}</td>
+                                  <td class="text-center py-1 border border-gray-500">{{ number_format($salary->potongan_bpjs, 0, ',', '.') }}</td>
+                                  {{-- <td class="text-center py-1 border border-gray-500">{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td> --}}
                                   <td class="text-center py-1 border border-gray-500">{{ number_format($salary->jumlah_bersih, 0, ',', '.') }}</td>
                                   <td class="text-center py-1 border border-gray-500">
                                     @if ($salary->ttd && file_exists(public_path('storage/ttd' . $salary->ttd)) )
@@ -163,7 +164,7 @@
                                   </td>
                                   <td class="text-center px-1 py-1 border border-gray-500">
                                     <div class="flex flex-col gap-1 items-center">
-                                      <a href="{{ route('edit.kantor', ['user'=>$user->id, 'page'=>request()->get('page',1)]) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
+                                      <a href="{{ route('edit.kantor', ['user'=>$user->id, 'from' => 'kantor 1', 'page'=>request()->get('page',1)]) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
                                       <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
                                       @csrf
                                       @method('DELETE')
@@ -180,14 +181,14 @@
 														<tr>
 															<td class="text-center border border-gray-500"></td>
 															<td colspan="2" class="border-b border-gray-500"><strong>TOTAL PER HALAMAN</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalGajiPokok'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalTunjanganMakan'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalJumlahGaji'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganBpjs'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganHariTua'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganKreditKasbon'], 0) }}</strong></td>
+															{{-- <td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganHariTua'], 0) }}</strong></td> --}}
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalPotonganBpjs'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($pageTotals['totalGeneral'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 														</tr>
@@ -195,14 +196,14 @@
 														<tr class="text-lg bg-gray-300 text-gray-900 font-semibold">
 															<td class="text-center border border-gray-500"></td>
 															<td colspan="2" class="border-b border-gray-500"><strong>TOTAL SEMUA</strong></td>
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalGajiPokok'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalTunjanganMakan'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalJumlahGaji'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganBpjs'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganHariTua'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0) }}</strong></td>
+															{{-- <td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganHariTua'], 0) }}</strong></td> --}}
+															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalPotonganBpjs'], 0) }}</strong></td>
 															<td class="text-center border border-gray-500"><strong>Rp{{ number_format($totalUsersSalary['totalGeneral'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 														</tr>

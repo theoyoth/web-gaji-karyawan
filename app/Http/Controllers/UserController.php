@@ -27,7 +27,7 @@ class UserController extends Controller
 			'kantor' => 'required|max:255',
 			'tempat_lahir' => 'nullable|string',
 			'tanggal_lahir' => 'nullable|date',
-			'tanggal_diangkat' => 'nullable|date',
+			'tanggal_diangkat' => 'nullable|string',
 
 			'gaji_pokok' => 'required|numeric',
 			'hari_kerja' => 'required|numeric',
@@ -38,11 +38,11 @@ class UserController extends Controller
 			'tunjangan_hari_tua' => 'nullable|numeric',
 
 			'potongan_bpjs' => 'required|numeric',
-			'potongan_tabungan_hari_tua' => 'required|numeric',
+			'potongan_tabungan_hari_tua' => 'nullable|numeric',
 			'potongan_kredit_kasbon' => 'required|numeric',
 
 			'ttd' => 'nullable|string',
-      'foto_profil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+      // 'foto_profil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
 		]);
 
 		// store image in storage folder
@@ -63,9 +63,13 @@ class UserController extends Controller
 		+ ($request->tunjangan_hari_tua ?? 0);
 
 		// create new instance for user,salary,delivery
+    // if ($request->hasFile('foto_profil')) {
+    //   $fotoPath = $request->file('foto_profil')->store('foto_profil', 'public');
+    // }
 		$user = new User();
-		$salary = new Salary();
+		$salary = new Salary(); 
 
+    // $user->foto_profil = $fotoPath ?? null;
 
 		// input data
 		$user->nama = $request->input('nama');
@@ -82,12 +86,12 @@ class UserController extends Controller
 		$salary->bulan = $request->input('bulan');
 		$salary->tahun = $request->input('tahun');
 		$salary->tunjangan_makan = $request->input('tunjangan_makan');
-		$salary->tunjangan_hari_tua = $request->input('tunjangan_hari_tua') ?? 0;
+		$salary->tunjangan_hari_tua = $request->input('tunjangan_hari_tua') ?: 0;
 
 		$salary->jumlah_gaji = $jumlah_gaji;
 
 		$salary->potongan_bpjs = $request->input('potongan_bpjs');
-		$salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua');
+		$salary->potongan_tabungan_hari_tua = $request->input('potongan_tabungan_hari_tua') ?: 0;
 		$salary->potongan_kredit_kasbon = $request->input('potongan_kredit_kasbon');
 
 		$salary->ttd = $fileName;
@@ -138,6 +142,7 @@ class UserController extends Controller
 			'kantor' => 'required|max:255',
 
 			'gaji_pokok' => 'required|numeric',
+			'tanggal_diangkat' => 'nullable|string',
 			'hari_kerja' => 'required|numeric',
 			'bulan' => 'required',
 			'tahun' => 'required|digits:4|integer|min:2010|max:'. date('Y'),
@@ -177,6 +182,7 @@ class UserController extends Controller
 		// input data
 		$user->nama = $request->input('nama');
 		$user->kantor = $request->input('kantor');
+		$user->tanggal_diangkat = $request->input('tanggal_diangkat');
 
 		$user->save();
 
@@ -367,6 +373,7 @@ class UserController extends Controller
 	  // Update salary
 	  $salary = $user->salary;
 
+	  $user->tanggal_diangkat = $request->input('tanggal_diangkat', $user->tanggal_diangkat);
 	  $salary->gaji_pokok = $request->input('gaji_pokok', $salary->gaji_pokok);
 	  $salary->bulan = $request->input('bulan', $salary->bulan);
 	  $salary->tahun = $request->input('tahun', $salary->tahun);
@@ -407,7 +414,8 @@ class UserController extends Controller
 		  + ($salary->tunjangan_makan ?? 0)
 		  + ($salary->tunjangan_hari_tua ?? 0);
 
-	  $salary->save();
+	  $user->save();
+    $salary->save();
 
 	  $page = $request->input('page', 1);
 
