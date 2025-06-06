@@ -55,18 +55,18 @@
                                 @error('tanggal_lahir')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
-                            </div>
-                            <div>
-                                <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Tanggal diangkat</label>
-                                <input type="date" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat') }}"  class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                @error('tanggal_diangkat')
-                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
                             </div> --}}
                             <div>
-                                <label for="gaji_pokok" class="block text-sm font-medium text-gray-700">Gaji pokok</label>
-                                <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                @error('gaji_pokok')
+                              <label for="gaji_pokok" class="block text-sm font-medium text-gray-700">Gaji pokok</label>
+                              <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                              @error('gaji_pokok')
+                              <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                              @enderror
+                            </div>
+                            <div>
+                                <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Masuk kerja</label>
+                                <input type="text" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat') }}"  class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                @error('tanggal_diangkat')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -108,29 +108,29 @@
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="flex items-center gap-10">
-                              <p class="block text-sm font-medium text-gray-700">Tunjangan</p>
-                              <div class="flex-1">
-                                  <div class="mt-2">
-                                      <label for="tunjangan_makan" class="block text-sm font-medium text-gray-700">Makan</label>
-                                      <input type="number" id="tunjangan_makan" name="tunjangan_makan" value="{{ old('tunjangan_makan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                      @error('tunjangan_makan')
-                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                      @enderror
-                                  </div>
-                                  {{-- <div class="mt-2">
-                                      <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">BPJS</label>
-                                      <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                      @error('tunjangan_hari_tua')
-                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                      @enderror
-                                  </div> --}}
-                              </div>
-                            </div>
                         </div>
 
                         <!-- Right Column -->
                         <div class="space-y-4">
+                          <div class="flex items-center">
+                            <p class="block text-sm font-medium text-gray-700 mr-10">Tunjangan</p>
+                            <div class="flex-1">
+                                <div class="mt-2">
+                                    <label for="tunjangan_makan" class="block text-sm font-medium text-gray-700">Makan</label>
+                                    <input type="number" id="tunjangan_makan" name="tunjangan_makan" value="{{ old('tunjangan_makan') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                    @error('tunjangan_makan')
+                                      <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                {{-- <div class="mt-2">
+                                    <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">BPJS</label>
+                                    <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                    @error('tunjangan_hari_tua')
+                                      <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div> --}}
+                            </div>
+                          </div>
                           <div class="flex items-center">
                             <p class="block text-sm font-medium text-gray-700 mr-10">Potongan</p>
                             <div class="flex-1">
@@ -164,14 +164,16 @@
                               <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                           </div> --}}
+
                           {{-- Foto profil --}}
-                          {{-- <div>
+                          <div>
                             <label for="foto_profil" class="block text-sm font-medium text-gray-700">Foto</label>
+                            <img id="preview" src="#" alt="Preview Foto" class="mt-2 w-32 h-40 object-cover rounded-md hidden">
                             <input type="file" id="foto_profil" name="foto_profil" accept="image/*" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                             @error('foto_profil')
                               <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
-                          </div> --}}
+                          </div>
                           {{-- TTD --}}
                           <div class="mt-4">
                               <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
@@ -225,6 +227,20 @@
                       if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'a') {
                         event.preventDefault(); // prevent browser's default save dialog
                         addDeliveryRow();
+                      }
+                    });
+
+                    // preview foto
+                    document.getElementById('foto_profil').addEventListener('change', function(event) {
+                      const [file] = event.target.files;
+                      const preview = document.getElementById('preview');
+
+                      if (file) {
+                          preview.src = URL.createObjectURL(file);
+                          preview.classList.remove('hidden');
+                      } else {
+                          preview.src = '#';
+                          preview.classList.add('hidden');
                       }
                     });
                 </script>

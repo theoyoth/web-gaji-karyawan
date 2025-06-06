@@ -10,7 +10,7 @@
             <h1 class="text-2xl font-bold text-center">FORMULIR INPUT TRANSPORTIR</h1>
             <h1 class="text-2xl font-bold text-center">AWAK 1 & AWAK 2</h1>
             <div class="mt-8">
-                <form action="{{ route('user.storeAwak12') }}" method="POST">
+                <form action="{{ route('user.storeAwak12') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Left Column -->
@@ -153,13 +153,15 @@
                               <button type="button" onclick="addDeliveryRow()" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded mt-4">+ Tambah Pengiriman</button>
                             </div>
 
-                            {{-- <div>
-                              <label for="photo" class="block text-sm font-medium text-gray-700">Foto</label>
-                              <input type="file" id="photo" name="photo" accept="image/*" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                              @error('photo')
+                            {{-- Foto profil --}}
+                            <div>
+                              <label for="foto_profil" class="block text-sm font-medium text-gray-700">Foto</label>
+                              <img id="preview" src="#" alt="Preview Foto" class="mt-2 w-32 h-40 object-cover rounded-md hidden">
+                              <input type="file" id="foto_profil" name="foto_profil" accept="image/*" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                              @error('foto_profil')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                               @enderror
-                            </div> --}}
+                            </div>
                             {{-- TTD --}}
                             <div class="mt-4">
                                 <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
@@ -235,6 +237,20 @@
                       if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'a') {
                         event.preventDefault(); // prevent browser's default save dialog
                         addDeliveryRow();
+                      }
+                    });
+
+                    // preview foto
+                    document.getElementById('foto_profil').addEventListener('change', function(event) {
+                      const [file] = event.target.files;
+                      const preview = document.getElementById('preview');
+
+                      if (file) {
+                          preview.src = URL.createObjectURL(file);
+                          preview.classList.remove('hidden');
+                      } else {
+                          preview.src = '#';
+                          preview.classList.add('hidden');
                       }
                     });
                 </script>

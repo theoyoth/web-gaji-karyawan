@@ -28,11 +28,11 @@ class placeController extends Controller
           'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
           'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_kredit_kasbon) ?? 0),
         ];
-      }, ['totalJumlahGaji' => 0, 
-      'totalTunjanganMakan' => 0, 
+      }, ['totalJumlahGaji' => 0,
+      'totalTunjanganMakan' => 0,
       'totalPotonganBpjs' => 0,
-      // 'totalPotonganHariTua' => 0, 
-      'totalPotonganKreditKasbon' => 0, 
+      // 'totalPotonganHariTua' => 0,
+      'totalPotonganKreditKasbon' => 0,
       'totalGeneral' => 0]);
 
       // Step 3: Paginate the original query
@@ -49,11 +49,11 @@ class placeController extends Controller
             'totalPotonganKreditKasbon' => $totalValue['totalPotonganKreditKasbon'] + ($salary->potongan_kredit_kasbon ?? 0),
             'totalGeneral' => $totalValue['totalGeneral'] + ($salary->jumlah_gaji - ($salary->potongan_bpjs + $salary->potongan_kredit_kasbon) ?? 0),
         ];
-      }, ['totalJumlahGaji' => 0, 
-      'totalTunjanganMakan' => 0, 
+      }, ['totalJumlahGaji' => 0,
+      'totalTunjanganMakan' => 0,
       'totalPotonganBpjs' => 0,
-      // 'totalPotonganHariTua' => 0, 
-      'totalPotonganKreditKasbon' => 0, 
+      // 'totalPotonganHariTua' => 0,
+      'totalPotonganKreditKasbon' => 0,
       'totalGeneral' => 0]);
 
       return view('place.kantor1', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary]);
@@ -384,7 +384,7 @@ class placeController extends Controller
       $allUsers = (clone $query)->get();
 
       // Paginate properly
-      $usersPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun']));
+      $usersPaginate = $query->paginate(15)->appends($request->only(['bulan','tahun']));
 
       // Calculate total for all data
       $totalUsersSalary = $allUsers->reduce(function ($total, $user) {
@@ -465,7 +465,7 @@ class placeController extends Controller
       // Step 2: Clone for total calculation (all data)
       $allUsers = (clone $query)->get();
       // Step 3: Paginate the original query
-      $usersPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun','kantor']));
+      $usersPaginate = $query->paginate(15)->appends($request->only(['bulan','tahun','kantor']));
 
       $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
         $salary = $user->salary;

@@ -162,7 +162,14 @@
 																			<tr>
 																				@if($index === 0)
 																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">{{ $no++ }}</td>
-																					<td rowspan="{{ $deliveryCount }}" class="text-left border border-gray-500 uppercase">{{$user->nama}}</td>
+																					<td rowspan="{{ $deliveryCount }}" class="text-left border border-gray-500 text-wrap w-[250px]">
+                                            <div class="flex items-center gap-2">
+                                              @if ($user->foto_profil)
+                                                <img src="{{ asset('storage/' . $user->foto_profil) }}" alt="Foto Profil" class="w-[50px] h-[70px] object-cover">
+                                              @endif
+                                              {{ $user->nama }}
+                                            </div>
+                                          </td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">Rp{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">{{$salary->hari_kerja}}</td>
 																				@endif

@@ -137,10 +137,12 @@
                                 <tr>
                                   <td class="text-center py-1 border border-gray-500">{{ $no++ }}</td>
                                   <td class="text-left py-1 border border-gray-500 text-wrap w-[250px]">
-                                    {{-- @if ($user->foto_profil)
-                                      <img src="{{ asset('storage/' . $user->foto_profil) }}" alt="Foto Profil" width="70" height="70" class="object-cover">
-                                    @endif --}}
-                                    {{ $user->nama }}
+                                    <div class="flex items-center gap-2">
+                                      @if ($user->foto_profil)
+                                        <img src="{{ asset('storage/' . $user->foto_profil) }}" alt="Foto Profil" class="w-[50px] h-[70px] object-cover">
+                                      @endif
+                                      {{ $user->nama }}
+                                    </div>
                                   </td>
                                   {{-- <td class="text-center py-1 border border-gray-500">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
                                   <td class="text-center py-1 border border-gray-500">
