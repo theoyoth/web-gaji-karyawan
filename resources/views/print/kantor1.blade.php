@@ -51,12 +51,7 @@
                 @endfor
             </select>
 
-            <button type="submit" class="select-input">Filter</button>
-
-            {{-- Reset Filter Button --}}
-            @if(request('bulan') || request('tahun'))
-              <a href="{{ route('print.kantor1.filtered') }}" class="select-input btn-reset">Reset</a>
-            @endif
+            <button type="submit" class="select-input btn-filter">Filter</button>
         </form>
 
         <div class="bg-gray-100">
@@ -75,7 +70,7 @@
 
                 <!-- Gaji Pokok with 3 sub-columns -->
                 <th rowspan="2" class="h-gaji-pokok">Gaji Pokok (Rp.)</th>
-                <th class="h-empty"></th>
+                {{-- <th class="h-empty"></th> --}}
                 <th rowspan="2" class="h-hari-kerja">Hari Kerja</th>
                 <!-- Sub-columns for tunjangan -->
                 <th class="h-tunjangan">Uang Makan (Rp.)</th>
@@ -109,22 +104,19 @@
                     {{-- <td>{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
                     <td class="h-masuk-kerja">
                       {{$user->tanggal_diangkat}}
-
                     </td>
 
                     <td>
                       {{number_format($salary->gaji_pokok, 0, ',', '.')}}
-
                     </td>
-                    <td></td>
-                    <td>{{$salary->hari_kerja}}</td>
+                    {{-- <td></td> --}}
+                    <td class="el-center">{{$salary->hari_kerja}}</td>
                     <td>
                       {{number_format($salary->tunjangan_makan, 0, ',', '.') ?: ''}}
                     </td>
                     {{-- <td>
                       {{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}
                     </td> --}}
-                    {{-- <td>{{number_format($salary->tunjangan_retase, 0, ',', '.')}}</td> --}}
                     <td>
                       {{number_format($salary->jumlah_gaji, 0, ',', '.')}}
                     </td>
@@ -139,12 +131,12 @@
                       {{number_format($salary->jumlah_bersih, 0, ',', '.')}}
                     </td>
                     @if($num % 2 == 0)
-                      <td class="ttd-center">
+                      <td class="el-center">
                         {{ $num++ }}.
                         {{-- <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd"> --}}
                       </td>
                     @else
-                      <td class="ttd-left">{{ $num++ }}.</td>
+                      <td class="el-left">{{ $num++ }}.</td>
                     @endif
                   </tr>
                 @endif
@@ -153,27 +145,27 @@
                 <td></td>
                 <td colspan="2"><strong>TOTAL</strong></td>
                 <td>
-                  {{-- {{number_format($totalUsersSalary['totalTunjanganMakan'], 0)}} --}}
+                  {{number_format($totalUsersSalary['totalGajiPokok'], 0) ?: ''}}
                 </td>
-                {{-- <td>{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
                 <td></td>
                 <td>
-                  {{-- {{number_format($totalUsersSalary['totalJumlahGaji'], 0)}} --}}
+                  {{number_format($totalUsersSalary['totalTunjanganMakan'], 0) ?: ''}}
+                </td>
+                {{-- <td>{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
+                <td>
+                  {{number_format($totalUsersSalary['totalJumlahGaji'], 0) ?: ''}}
                 </td>
                 <td>
-                  {{-- {{number_format($totalUsersSalary['totalPotonganBpjs'], 0)}} --}}
+                  {{number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0) ?: ''}}
+                </td>
+                <td>
+                  {{number_format($totalUsersSalary['totalPotonganBpjs'], 0) ?: ''}}
 
                 </td>
                 {{-- <td>{{number_format($totalUsersSalary['totalPotonganHariTua'], 0)}}</td> --}}
                 <td>
-                  {{-- {{number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0)}} --}}
+                  {{number_format($totalUsersSalary['totalGeneral'], 0) ?: ''}}
                 </td>
-                <td>
-                  {{-- {{number_format($totalUsersSalary['totalGeneral'], 0)}} --}}
-
-                </td>
-                <td></td>
-                <td></td>
                 <td></td>
               </tr>
             </tbody>

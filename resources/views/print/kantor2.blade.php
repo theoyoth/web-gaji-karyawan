@@ -48,12 +48,7 @@
               @endfor
           </select>
 
-          <button type="submit" class="select-input">Filter</button>
-
-          {{-- Reset Filter Button --}}
-          @if(request('bulan') || request('tahun'))
-            <a href="{{ route('print.kantor2.filtered') }}" class="select-input btn-reset">Reset</a>
-          @endif
+          <button type="submit" class="select-input btn-filter">Filter</button>
         </form>
 
         <div>
@@ -65,42 +60,38 @@
           <table class="table-auto border-collapse">
             <thead>
               <tr>
-                <th rowspan="2">No.</th>
-                <th rowspan="2" class="h-name">Nama</th>
-                {{-- <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th>
-                <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal diangkat</th> --}}
+                <th class="h-no">No.</th>
+                <th class="h-name">Nama</th>
+                {{-- <th class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th>
+                <th class="py-2 border border-black bg-gray-500">Tanggal diangkat</th> --}}
 
+                <th>Masuk Kerja</th>
                 <!-- Gaji Pokok with 3 sub-columns -->
-                <th rowspan="2">Gaji Pokok</th>
+                <th class="h-gaji-pokok">Gaji Pokok (Rp.)</th>
+                <th class="h-hari-kerja">Hari Kerja</th>
 
                 <!-- Tunjangan -->
-                <th>Tunjangan</th>
+                <!-- Sub-columns for tunjangan -->
+                <th class="h-tunjangan">Uang Makan (Rp.)</th>
 
                 <!-- Jumlah Kotor -->
-                <th rowspan="2">Jumlah Gaji</th>
+                <th class="h-total-gaji">Total Gaji (Rp.)</th>
 
                 <!-- Potongan with 3 sub-columns -->
-                <th colspan="3">Potongan</th>
+                <!-- Sub-columns for Potongan -->
+                <th class="h-potongan">Kredit/kasbon (Rp.)</th>
+                <th class="h-potongan">BPJS (Rp.)</th>
+                {{-- <th class="h-potongan">Tabungan hari tua</th> --}}
 
                 <!-- Jumlah Bersih -->
-                <th rowspan="2">Jumlah Bersih</th>
+                <th class="h-gaji-bersih">Jumlah Gaji Bersih (Rp.)</th>
 
                 <!-- TTD -->
-                <th rowspan="2" class="h-ttd">TTD</th>
-              </tr>
-              <tr>
-                <!-- Sub-columns for tunjangan -->
-                <th class="h-tunjangan">Makan</th>
-                {{-- <th class="h-tunjangan">Hari tua</th> --}}
-
-                <!-- Sub-columns for Potongan -->
-                <th class="h-potongan">BPJS</th>
-                <th class="h-potongan">Tabungan hari tua</th>
-                <th class="h-potongan">Kredit/kasbon</th>
+                <th class="h-ttd">TTD</th>
               </tr>
             </thead>
             <tbody>
-              @php $no = 1; @endphp
+              @php $no = 1; $num = 1;@endphp
               @foreach($users as $user)
                 @php
                   $salary = $user->salary;
@@ -109,33 +100,43 @@
                   <tr>
                     <td>{{ $no++ }}</td>
                     <td class="td-nama">{{$user->nama}}</td>
-                    {{-- <td>{{$user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td>
-                    <td>{{$user->tanggal_diangkat->format('d F Y')}}</td> --}}
+                    {{-- <td>{{$user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
+                    <td class="h-masuk-kerja">{{$user->tanggal_diangkat}}</td>
 
-                    <td>Rp.{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->tunjangan_makan, 0, ',', '.')}}</td>
-                    {{-- <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
-                    <td>Rp.{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.')}}</td>
-                    <td>Rp.{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
-                    <td>
+                    <td>{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
+                    
+                    <td class="el-center">{{$salary->hari_kerja}}</td>
+                    <td>{{number_format($salary->tunjangan_makan, 0, ',', '.') ?: ''}}</td>
+                    {{-- <td>{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
+                    <td>{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
+                    <td>{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: ''}}</td>
+                    <td>{{number_format($salary->potongan_bpjs, 0, ',', '.') ?: ''}}</td>
+                    {{-- <td>{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td> --}}
+                    <td>{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
+                    
+                    @if($num % 2 == 0)
+                    <td class="el-center">
+                      {{ $num++ }}.
                       {{-- <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd"> --}}
                     </td>
+                    @else
+                      <td class="el-left">{{ $num++ }}.</td>
+                    @endif
                   </tr>
                 @endif
               @endforeach
               <tr class="row-total">
                 <td></td>
                 <td colspan="2"><strong>TOTAL</strong></td>
-                <td>Rp.{{number_format($totalUsersSalary['totalTunjanganMakan'], 0)}}</td>
-                {{-- <td>Rp.{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
-                <td>Rp.{{number_format($totalUsersSalary['totalJumlahGaji'], 0)}}</td>
-                <td>Rp.{{number_format($totalUsersSalary['totalPotonganBpjs'], 0)}}</td>
-                <td>Rp.{{number_format($totalUsersSalary['totalPotonganHariTua'], 0)}}</td>
-                <td>Rp.{{number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0)}}</td>
-                <td>Rp.{{number_format($totalUsersSalary['totalGeneral'], 0)}}</td>
+                <td>{{number_format($totalUsersSalary['totalGajiPokok'], 0) ?: ''}}</td>
+                <td></td>
+                <td>{{number_format($totalUsersSalary['totalTunjanganMakan'], 0) ?: ''}}</td>
+                {{-- <td>{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
+                <td>{{number_format($totalUsersSalary['totalJumlahGaji'], 0) ?: ''}}</td>
+                <td>{{number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0) ?: ''}}</td>
+                {{-- <td>{{number_format($totalUsersSalary['totalPotonganHariTua'], 0)}}</td> --}}
+                <td>{{number_format($totalUsersSalary['totalPotonganBpjs'], 0) ?: ''}}</td>
+                <td>{{number_format($totalUsersSalary['totalGeneral'], 0) ?: ''}}</td>
                 <td></td>
               </tr>
             </tbody>

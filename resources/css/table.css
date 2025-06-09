@@ -76,6 +76,11 @@ padding-block:10px;
 padding-inline: 16px;
 cursor: pointer;
 }
+.btn-filter{
+  background-color: #1f2937;
+  color: white;
+  border:none;
+}
 form{
 margin-bottom: 10px;
 }
@@ -138,8 +143,8 @@ border-bottom: 1px solid black;
   width: 20px;
 }
 .h-hari-kerja{
-    width:50px;
-  }
+  width:50px;
+}
 .h-potongan{
   width:60px;
 }
@@ -155,10 +160,10 @@ border-bottom: 1px solid black;
 .h-gaji-bersih{
   width: 150px;
 }
-.ttd-center{
+.el-center{
   text-align: center;
 }
-.ttd-left{
+.el-left{
   text-align: left;
 }
 
@@ -273,10 +278,10 @@ border-bottom: 1px solid black;
   .h-masuk-kerja{
     width: 100px;
   }
-  .ttd-center{
+  .el-center{
     text-align: center;
   }
-  .ttd-left{
+  .el-left{
     text-align: left;
   }
 }

@@ -391,6 +391,7 @@ class placeController extends Controller
           $salary = $user->salary;
 
           return [
+              'totalGajiPokok' => $total['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
               'totalJumlahGaji' => $total['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
               'totalTunjanganMakan' => $total['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
               'totalJumlahRetase' => $total['totalJumlahRetase'] + ($salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase) ?? 0),
@@ -400,6 +401,7 @@ class placeController extends Controller
               'totalGeneral' => $total['totalGeneral'] + (($salary->jumlah_gaji ?? 0) - (($salary->potongan_bpjs ?? 0) + ($salary->potongan_hari_tua ?? 0) + ($salary->potongan_kredit_kasbon ?? 0))),
           ];
       }, [
+          'totalGajiPokok' => 0,
           'totalJumlahGaji' => 0,
           'totalTunjanganMakan' => 0,
           'totalJumlahRetase' => 0,
@@ -414,6 +416,7 @@ class placeController extends Controller
           $salary = $user->salary;
 
           return [
+              'totalGajiPokok' => $total['totalGajiPokok'] + ($salary->jumlah_gaji ?? 0),
               'totalJumlahGaji' => $total['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
               'totalTunjanganMakan' => $total['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
               'totalJumlahRetase' => $total['totalJumlahRetase'] + ($salary->deliveries->sum(fn($d) => $d->jumlah_retase * $d->tarif_retase) ?? 0),
@@ -423,6 +426,7 @@ class placeController extends Controller
               'totalGeneral' => $total['totalGeneral'] + (($salary->jumlah_gaji ?? 0) - (($salary->potongan_bpjs ?? 0) + ($salary->potongan_hari_tua ?? 0) + ($salary->potongan_kredit_kasbon ?? 0))),
           ];
       }, [
+          'totalGajiPokok' => 0,
           'totalJumlahGaji' => 0,
           'totalTunjanganMakan' => 0,
           'totalJumlahRetase' => 0,

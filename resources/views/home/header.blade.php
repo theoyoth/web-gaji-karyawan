@@ -31,11 +31,11 @@
                             </div>
                             <div class="text-center font-semibold text-white ml-2">KANTOR 2</div>
                         </a>
-                        <a href="{{ route('filterbymonth.kantor',['bulan' => $monthName ,'tahun' => 2025,'kantor' => 'kantor 2']) }}" class="my-4 w-[200px] h-[100px] flex flex-col items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
+                        <a href="{{ route('filterbymonth.kantor',['bulan' => $monthName ,'tahun' => 2025,'kantor' => 'operator,helper,supir']) }}" class="my-4 w-[200px] h-[100px] flex flex-col items-center justify-center bg-gray-700 text-white text-center rounded-md hover:bg-gray-800">
                             <div class="text-orange-500 text-4xl mb-2">
                                 <i class="fas fa-users"></i>
                             </div>
-                            <div class="text-center font-semibold text-white ml-2">OPERATOR, HELPER</div>
+                            <div class="text-center font-semibold text-white ml-2">OPERATOR, HELPER, & SUPIR</div>
                         </a>
                     </div>
                 </div>

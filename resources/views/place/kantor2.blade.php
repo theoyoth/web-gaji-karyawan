@@ -154,15 +154,15 @@
                                     </td>
                                     {{-- <td class="text-center py-1 border border-gray-500">{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
                                     <td class="text-center py-1 border border-gray-500">{{ $user->tanggal_diangkat }}</td>
-                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>
+                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->gaji_pokok, 0, ',', '.') ?: '' }}</td>
                                     <td class="text-center py-1 border border-gray-500">{{ $salary->hari_kerja }}</td>
-                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->tunjangan_makan, 0, ',', '.') }}</td>
+                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->tunjangan_makan, 0, ',', '.') ?: '' }}</td>
                                     {{-- <td class="text-center py-1 border border-gray-500">{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td> --}}
-                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->jumlah_gaji, 0, ',', '.') }}</td>
-                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') }}</td>
-                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->potongan_bpjs, 0, ',', '.') }}</td>
+                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->jumlah_gaji, 0, ',', '.') ?: '' }}</td>
+                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: '' }}</td>
+                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->potongan_bpjs, 0, ',', '.') ?: '' }}</td>
                                     {{-- <td class="text-center py-1 border border-gray-500">{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td> --}}
-                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->jumlah_bersih, 0, ',', '.') }}</td>
+                                    <td class="text-center py-1 border border-gray-500">{{ number_format($salary->jumlah_bersih, 0, ',', '.') ?: '' }}</td>
                                     <td class="text-center py-1 border border-gray-500">
                                       @if ($salary->ttd && file_exists(public_path('storage/ttd' . $salary->ttd)) )
                                         <img src="{{ asset('storage/ttd/' . $user->nama . '.png') }}" alt="{{ 'ttd' . $user->nama }}" class="ttd w-20 h-20 object-contain">
@@ -189,14 +189,14 @@
 														<tr>
 															<td class="text-center border border-gray-500"></td>
 															<td colspan="2" class="border-b border-gray-500"><strong>TOTAL PER HALAMAN</strong></td>
-                              <td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalGajiPokok'], 0) }}</strong></td>
+                              <td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalGajiPokok'], 0) ?: '' }}</strong></td>
 															<td class="text-center border-b border-gray-500"></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalTunjanganMakan'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalJumlahGaji'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalPotonganKreditKasbon'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalTunjanganMakan'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalJumlahGaji'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalPotonganKreditKasbon'], 0) ?: '' }}</strong></td>
 															{{-- <td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalPotonganHariTua'], 0) }}</strong></td> --}}
-															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalPotonganBpjs'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalGeneral'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalPotonganBpjs'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($pageTotals['totalGeneral'], 0) ?: '' }}</strong></td>
 															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 														</tr>
@@ -204,14 +204,14 @@
 														<tr class="text-lg bg-gray-300 text-gray-900 font-semibold">
 															<td class="text-center border border-gray-500"></td>
 															<td colspan="2" class="border-b border-gray-500"><strong>TOTAL SEMUA</strong></td>
-                              <td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalGajiPokok'], 0) }}</strong></td>
+                              <td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalGajiPokok'], 0) ?: '' }}</strong></td>
 															<td class="text-center border-b border-gray-500"></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalTunjanganMakan'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalJumlahGaji'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalTunjanganMakan'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalJumlahGaji'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0) ?: '' }}</strong></td>
 															{{-- <td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalPotonganHariTua'], 0) }}</strong></td> --}}
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalPotonganBpjs'], 0) }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalGeneral'], 0) }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalPotonganBpjs'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalGeneral'], 0) ?: '' }}</strong></td>
 															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 														</tr>
