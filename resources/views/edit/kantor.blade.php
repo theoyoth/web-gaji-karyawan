@@ -147,6 +147,7 @@
                               </div>
                             </div>
                           </div>
+                          @if($user->foto_profil)
                           <!-- Preview Image -->
                           <div class="relative">
                             <img id="preview"
@@ -160,6 +161,7 @@
                             {{-- Hidden input to signal removal --}}
                             <input type="hidden" name="hapus_foto" id="hapus_foto" value="0">
                           </div>
+                          @endif
                           <!-- Upload new photo -->
                           <div class="mt-2">
                               <label for="foto_profil" class="block text-sm font-medium text-gray-700">Ganti foto profil</label>
