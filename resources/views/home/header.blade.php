@@ -35,7 +35,7 @@
                             <div class="text-orange-500 text-4xl mb-2">
                                 <i class="fas fa-users"></i>
                             </div>
-                            <div class="text-center font-semibold text-white ml-2">OPERATOR, HELPER, & SUPIR</div>
+                            <div class="text-center font-semibold text-white text-sm">OPERATOR, HELPER, & SUPIR</div>
                         </a>
                     </div>
                 </div>

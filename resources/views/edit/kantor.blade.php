@@ -148,19 +148,19 @@
                             </div>
                           </div>
                           @if($user->foto_profil)
-                          <!-- Preview Image -->
-                          <div class="relative">
-                            <img id="preview"
-                                src="{{ $user->foto_profil ? asset('storage/' . $user->foto_profil) : '#' }}"
-                                alt="Preview Foto"
-                                class="mt-2 w-32 h-40 object-cover rounded-md {{ $user->foto_profil ? '' : 'hidden' }}">
-                            {{-- Cross icon to remove photo --}}
-                            <button type="button" onclick="removePhoto()" class="absolute top-0 left-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center">
-                                &times;
-                            </button>
-                            {{-- Hidden input to signal removal --}}
-                            <input type="hidden" name="hapus_foto" id="hapus_foto" value="0">
-                          </div>
+                            <!-- Preview Image -->
+                            <div class="relative">
+                              <img id="preview"
+                                  src="{{ $user->foto_profil ? asset('storage/' . $user->foto_profil) : '#' }}"
+                                  alt="Preview Foto"
+                                  class="mt-2 w-32 h-40 object-cover rounded-md {{ $user->foto_profil ? '' : 'hidden' }}">
+                              {{-- Cross icon to remove photo --}}
+                              <button type="button" onclick="removePhoto()" class="absolute top-0 left-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center">
+                                  &times;
+                              </button>
+                              {{-- Hidden input to signal removal --}}
+                              <input type="hidden" name="hapus_foto" id="hapus_foto" value="0">
+                            </div>
                           @endif
                           <!-- Upload new photo -->
                           <div class="mt-2">
