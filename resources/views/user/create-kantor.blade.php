@@ -168,8 +168,15 @@
                           {{-- Foto profil --}}
                           <div>
                             <label for="foto_profil" class="block text-sm font-medium text-gray-700">Foto</label>
-                            <img id="preview" src="#" alt="Preview Foto" class="mt-2 w-32 h-40 object-cover rounded-md hidden">
+                            <div class="relative">
+                              <img id="preview" src="#" alt="Preview Foto" class="mt-2 w-32 h-40 object-cover rounded-md hidden">
+                              {{-- Cross icon to remove photo --}}
+                              <button type="button" onclick="removePhoto(event)" class="absolute top-0 left-0 bg-black text-white rounded-full w-6 h-6 items-center justify-center hidden">
+                                  &times;
+                              </button>
+                            </div>
                             <input type="file" id="foto_profil" name="foto_profil" accept="image/*" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                            
                             @error('foto_profil')
                               <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -234,15 +241,25 @@
                     document.getElementById('foto_profil').addEventListener('change', function(event) {
                       const [file] = event.target.files;
                       const preview = document.getElementById('preview');
+                      const removeBtn = preview.nextElementSibling;
 
                       if (file) {
                           preview.src = URL.createObjectURL(file);
                           preview.classList.remove('hidden');
+                          preview.style.display = 'block';
+                          removeBtn.style.display = 'flex';
                       } else {
                           preview.src = '#';
-                          preview.classList.add('hidden');
+                          preview.style.display = 'none';
+                          removeBtn.style.display = 'none';
                       }
                     });
+
+                    function removePhoto(event) {
+                      document.getElementById('preview').style.display = 'none';
+                      document.getElementById('foto_profil').value = '';
+                      event.target.style.display = 'none'; // Hide the cross button too
+                    }
                 </script>
         </div>
     </main>
