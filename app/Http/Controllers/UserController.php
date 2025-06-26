@@ -399,18 +399,7 @@ class UserController extends Controller
     $bulan = $request->input('bulan');
     $tahun = $request->input('tahun');
 
-    $allUsers = User::where('kantor', 'awak 1 dan awak 2') // Filter by kantor
-    ->whereHas('salary', function ($q) use ($bulan, $tahun) {
-        // Filter salaries by bulan (month) and tahun (year)
-        if ($bulan && $tahun) {
-            $q->where('bulan', $bulan)
-              ->where('tahun', $tahun);
-        }
-    })->get()->count();
-
-		$lastPage = ceil($allUsers / 15);
-
-		return redirect()->route('awak12.index',['bulan' => $bulan, 'tahun' => $tahun, 'page' => $lastPage])->with('success', 'User updated successfully!');
+		return redirect()->route('awak12.index',['bulan' => $bulan, 'tahun' => $tahun, 'page' => $request->page])->with('success', 'User updated successfully!');
 	}
 
 	public function updateKantor(Request $request, $userId){

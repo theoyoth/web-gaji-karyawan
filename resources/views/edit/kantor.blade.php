@@ -155,7 +155,7 @@
                                   id="preview"
                                   src="{{ $user->foto_profil ? asset('storage/' . $user->foto_profil) : '#' }}"
                                   alt="Preview Foto"
-                                  class="mt-2 w-32 h-40 object-cover rounded-md {{ $user->foto_profil ? '' : 'hidden' }}">
+                                  class="mt-2 w-32 h-40 object-contain rounded-md {{ $user->foto_profil ? '' : 'hidden' }}">
                                 {{-- Cross icon to remove photo --}}
                                 <button type="button" onclick="removePhoto(event)" class="absolute top-0 left-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center {{ $user->foto_profil ? '' : 'hidden' }}">
                                     &times;
