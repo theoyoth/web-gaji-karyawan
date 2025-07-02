@@ -644,4 +644,13 @@ class UserController extends Controller
 
     return Excel::download(new Awak12Export($month, $year), "awak12_{$month}_{$year}.xlsx");
   }
+
+  public function filterUserByAwak12() {
+    $kantor = ["awak 1 dan awak 2"];
+    $users = User::whereIn('kantor', $kantor)
+             ->with('salary')
+             ->get();
+
+    return view('user.create-awak12', compact('users'));
+  }
 }

@@ -26,6 +26,8 @@ Route::get('/user/create/awak12', [UserController::class, 'createAwak12'])->name
 // store
 Route::post('/user/create/kantor', [UserController::class, 'store'])->name('user.store');
 Route::post('/user/create/awak12', [UserController::class, 'storeAwak12'])->name('user.storeAwak12');
+
+Route::get('/user/create/awak12', [userController::class, 'filterUserByAwak12'])->name('filter.awak12');
 // edit
 Route::get('/awak12/edit/user/{user}', [UserController::class, 'editPageAwak12'])->name('edit.awak12');
 Route::get('/kantor/edit/user/{user}', [UserController::class, 'editPageKantor'])->name('edit.kantor');
@@ -42,7 +44,7 @@ Route::get('/kantor-2', [placeController::class, 'kantor2'])->name('kantor2.inde
 Route::get('/awak-1-2', [placeController::class, 'filterbyMonthAwak12'])->name('awak12.index');
 // Route::get('/kantor-1/filter', [placeController::class, 'filterKantor1'])->name('filter.kantor1');
 // Route::get('/kantor-2/filter', [placeController::class, 'filterKantor2'])->name('filter.kantor2');
-// Route::get('/awak-1-2/filter', [placeController::class, 'filterAwak12'])->name('filter.awak12');
+
 // Route::get('/awak-1-2/filter', [placeController::class, 'filterbyMonthAwak12'])->name('filterbymonth.awak12');
 Route::get('/kantor', [placeController::class, 'filterbyMonthKantor'])->name('filterbymonth.kantor');
 Route::get('/operator-helper', [placeController::class, 'filterbyMonthOperatorHelper'])->name('filterbymonth.operatorhelper');

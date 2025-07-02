@@ -17,18 +17,19 @@
                         <div class="space-y-2">
                             <div>
                                 <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                                <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false">
+                                {{-- <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"> --}}
+                                <select name="nama" id="nama" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                    @foreach ($users as $user)
+                                      <option value="{{ $user->nama }}">{{ $user->nama }}</option>
+                                    @endforeach
+                                </select>
                                 @error('nama')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div>
                                 <label for="kantor" class="block text-sm font-medium text-gray-700">Kantor</label>
-                                <select name="kantor" id="kantor" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                    @foreach (['awak 1 dan awak 2'] as $kan)
-                                        <option value="{{ $kan }}" {{ request('kan') ? 'selected' : '' }}>{{ $kan }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" id="kantor" name="kantor" value="awak 1 dan awak 2" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm" readonly>
                                 @error('kantor')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
