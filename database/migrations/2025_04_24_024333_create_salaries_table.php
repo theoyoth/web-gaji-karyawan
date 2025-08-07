@@ -30,8 +30,6 @@ return new class extends Migration
                   ->storedAs('jumlah_gaji - (potongan_bpjs + potongan_tabungan_hari_tua + potongan_kredit_kasbon)');
             $table->string('ttd');
             $table->timestamps();
-
-            $table->unique(['user_id']);
         });
     }
 

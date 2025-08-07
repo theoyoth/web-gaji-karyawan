@@ -20,7 +20,6 @@ return new class extends Migration
             $table->date('tanggal_lahir')->nullable();
             $table->string('tanggal_diangkat')->nullable();
             $table->string('kantor');
-            $table->string('foto_profil')->nullable();
             $table->timestamps();
         });
     }
