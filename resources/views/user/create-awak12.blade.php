@@ -10,6 +10,17 @@
             <h1 class="text-2xl font-bold text-center">FORMULIR INPUT TRANSPORTIR</h1>
             <h1 class="text-2xl font-bold text-center">AWAK 1 & AWAK 2</h1>
             <div class="mt-8">
+              @if(session('error'))
+                <div id="error-msg" class="bg-red-100 text-red-700 p-2 text-sm rounded my-2">
+                  {{ session('error') }}
+                </div>
+                <script>
+                  setTimeout(() => {
+                      const msg = document.getElementById('error-msg');
+                      if (msg) msg.style.display = 'none';
+                  }, 4000);
+                </script>
+              @endif
                 <form action="{{ route('user.storeAwak12') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -17,12 +28,20 @@
                         <div class="space-y-2">
                             <div>
                                 <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                                {{-- <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"> --}}
-                                <select name="nama" id="nama" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                <select name="user_id" id="user_id" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                     @foreach ($users as $user)
-                                      <option value="{{ $user->nama }}">{{ $user->nama }}</option>
+                                      <option value="{{ $user->id }}">{{ $user->nama }}</option>
                                     @endforeach
                                 </select>
+                                {{-- Checkbox --}}
+                                <label class="block mt-2">
+                                    <input type="checkbox" id="new_user_checkbox" name="new_user_checkbox" value="1">
+                                    Belum terdaftar
+                                </label>
+
+                                {{-- New User Input (Hidden by Default) --}}
+                                <input type="text" id="nama" name="nama" class="w-full h-10 px-2 mt-2 rounded-md border-2 border-gray-200 outline-none shadow-sm focus:border-gray-600" style="display: none;">
+
                                 @error('nama')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -65,7 +84,7 @@
                                   <option value="Mei" {{ request('bulan') === 'Mei' ? 'selected' : '' }}>Mei</option>
                                   <option value="Juni" {{ request('bulan') === 'Juni' ? 'selected' : '' }}>Juni</option>
                                   <option value="Juli" {{ request('bulan') === 'Juli' ? 'selected' : '' }}>Juli</option>
-                                  <option value="Agustus" {{ request('bulan') === 'Juli' ? 'Agustus' : '' }}>Agustus</option>
+                                  <option value="Agustus" {{ request('bulan') === 'Agustus' ? 'selected' : '' }}>Agustus</option>
                                   <option value="September" {{ request('bulan') === 'September' ? 'selected' : '' }}>September</option>
                                   <option value="Oktober" {{ request('bulan') === 'Oktober' ? 'selected' : '' }}>Oktober</option>
                                   <option value="November" {{ request('bulan') === 'November' ? 'selected' : '' }}>November</option>
@@ -155,9 +174,15 @@
                             </div>
 
                             {{-- Foto profil --}}
-                            <div>
-                              <label for="foto_profil" class="block text-sm font-medium text-gray-700">Foto</label>
+                            <div class="relative">
                               <img id="preview" src="#" alt="Preview Foto" class="mt-2 w-32 h-40 object-cover rounded-md hidden">
+                              {{-- Cross icon to remove photo --}}
+                              <button type="button" id="removeBtn" onclick="removePhoto()" class="absolute top-0 left-0 bg-black text-white rounded-full w-6 h-6 items-center justify-center hidden">
+                                &times;
+                              </button>
+                            </div>
+                            <div class="mt-2">
+                              <label for="foto_profil" class="block text-sm font-medium text-gray-700">Foto</label>
                               <input type="file" id="foto_profil" name="foto_profil" accept="image/*" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                               @error('foto_profil')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -243,16 +268,38 @@
 
                     // preview foto
                     document.getElementById('foto_profil').addEventListener('change', function(event) {
-                      const [file] = event.target.files;
                       const preview = document.getElementById('preview');
+                      const removeBtn = document.getElementById('removeBtn');
+                      const file = event.target.files[0];
 
                       if (file) {
                           preview.src = URL.createObjectURL(file);
                           preview.classList.remove('hidden');
-                      } else {
-                          preview.src = '#';
-                          preview.classList.add('hidden');
+                          removeBtn.classList.remove('hidden');
                       }
+                    });
+
+                    function removePhoto() {
+                      document.getElementById('removeBtn').classList.add('hidden');
+                      document.getElementById('preview').style.display = 'none';
+                      
+                      // also clear the input
+                      document.getElementById('foto_profil').value = "";
+                    }
+
+                    const checkbox = document.getElementById('new_user_checkbox');
+                    const namaInput = document.getElementById('nama');
+                    const userSelect = document.getElementById('user_id');
+
+                    checkbox.addEventListener('change', function () {
+                        if (this.checked) {
+                            namaInput.style.display = 'block';
+                            userSelect.disabled = true;
+                            // userSelect.value = ""; 
+                        } else {
+                            namaInput.style.display = 'none';
+                            userSelect.disabled = false;
+                        }
                     });
                 </script>
         </div>

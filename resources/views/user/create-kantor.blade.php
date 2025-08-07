@@ -9,7 +9,7 @@
 
             <h1 class="text-4xl font-bold text-center">FORMULIR INPUT KANTOR</h1>
             <div class="mt-8">
-              @if ($errors->any())
+              {{-- @if ($errors->any())
                 <div class="bg-red-100 text-red-700 border border-red-400 px-4 py-2 rounded mb-4">
                   <ul class="list-disc pl-5">
                     @foreach ($errors->all() as $error)
@@ -17,6 +17,17 @@
                     @endforeach
                   </ul>
                 </div>
+              @endif --}}
+              @if(session('error'))
+                  <div id="error-msg" class="bg-red-100 text-red-600 p-2 text-sm rounded my-2">
+                      {{ session('error') }}
+                  </div>
+                  <script>
+                      setTimeout(() => {
+                          const msg = document.getElementById('error-msg');
+                          if (msg) msg.style.display = 'none';
+                      }, 4000);
+                  </script>
               @endif
                 <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -25,7 +36,20 @@
                         <div class="space-y-4">
                             <div>
                               <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                              <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                              <select name="user_id" id="user_id" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                  @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->nama }}</option>
+                                  @endforeach
+                              </select>
+                              {{-- Checkbox --}}
+                              <label class="block mt-2">
+                                  <input type="checkbox" id="new_user_checkbox" name="new_user_checkbox" value="1">
+                                  Belum terdaftar
+                              </label>
+
+                              {{-- New User Input (Hidden by Default) --}}
+                              <input type="text" id="nama" name="nama" class="w-full h-10 px-2 mt-2 rounded-md border-2 border-gray-200 outline-none shadow-sm focus:border-gray-600" style="display: none;">
+
                               @error('nama')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                               @enderror
@@ -260,6 +284,21 @@
                       document.getElementById('foto_profil').value = '';
                       event.target.style.display = 'none'; // Hide the cross button too
                     }
+
+                    const checkbox = document.getElementById('new_user_checkbox');
+                    const namaInput = document.getElementById('nama');
+                    const userSelect = document.getElementById('user_id');
+
+                    checkbox.addEventListener('change', function () {
+                        if (this.checked) {
+                            namaInput.style.display = 'block';
+                            userSelect.disabled = true;
+                            // userSelect.value = ""; 
+                        } else {
+                            namaInput.style.display = 'none';
+                            userSelect.disabled = false;
+                        }
+                    });
                 </script>
         </div>
     </main>
