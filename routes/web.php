@@ -26,8 +26,6 @@ Route::get('/user/create/awak12', [UserController::class, 'createAwak12'])->name
 // store
 Route::post('/user/create/kantor', [UserController::class, 'store'])->name('user.store');
 Route::post('/user/create/awak12', [UserController::class, 'storeAwak12'])->name('user.storeAwak12');
-
-Route::get('/user/create/awak12', [userController::class, 'filterUserByAwak12'])->name('filter.awak12');
 // edit
 Route::get('/awak12/edit/user/{user}', [UserController::class, 'editPageAwak12'])->name('edit.awak12');
 Route::get('/kantor/edit/user/{user}', [UserController::class, 'editPageKantor'])->name('edit.kantor');

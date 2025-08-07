@@ -13,17 +13,31 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
-	public function create(){
-		return view('user.create-kantor');
+	public function create(Request $request){
+    if($request->input("from") === 'kantor 1'){
+      $kantor = "kantor 1";
+    } else {
+      $kantor = "kantor 2";
+    }
+
+    $users = User::whereIn('kantor', [$kantor])
+             ->with('salary')
+             ->get();
+		return view('user.create-kantor',compact('users'));
 	}
 
 	public function createAwak12(){
-		return view('user.create-awak12');
+    $kantor = ["awak 1 dan awak 2"];
+    $users = User::whereIn('kantor', $kantor)
+             ->with('salary')
+             ->get();
+
+    return view('user.create-awak12', compact('users'));
 	}
 
 	public function store(Request $request){
 		$request->validate([
-			'nama' => 'required|max:255',
+			'nama' => 'max:255',
 			'kantor' => 'required|max:255',
 			'tempat_lahir' => 'nullable|string',
 			'tanggal_lahir' => 'nullable|date',
@@ -62,26 +76,37 @@ class UserController extends Controller
 		+ ($request->tunjangan_makan ?? 0)
 		+ ($request->tunjangan_hari_tua ?? 0);
 
-		// create new instance for user,salary,delivery
-    if ($request->hasFile('foto_profil')) {
-      $fotoPath = $request->file('foto_profil')->store('foto_profil', 'public');
+    if ($request->filled('user_id') &&
+        Salary::where('user_id', $request->user_id)
+            ->where('bulan', $request->bulan)
+            ->where('tahun', $request->tahun)
+            ->exists()) {
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'Karyawan ini sudah terdaftar pada bulan ' . $request->bulan . ' tahun ' . $request->tahun);
     }
-    else{
-      $fotoPath = '';
+    else if ($request->filled('user_id')) {
+        $user = User::find($request->user_id);
+    } else {
+        if ($request->hasFile('foto_profil')) {
+          $fotoPath = $request->file('foto_profil')->store('foto_profil', 'public');
+        }
+        else{
+          $fotoPath = '';
+        }
+
+        $user = new User();
+        $user->nama = Str::title($request->input('nama'));
+        $user->kantor = $request->input('kantor');
+        $user->tempat_lahir = Str::title($request->input('tempat_lahir')) ?: null;
+        $user->tanggal_lahir = $request->input('tanggal_lahir') ?: null;
+        $user->tanggal_diangkat = $request->input('tanggal_diangkat') ?: null;
+        $user->foto_profil = $fotoPath ?: null;
+        $user->save();
     }
-		$user = new User();
+
 		$salary = new Salary();
-
-    $user->foto_profil = $fotoPath ?: null;
-
-		// input data
-		$user->nama = $request->input('nama');
-		$user->kantor = $request->input('kantor');
-		$user->tempat_lahir = Str::title($request->input('tempat_lahir')) ?: null;
-		$user->tanggal_lahir = $request->input('tanggal_lahir') ?: null;
-		$user->tanggal_diangkat = $request->input('tanggal_diangkat') ?: null;
-
-		$user->save();
 
 		$salary->user_id = $user->id;
 		$salary->gaji_pokok = $request->input('gaji_pokok');
@@ -141,7 +166,8 @@ class UserController extends Controller
 
 	public function storeAwak12(Request $request){
 		$request->validate([
-			'nama' => 'required|max:255',
+      'user_id' => 'nullable|exists:users,id',
+			'nama' => 'max:255',
 			'kantor' => 'required|max:255',
       'tempat_lahir' => 'nullable|string',
 			'tanggal_lahir' => 'nullable|date',
@@ -168,6 +194,30 @@ class UserController extends Controller
 
 		]);
 
+    // 🔍 Check if salary already exists for this user in the same month + year
+    $existingUser = null;
+
+    if ($request->filled('user_id')) {
+        $existingUser = User::find($request->user_id);
+    } else {
+        $existingUser = User::where('nama', Str::title($request->nama))
+            ->where('kantor', $request->kantor)
+            ->first();
+    }
+
+    if ($existingUser) {
+        $alreadyExists = Salary::where('user_id', $existingUser->id)
+            ->where('bulan', $request->bulan)
+            ->where('tahun', $request->tahun)
+            ->exists();
+
+        if ($alreadyExists) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Awak ini sudah terdaftar pada bulan ' . $request->bulan . ' tahun ' . $request->tahun);
+        }
+    }
+
 		// store image in storage folder
 		// Clean the base64 signature
 		$imageData = $request->input('ttd');
@@ -181,25 +231,27 @@ class UserController extends Controller
 		Storage::disk('public')->put('ttd/' . $fileName, base64_decode($image));
 
     // create new instance for user,salary,delivery
-    if ($request->hasFile('foto_profil')) {
-      $fotoPath = $request->file('foto_profil')->store('foto_profil', 'public');
-    }
-    else{
-      $fotoPath = '';
+    // get or create user
+    if ($request->filled('user_id')) {
+        $user = User::find($request->user_id);
+    } else {
+        // create new instance for user,salary,delivery
+        if ($request->hasFile('foto_profil')) {
+          $fotoPath = $request->file('foto_profil')->store('foto_profil', 'public');
+        }
+        else{
+          $fotoPath = '';
+        }
+
+        $user = new User();
+        $user->nama = Str::title($request->input('nama'));
+        $user->kantor = $request->input('kantor');
+        $user->tanggal_diangkat = $request->input('tanggal_diangkat') ?: null;
+        $user->foto_profil = $fotoPath ?: null;
+        $user->save();
     }
 
-		// create new instance for user,salary,delivery
-		$user = new User();
 		$salary = new Salary();
-
-    $user->foto_profil = $fotoPath ?: null;
-
-		// input data
-		$user->nama = $request->input('nama');
-		$user->kantor = $request->input('kantor');
-		$user->tanggal_diangkat = $request->input('tanggal_diangkat') ?: null;
-
-		$user->save();
 
 		$salary->user_id = $user->id;
 		$salary->gaji_pokok = $request->input('gaji_pokok');
@@ -645,12 +697,4 @@ class UserController extends Controller
     return Excel::download(new Awak12Export($month, $year), "awak12_{$month}_{$year}.xlsx");
   }
 
-  public function filterUserByAwak12() {
-    $kantor = ["awak 1 dan awak 2"];
-    $users = User::whereIn('kantor', $kantor)
-             ->with('salary')
-             ->get();
-
-    return view('user.create-awak12', compact('users'));
-  }
 }
