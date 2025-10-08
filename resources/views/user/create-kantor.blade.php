@@ -5,7 +5,7 @@
     <main class="min-h-screen flex justify-center items-center">
         <div class="w-1/2 m-auto py-2 px-10 bg-gray-100 rounded-lg border border-black my-4">
 
-            <a href="{{ route('filterbymonth.kantor', ['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => request('from')]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- kembali</a>
+            <a href="{{ route('filterbymonth.kantor', ['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => request('from')]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-arrow-left text-lg text-gray-100 mr-1"></i> kembali</a>
 
             <h1 class="text-4xl font-bold text-center">FORMULIR INPUT KANTOR</h1>
             <div class="mt-8">

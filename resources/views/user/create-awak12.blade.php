@@ -5,7 +5,7 @@
     <main class="min-h-screen flex justify-center items-center">
         <div class="w-1/2 m-auto py-2 px-10 bg-gray-100 rounded-lg border border-black my-4">
             <a href="{{ route('awak12.index', ['bulan' => request('bulan'),'tahun' => request('tahun'),'page' => 1]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
-              <- kembali
+              <i class="fas fa-arrow-left text-lg text-gray-100 mr-1"></i> kembali
             </a>
             <h1 class="text-2xl font-bold text-center">FORMULIR INPUT TRANSPORTIR</h1>
             <h1 class="text-2xl font-bold text-center">AWAK 1 & AWAK 2</h1>

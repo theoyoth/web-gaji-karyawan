@@ -9,7 +9,7 @@
               $tah = $user->salary->tahun;
             @endphp
             <a href="{{ route('filterbymonth.kantor',['bulan' => $bul, 'tahun' => $tah, 'kantor' => request('from') ,'page' => request('page')]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
-              <- kembali
+              <i class="fas fa-arrow-left text-lg text-gray-100 mr-1"></i> kembali
             </a>
             <h1 class="text-3xl font-bold text-center">EDIT KANTOR 1 & KANTOR 2</h1>
             <div class="mt-8">
