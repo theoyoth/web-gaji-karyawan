@@ -56,12 +56,11 @@
                             </div>
                             <div>
                               <label for="kantor" class="block text-sm font-medium text-gray-700">Kantor</label>
+                              @php
+                                $kantor = request('from');
+                              @endphp
+                              <input type="text" id="kantor" name="kantor" value="{{ $kantor === 'kantor 1' ? 'kantor 1' : 'kantor 2' }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm" readonly>
 
-                              <select name="kantor" id="kantor" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                @foreach (['kantor 1','kantor 2'] as $kan)
-                                  <option value="{{ $kan }}" {{ request('from') === $kan ? 'selected' : '' }}>{{ $kan }}</option>
-                                @endforeach
-                              </select>
                               @error('kantor')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                               @enderror
