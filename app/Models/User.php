@@ -10,20 +10,15 @@ class User extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama',
-        'kantor',
-        'tempat_lahir',
-        'tanggal_lahir',
-        'tanggal_diangkat',
-        'foto_profil',
+        'username',
+        'password'
     ];
 
     protected $casts = [
-        'tanggal_lahir' => 'date',
-        'tanggal_diangkat' => 'string',
+        //
     ];
-
-    public function salary(){
-        return $this->hasOne(Salary::class);
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 }

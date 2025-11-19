@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class PrintController extends Controller
 {
     public function kantor1(Request $request){
 
-        // Load users with their salaries, filtered by kantor
-        $users = User::where('kantor', "kantor 1")
+        // Load employees with their salaries, filtered by kantor
+        $employees = Employee::where('kantor', "kantor 1")
                     ->with('salary')
                     ->get();
 
-        $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+        $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
 
         return [
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -27,17 +27,17 @@ class PrintController extends Controller
         ];
         }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
 
-        return view('print.kantor1', ['users' => $users, 'totalUsersSalary' => $totalUsersSalary]);
+        return view('print.kantor1', ['employees' => $employees, 'totalEmployeesSalary' => $totalEmployeesSalary]);
     }
 
     public function kantor2(){
-      // Load users with their salaries, filtered by kantor
-      $users = User::where('kantor', "kantor 2")
+      // Load employees with their salaries, filtered by kantor
+      $employees = Employee::where('kantor', "kantor 2")
                   ->with('salary')
                   ->get();
 
-      $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
-      $salary = $user->salary;
+      $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
+      $salary = $employee->salary;
 
       return [
         'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -49,16 +49,16 @@ class PrintController extends Controller
       ];
       }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
 
-      return view('print.kantor2', ['users' => $users, 'totalUsersSalary' => $totalUsersSalary]);
+      return view('print.kantor2', ['employees' => $employees, 'totalEmployeesSalary' => $totalEmployeesSalary]);
     }
     public function awak12(){
-      // Load users with their salaries, filtered by kantor
-      $users = User::where('kantor', "awak 1 dan awak 2")
+      // Load employees with their salaries, filtered by kantor
+      $employees = Employee::where('kantor', "awak 1 dan awak 2")
                   ->with('salary')
                   ->get();
 
-      $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
         return [
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
           'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
@@ -71,7 +71,7 @@ class PrintController extends Controller
       }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalJumlahRetase' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
 
 
-      return view('print.awak12', ['users' => $users, 'totalUsersSalary' => $totalUsersSalary]);
+      return view('print.awak12', ['employees' => $employees, 'totalEmployeesSalary' => $totalEmployeesSalary]);
     }
 
 
@@ -81,7 +81,7 @@ class PrintController extends Controller
       $year = $request->input('tahun');
       $kantor = 'kantor 1';
 
-      $users = User::where('kantor', $kantor) // Filter by kantor (from users table)
+      $employees = Employee::where('kantor', $kantor) // Filter by kantor (from employees table)
       ->whereHas('salary', function ($query) use ($month, $year) {
           // Filter salaries by bulan (month) and tahun (year)
           if ($month && $year) {
@@ -98,8 +98,8 @@ class PrintController extends Controller
       }])
       ->get();
 
-      $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
 
         return [
           'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
@@ -112,7 +112,7 @@ class PrintController extends Controller
         ];
       }, ['totalGajiPokok' => 0, 'totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
 
-      return view('print.kantor1', ['users' => $users, 'month' => $month, 'year' => $year,'totalUsersSalary'=>$totalUsersSalary]);
+      return view('print.kantor1', ['employees' => $employees, 'month' => $month, 'year' => $year,'totalEmployeesSalary'=>$totalEmployeesSalary]);
   }
 
   public function filterKantor2(Request $request){
@@ -120,7 +120,7 @@ class PrintController extends Controller
       $year = $request->input('tahun');
       $kantor = 'kantor 2';
 
-      $users = User::where('kantor', $kantor) // Filter by kantor (from users table)
+      $employees = Employee::where('kantor', $kantor) // Filter by kantor (from employees table)
       ->whereHas('salary', function ($query) use ($month, $year) {
           // Filter salaries by bulan (month) and tahun (year)
           if ($month && $year) {
@@ -137,8 +137,8 @@ class PrintController extends Controller
       }])
       ->get();
 
-      $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
 
         return [
           'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
@@ -151,7 +151,7 @@ class PrintController extends Controller
         ];
       }, ['totalGajiPokok' => 0, 'totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
 
-      return view('print.kantor2', ['users' => $users, 'month' => $month, 'year' => $year,'totalUsersSalary'=>$totalUsersSalary]);
+      return view('print.kantor2', ['employees' => $employees, 'month' => $month, 'year' => $year,'totalEmployeesSalary'=>$totalEmployeesSalary]);
   }
 
   public function filterAwak12(Request $request){
@@ -159,7 +159,7 @@ class PrintController extends Controller
       $year = $request->input('tahun');
       $kantor = 'awak 1 dan awak 2';
 
-      $users = User::where('kantor', $kantor) // Filter by kantor (from users table)
+      $employees = Employee::where('kantor', $kantor) // Filter by kantor (from employees table)
       ->whereHas('salary', function ($query) use ($month, $year) {
           // Filter salaries by bulan (month) and tahun (year)
           if ($month && $year) {
@@ -176,8 +176,8 @@ class PrintController extends Controller
       }])
       ->get();
 
-      $totalUsersSalary = $users->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
 
         return [
           'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->jumlah_gaji ?? 0),
@@ -192,6 +192,6 @@ class PrintController extends Controller
       }, ['totalGajiPokok' => 0, 'totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalJumlahRetase' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
 
 
-      return view('print.awak12', ['users' => $users, 'month' => $month, 'year' => $year,'totalUsersSalary'=>$totalUsersSalary]);
+      return view('print.awak12', ['employees' => $employees, 'month' => $month, 'year' => $year,'totalEmployeesSalary'=>$totalEmployeesSalary]);
   }
 }

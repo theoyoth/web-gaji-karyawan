@@ -1,11 +1,11 @@
-<!-- resources/views/user/print.blade.php -->
+<!-- resources/views/employee/print.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/table.css')
-    <title>Print User Details</title>
+    <title>Print Employee Details</title>
 </head>
 <body>
     <div class="px-4">
@@ -49,7 +49,7 @@
       </form>
 
       <div class="bg-gray-100">
-        @if($users->filter(fn($user) => $user->salary)->isNotEmpty())
+        @if($employees->filter(fn($employee) => $employee->salary)->isNotEmpty())
             <!-- your table -->
         @else
             <p class="empty-list">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
@@ -94,17 +94,17 @@
           </thead>
           <tbody>
             @php $no = 1; @endphp
-              @foreach($users as $user)
-                @if ($user->salary)
+              @foreach($employees as $employee)
+                @if ($employee->salary)
                   @php $deliveryCount = $salary =
-                      $user->salary;
+                      $employee->salary;
                       $deliveryCount = $salary->deliveries->count();
                   @endphp
                   @foreach ($salary->deliveries as $index => $delivery)
                   <tr>
                     @if($index === 0)
                       <td rowspan="{{ $deliveryCount }}">{{ $no++ }}</td>
-                      <td rowspan="{{ $deliveryCount }}" class="user-name">{{$user->nama}}</td>
+                      <td rowspan="{{ $deliveryCount }}" class="employee-name">{{$employee->nama}}</td>
                       <td rowspan="{{ $deliveryCount }}">{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
                       <td class="el-center" rowspan="{{ $deliveryCount }}">{{$salary->hari_kerja}}</td>
                     @endif
@@ -123,7 +123,7 @@
                       <td rowspan="{{ $deliveryCount }}">{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: ''}}</td>
                       <td rowspan="{{ $deliveryCount }}">{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
                       <td rowspan="{{ $deliveryCount }}">
-                          {{-- <img src="{{ file_exists(public_path('storage/ttd/' . $user->nama . '.png')) ? asset('storage/ttd/' . $user->nama . '.png') : '' }}" alt="ttd"> --}}
+                          {{-- <img src="{{ file_exists(public_path('storage/ttd/' . $employee->nama . '.png')) ? asset('storage/ttd/' . $employee->nama . '.png') : '' }}" alt="ttd"> --}}
                       </td>
                     @endif
                   </tr>
@@ -133,16 +133,16 @@
               <tr class="row-total">
                 <td></td>
                 <td><strong>TOTAL</strong></td>
-                <td><strong>{{number_format($totalUsersSalary['totalGajiPokok'], 0) ?: ''}}</strong></td>
+                <td><strong>{{number_format($totalEmployeesSalary['totalGajiPokok'], 0) ?: ''}}</strong></td>
                 <td colspan="4"></td>
-                <td><strong>{{number_format($totalUsersSalary['totalTunjanganMakan'], 0) ?: ''}}</strong></td>
+                <td><strong>{{number_format($totalEmployeesSalary['totalTunjanganMakan'], 0) ?: ''}}</strong></td>
                 {{-- <td>{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
-                <td><strong>{{number_format($totalUsersSalary['totalJumlahRetase'], 0) ?: ''}}</strong></td>
-                <td><strong>{{number_format($totalUsersSalary['totalJumlahGaji'], 0) ?: ''}}</strong></td>
-                <td><strong>{{number_format($totalUsersSalary['totalPotonganBpjs'], 0) ?: ''}}</strong></td>
-                {{-- <td><strong>{{number_format($totalUsersSalary['totalPotonganHariTua'], 0) ?: ''}}</strong></td> --}}
-                <td><strong>{{number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0) ?: ''}}</strong></td>
-                <td><strong>{{number_format($totalUsersSalary['totalGeneral'], 0) ?: ''}}</strong></td>
+                <td><strong>{{number_format($totalEmployeesSalary['totalJumlahRetase'], 0) ?: ''}}</strong></td>
+                <td><strong>{{number_format($totalEmployeesSalary['totalJumlahGaji'], 0) ?: ''}}</strong></td>
+                <td><strong>{{number_format($totalEmployeesSalary['totalPotonganBpjs'], 0) ?: ''}}</strong></td>
+                {{-- <td><strong>{{number_format($totalEmployeesSalary['totalPotonganHariTua'], 0) ?: ''}}</strong></td> --}}
+                <td><strong>{{number_format($totalEmployeesSalary['totalPotonganKreditKasbon'], 0) ?: ''}}</strong></td>
+                <td><strong>{{number_format($totalEmployeesSalary['totalGeneral'], 0) ?: ''}}</strong></td>
                 <td></td>
               </tr>
           </tbody>

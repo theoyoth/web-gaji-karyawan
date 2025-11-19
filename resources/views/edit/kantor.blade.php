@@ -5,23 +5,23 @@
     <main class="min-h-screen flex justify-center items-center">
         <div class="w-1/2 m-auto py-2 px-10 bg-gray-100 rounded-lg border border-black my-4">
             @php
-              $bul = $user->salary->bulan;
-              $tah = $user->salary->tahun;
+              $bul = $employee->salary->bulan;
+              $tah = $employee->salary->tahun;
             @endphp
             <a href="{{ route('filterbymonth.kantor',['bulan' => $bul, 'tahun' => $tah, 'kantor' => request('from') ,'page' => request('page')]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
               <i class="fas fa-arrow-left text-lg text-gray-100 mr-1"></i> kembali
             </a>
             <h1 class="text-3xl font-bold text-center">EDIT KANTOR 1 & KANTOR 2</h1>
             <div class="mt-8">
-                <form action="{{ route('update.kantor', $user->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('update.kantor', $employee->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                       @php
-                        $salary = $user->salary;
+                        $salary = $employee->salary;
                       @endphp
-                      @if($user->salary)
+                      @if($employee->salary)
                       {{-- send hidden page pagination number to backend --}}
                       <input type="hidden" name="page" value="{{ request('page') }}">
 
@@ -29,7 +29,7 @@
                         <div class="space-y-2">
                           <div>
                               <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                              <input type="text" id="nama" name="nama" value="{{ old('nama',$user->nama) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                              <input type="text" id="nama" name="nama" value="{{ old('nama',$employee->nama) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                               @error('nama')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                               @enderror
@@ -38,7 +38,7 @@
                               <label for="kantor" class="block text-sm font-medium text-gray-700">Kantor</label>
                               <select name="kantor" id="kantor" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                   @foreach (['kantor 1','kantor 2'] as $kan)
-                                      <option value="{{ $kan }}" {{ $user->kantor == $kan ? 'selected' : '' }}>{{ $kan }}</option>
+                                      <option value="{{ $kan }}" {{ $employee->kantor == $kan ? 'selected' : '' }}>{{ $kan }}</option>
                                   @endforeach
                               </select>
                               @error('kantor')
@@ -47,7 +47,7 @@
                           </div>
                           <div>
                               <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Masuk Kerja</label>
-                              <input type="text" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat',$user->tanggal_diangkat) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                              <input type="text" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat',$employee->tanggal_diangkat) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                               @error('tanggal_diangkat')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                               @enderror
@@ -153,11 +153,11 @@
                               <div class="relative">
                                 <img 
                                   id="preview"
-                                  src="{{ $user->foto_profil ? asset('storage/' . $user->foto_profil) : '#' }}"
+                                  src="{{ $employee->foto_profil ? asset('storage/' . $employee->foto_profil) : '#' }}"
                                   alt="Preview Foto"
-                                  class="mt-2 w-32 h-40 object-contain rounded-md {{ $user->foto_profil ? '' : 'hidden' }}">
+                                  class="mt-2 w-32 h-40 object-contain rounded-md {{ $employee->foto_profil ? '' : 'hidden' }}">
                                 {{-- Cross icon to remove photo --}}
-                                <button type="button" onclick="removePhoto(event)" class="absolute top-0 left-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center {{ $user->foto_profil ? '' : 'hidden' }}">
+                                <button type="button" onclick="removePhoto(event)" class="absolute top-0 left-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center {{ $employee->foto_profil ? '' : 'hidden' }}">
                                     &times;
                                 </button>
                                 {{-- Hidden input to signal removal --}}
@@ -223,13 +223,13 @@
                     disableClearButton();
                   }
 
-                  // Watch user drawing and disable clear
+                  // Watch employee drawing and disable clear
                   signaturePad.onBegin = () => {
                     if (signaturePad.isEmpty()) return;
                     disableClearButton();
                   };
 
-                  // Watch user drawing and enable clear
+                  // Watch employee drawing and enable clear
                   signaturePad.onEnd = () => {
                     if (!signaturePad.isEmpty()) {
                       enableClearButton();

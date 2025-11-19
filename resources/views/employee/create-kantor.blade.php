@@ -29,25 +29,25 @@
                       }, 4000);
                   </script>
               @endif
-                <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Left Column -->
                         <div class="space-y-4">
                             <div>
                               <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                              <select name="user_id" id="user_id" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                  @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->nama }}</option>
+                              <select name="employee_id" id="employee_id" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                  @foreach ($employees as $employee)
+                                    <option value="{{ $employee->id }}">{{ $employee->nama }}</option>
                                   @endforeach
                               </select>
                               {{-- Checkbox --}}
                               <label class="block mt-2">
-                                  <input type="checkbox" id="new_user_checkbox" name="new_user_checkbox" value="1">
+                                  <input type="checkbox" id="new_employee_checkbox" name="new_employee_checkbox" value="1">
                                   Belum terdaftar
                               </label>
 
-                              {{-- New User Input (Hidden by Default) --}}
+                              {{-- New employee Input (Hidden by Default) --}}
                               <input type="text" id="nama" name="nama" class="w-full h-10 px-2 mt-2 rounded-md border-2 border-gray-200 outline-none shadow-sm focus:border-gray-600" style="display: none;">
 
                               @error('nama')
@@ -284,18 +284,18 @@
                       event.target.style.display = 'none'; // Hide the cross button too
                     }
 
-                    const checkbox = document.getElementById('new_user_checkbox');
+                    const checkbox = document.getElementById('new_employee_checkbox');
                     const namaInput = document.getElementById('nama');
-                    const userSelect = document.getElementById('user_id');
+                    const employeeSelect = document.getElementById('employee_id');
 
                     checkbox.addEventListener('change', function () {
                         if (this.checked) {
                             namaInput.style.display = 'block';
-                            userSelect.disabled = true;
-                            // userSelect.value = ""; 
+                            employeeSelect.disabled = true;
+                            // employeeSelect.value = ""; 
                         } else {
                             namaInput.style.display = 'none';
-                            userSelect.disabled = false;
+                            employeeSelect.disabled = false;
                         }
                     });
                 </script>

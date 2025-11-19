@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
             $table->string('bulan');
             $table->integer('tahun');
             $table->bigInteger('gaji_pokok');

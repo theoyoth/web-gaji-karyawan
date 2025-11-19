@@ -4,7 +4,7 @@ use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\placeController;
 use App\Http\Controllers\PrintController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmployeeController;
 
 
 /*
@@ -19,21 +19,21 @@ use App\Http\Controllers\UserController;
 */
 // home
 Route::get('/', [DaftarController::class, 'index'])->name('header.index');
-// users
+// employees
 // create - form
-Route::get('/user/create/kantor', [UserController::class, 'create'])->name('user.createKantor');
-Route::get('/user/create/awak12', [UserController::class, 'createAwak12'])->name('user.createAwak12');
+Route::get('/employee/create/kantor', [EmployeeController::class, 'create'])->name('employee.createKantor');
+Route::get('/employee/create/awak12', [EmployeeController::class, 'createAwak12'])->name('employee.createAwak12');
 // store
-Route::post('/user/create/kantor', [UserController::class, 'store'])->name('user.store');
-Route::post('/user/create/awak12', [UserController::class, 'storeAwak12'])->name('user.storeAwak12');
+Route::post('/employee/create/kantor', [EmployeeController::class, 'store'])->name('employee.store');
+Route::post('/employee/create/awak12', [EmployeeController::class, 'storeAwak12'])->name('employee.storeAwak12');
 // edit
-Route::get('/awak12/edit/user/{user}', [UserController::class, 'editPageAwak12'])->name('edit.awak12');
-Route::get('/kantor/edit/user/{user}', [UserController::class, 'editPageKantor'])->name('edit.kantor');
-// update
-Route::put('/awak12/update/user/{userId}', [UserController::class, 'updateAwak12'])->name('update.awak12');
-Route::put('/kantor/update/user/{userId}', [UserController::class, 'updateKantor'])->name('update.kantor');
+Route::get('/awak12/edit/employee/{employee}', [EmployeeController::class, 'editPageAwak12'])->name('edit.awak12');
+Route::get('/kantor/edit/employee/{employee}', [EmployeeController::class, 'editPageKantor'])->name('edit.kantor');
+// updateR
+Route::put('/awak12/update/employee/{employeeId}', [EmployeeController::class, 'updateAwak12'])->name('update.awak12');
+Route::put('/kantor/update/employee/{employeeId}', [EmployeeController::class, 'updateKantor'])->name('update.kantor');
 // delete
-Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+Route::delete('/employee/{id}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
 
 // places
 Route::get('/kantor-1', [placeController::class, 'kantor1'])->name('kantor1.index');
@@ -56,8 +56,8 @@ Route::get('/print/awak-1-2/filter', [PrintController::class, 'filterAwak12'])->
 Route::get('/print/kantor-1/filter', [PrintController::class, 'filterKantor1'])->name('print.kantor1.filtered');
 Route::get('/print/kantor-2/filter', [PrintController::class, 'filterKantor2'])->name('print.kantor2.filtered');
 // search
-Route::get('/search/awak-1-2', [UserController::class, 'searchUserAwak12'])->name('search.awak12');
-Route::get('/search/kantor', [UserController::class, 'searchUserKantor'])->name('search.kantor');
-// Route::get('/search/kantor-2', [UserController::class, 'filterKantor2'])->name('print.kantor2.filtered');
+Route::get('/search/awak-1-2', [EmployeeController::class, 'searchEmployeeAwak12'])->name('search.awak12');
+Route::get('/search/kantor', [EmployeeController::class, 'searchEmployeeKantor'])->name('search.kantor');
+// Route::get('/search/kantor-2', [EmployeeController::class, 'filterKantor2'])->name('print.kantor2.filtered');
 
-Route::get('/export-awak12', [UserController::class, 'exportAwak12'])->name('export.awak12');
+Route::get('/export-awak12', [EmployeeController::class, 'exportAwak12'])->name('export.awak12');

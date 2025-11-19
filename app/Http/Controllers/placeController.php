@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class placeController extends Controller
@@ -10,15 +10,15 @@ class placeController extends Controller
 
     public function kantor1(){
 
-      // Load users with their salaries, filtered by kantor
-      $users = User::where('kantor', "kantor 1")
+      // Load employees with their salaries, filtered by kantor
+      $employees = Employee::where('kantor', "kantor 1")
                     ->with('salary');
 
       // Step 2: Clone for total calculation (all data)
-      $allUsers = (clone $users)->get();
+      $allEmployees = (clone $employees)->get();
 
-      $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $totalEmployeesSalary = $allEmployees->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
         // if tabungan_hari_tua is needed, put it back in total general
         return [
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -36,10 +36,10 @@ class placeController extends Controller
       'totalGeneral' => 0]);
 
       // Step 3: Paginate the original query
-      $usersPaginate = $users->paginate(15);
+      $employeesPaginate = $employees->paginate(15);
       // calculate total of data paginate
-      $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $pageTotals = $employeesPaginate->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
 
         return [
             'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -56,19 +56,19 @@ class placeController extends Controller
       'totalPotonganKreditKasbon' => 0,
       'totalGeneral' => 0]);
 
-      return view('place.kantor1', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary]);
+      return view('place.kantor1', ['employees'=>$employeesPaginate,'pageTotals'=>$pageTotals,'totalEmployeesSalary'=>$totalEmployeesSalary]);
     }
 
     public function kantor2(){
-      // Load users with their salaries, filtered by kantor
-      $users = User::where('kantor', "kantor 2")
+      // Load employees with their salaries, filtered by kantor
+      $employees = Employee::where('kantor', "kantor 2")
                   ->with('salary');
 
       // Step 2: Clone for total calculation (all data)
-      $allUsers = (clone $users)->get();
+      $allEmployees = (clone $employees)->get();
 
-      $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $totalEmployeesSalary = $allEmployees->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
         return [
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
           'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
@@ -80,10 +80,10 @@ class placeController extends Controller
       }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
 
       // Step 3: Paginate the original query
-      $usersPaginate = $users->paginate(15);
+      $employeesPaginate = $employees->paginate(15);
       // calculate total of data paginate
-      $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $pageTotals = $employeesPaginate->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
 
         return [
             'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -96,19 +96,19 @@ class placeController extends Controller
         ];
       }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalJumlahRetase' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
 
-      return view('place.kantor2', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary]);
+      return view('place.kantor2', ['employees'=>$employeesPaginate,'pageTotals'=>$pageTotals,'totalEmployeesSalary'=>$totalEmployeesSalary]);
     }
 
     public function awak12(){
-        // Load users with their salaries, filtered by kantor
-        $users = User::where('kantor', "awak 1 dan awak 2")
+        // Load employees with their salaries, filtered by kantor
+        $employees = Employee::where('kantor', "awak 1 dan awak 2")
                     ->with('salary.deliveries');
 
         // Step 2: Clone for total calculation (all data)
-        $allUsers = (clone $users)->get();
+        $allEmployees = (clone $employees)->get();
 
-        $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
-          $salary = $user->salary;
+        $totalEmployeesSalary = $allEmployees->reduce(function ($totalValue, $employee) {
+          $salary = $employee->salary;
           return [
             'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
             'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
@@ -121,10 +121,10 @@ class placeController extends Controller
         }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalJumlahRetase' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
 
         // Step 3: Paginate the original query
-        $usersPaginate = $users->paginate(15);
+        $employeesPaginate = $employees->paginate(15);
         // calculate total of data paginate
-        $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
-          $salary = $user->salary;
+        $pageTotals = $employeesPaginate->reduce(function ($totalValue, $employee) {
+          $salary = $employee->salary;
 
           return [
               'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -137,7 +137,7 @@ class placeController extends Controller
           ];
         }, ['totalJumlahGaji' => 0, 'totalTunjanganMakan' => 0, 'totalJumlahRetase' => 0, 'totalPotonganBpjs' => 0,'totalPotonganHariTua' => 0, 'totalPotonganKreditKasbon' => 0, 'totalGeneral' => 0]);
 
-        return view('place.awak12', ['users'=>$usersPaginate, 'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary]);
+        return view('place.awak12', ['employees'=>$employeesPaginate, 'pageTotals'=>$pageTotals,'totalEmployeesSalary'=>$totalEmployeesSalary]);
       }
 
       // FILTER controller
@@ -146,7 +146,7 @@ class placeController extends Controller
         $year = $request->input('tahun');
         $kantor = 'kantor 1';
 
-        $query = User::where('kantor', $kantor) // Filter by kantor (from users table)
+        $query = Employee::where('kantor', $kantor) // Filter by kantor (from employees table)
         ->whereHas('salary', function ($q) use ($month, $year) {
             // Filter salaries by bulan (month) and tahun (year)
             if ($month && $year) {
@@ -163,12 +163,12 @@ class placeController extends Controller
         }]);
 
         // Step 2: Clone for total calculation (all data)
-      $allUsers = (clone $query)->get();
+      $allEmployees = (clone $query)->get();
       // Step 3: Paginate the original query
-      $usersPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun']));
+      $employeesPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun']));
 
-      $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $totalEmployeesSalary = $allEmployees->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
         return [
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
           'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
@@ -187,8 +187,8 @@ class placeController extends Controller
       ]);
 
       // calculate total of data paginate
-      $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $pageTotals = $employeesPaginate->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
 
         return [
             'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -207,7 +207,7 @@ class placeController extends Controller
         'totalGeneral' => 0
       ]);
 
-      return view('place.kantor1', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary,'month'=>$month,'year'=>$year]);
+      return view('place.kantor1', ['employees'=>$employeesPaginate,'pageTotals'=>$pageTotals,'totalEmployeesSalary'=>$totalEmployeesSalary,'month'=>$month,'year'=>$year]);
     }
 
     public function filterKantor2(Request $request){
@@ -215,29 +215,29 @@ class placeController extends Controller
       $year = $request->input('tahun');
       $kantor = 'kantor 2';
 
-      $query = User::where('kantor', $kantor) // Filter by kantor (from users table)
+      $query = Employee::where('kantor', $kantor) // Filter by kantor (from employees table)
       ->whereHas('salary', function ($q) use ($month, $year) {
           // Filter salaries by bulan (month) and tahun (year)
           if ($month && $year) {
               $q->where('bulan', $month)
-                    ->where('tahun', $year);
+                ->where('tahun', $year);
           }
       })
       ->with(['salary' => function ($q) use ($month, $year) {
           // Also filter the eager-loaded salaries by bulan and tahun
           if ($month && $year) {
               $q->where('bulan', $month)
-                    ->where('tahun', $year);
+                ->where('tahun', $year);
           }
       }]);
 
       // Step 2: Clone for total calculation (all data)
-      $allUsers = (clone $query)->get();
+      $allEmployees = (clone $query)->get();
       // Step 3: Paginate the original query
-      $usersPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun']));
+      $employeesPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun']));
 
-      $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $totalEmployeesSalary = $allEmployees->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
         return [
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
           'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
@@ -256,8 +256,8 @@ class placeController extends Controller
       ]);
 
       // calculate total of data paginate
-      $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $pageTotals = $employeesPaginate->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
 
         return [
             'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -276,7 +276,7 @@ class placeController extends Controller
         'totalGeneral' => 0
       ]);
 
-      return view('place.kantor2', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary,'month'=>$month,'year'=>$year]);
+      return view('place.kantor2', ['employees'=>$employeesPaginate,'pageTotals'=>$pageTotals,'totalEmployeesSalary'=>$totalEmployeesSalary,'month'=>$month,'year'=>$year]);
     }
 
     public function filterAwak12(Request $request){
@@ -285,7 +285,7 @@ class placeController extends Controller
       $kantor = 'awak 1 dan awak 2';
 
       // Build query (do NOT call get() here)
-      $query = User::where('kantor', $kantor)
+      $query = Employee::where('kantor', $kantor)
           ->whereHas('salary', function ($query) use ($month, $year) {
               if ($month && $year) {
                   $query->where('bulan', $month)
@@ -300,14 +300,14 @@ class placeController extends Controller
           }]);
 
       // Clone for total calculation
-      $allUsers = (clone $query)->get();
+      $allEmployees = (clone $query)->get();
 
       // Paginate properly
-      $usersPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun']));
+      $employeesPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun']));
 
       // Calculate total for all data
-      $totalUsersSalary = $allUsers->reduce(function ($total, $user) {
-          $salary = $user->salary;
+      $totalEmployeesSalary = $allEmployees->reduce(function ($total, $employee) {
+          $salary = $employee->salary;
 
           return [
               'totalJumlahGaji' => $total['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -329,8 +329,8 @@ class placeController extends Controller
       ]);
 
       // Calculate total for current page
-      $pageTotals = $usersPaginate->getCollection()->reduce(function ($total, $user) {
-          $salary = $user->salary;
+      $pageTotals = $employeesPaginate->getCollection()->reduce(function ($total, $employee) {
+          $salary = $employee->salary;
 
           return [
               'totalJumlahGaji' => $total['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -352,11 +352,11 @@ class placeController extends Controller
       ]);
 
       return view('place.awak12', [
-          'users' => $usersPaginate,
+          'employees' => $employeesPaginate,
           'month' => $month,
           'year' => $year,
           'pageTotals' => $pageTotals,
-          'totalUsersSalary' => $totalUsersSalary,
+          'totalemployeesSalary' => $totalEmployeesSalary,
       ]);
     }
 
@@ -366,7 +366,7 @@ class placeController extends Controller
       $kantor = 'awak 1 dan awak 2';
 
       // Build query (do NOT call get() here)
-      $query = User::where('kantor', $kantor)
+      $query = Employee::where('kantor', $kantor)
           ->whereHas('salary', function ($query) use ($month, $year) {
               if ($month && $year) {
                   $query->where('bulan', $month)
@@ -381,14 +381,14 @@ class placeController extends Controller
           }]);
 
       // Clone for total calculation
-      $allUsers = (clone $query)->get();
+      $allemployees = (clone $query)->get();
 
       // Paginate properly
-      $usersPaginate = $query->paginate(15)->appends($request->only(['bulan','tahun']));
+      $employeesPaginate = $query->paginate(15)->appends($request->only(['bulan','tahun']));
 
       // Calculate total for all data
-      $totalUsersSalary = $allUsers->reduce(function ($total, $user) {
-          $salary = $user->salary;
+      $totalEmployeesSalary = $allemployees->reduce(function ($total, $employee) {
+          $salary = $employee->salary;
 
           return [
               'totalGajiPokok' => $total['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
@@ -412,8 +412,8 @@ class placeController extends Controller
       ]);
 
       // Calculate total for current page
-      $pageTotals = $usersPaginate->getCollection()->reduce(function ($total, $user) {
-          $salary = $user->salary;
+      $pageTotals = $employeesPaginate->getCollection()->reduce(function ($total, $employee) {
+          $salary = $employee->salary;
 
           return [
               'totalGajiPokok' => $total['totalGajiPokok'] + ($salary->jumlah_gaji ?? 0),
@@ -437,11 +437,11 @@ class placeController extends Controller
       ]);
 
       return view('place.awak12', [
-          'users' => $usersPaginate,
+          'employees' => $employeesPaginate,
           'month' => $month,
           'year' => $year,
           'pageTotals' => $pageTotals,
-          'totalUsersSalary' => $totalUsersSalary,
+          'totalEmployeesSalary' => $totalEmployeesSalary,
       ]);
     }
 
@@ -450,7 +450,7 @@ class placeController extends Controller
       $year = $request->input('tahun');
       $kantor = $request->input('kantor');
 
-      $query = User::where('kantor', $kantor) // Filter by kantor (from users table)
+      $query = Employee::where('kantor', $kantor) // Filter by kantor (from employees table)
       ->whereHas('salary', function ($q) use ($month, $year) {
           // Filter salaries by bulan (month) and tahun (year)
           if ($month && $year) {
@@ -467,12 +467,12 @@ class placeController extends Controller
       }]);
 
       // Step 2: Clone for total calculation (all data)
-      $allUsers = (clone $query)->get();
+      $allEmployees = (clone $query)->get();
       // Step 3: Paginate the original query
-      $usersPaginate = $query->paginate(15)->appends($request->only(['bulan','tahun','kantor']));
+      $employeesPaginate = $query->paginate(15)->appends($request->only(['bulan','tahun','kantor']));
 
-      $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $totalEmployeesSalary = $allEmployees->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
         return [
           'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -493,8 +493,8 @@ class placeController extends Controller
       ]);
 
       // calculate total of data paginate
-      $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
-        $salary = $user->salary;
+      $pageTotals = $employeesPaginate->reduce(function ($totalValue, $employee) {
+        $salary = $employee->salary;
 
         return [
             'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
@@ -516,10 +516,10 @@ class placeController extends Controller
       ]);
 
       if($kantor === 'kantor 1'){
-        return view('place.kantor1', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary,'month'=>$month,'year'=>$year]);
+        return view('place.kantor1', ['employees'=>$employeesPaginate,'pageTotals'=>$pageTotals,'totalEmployeesSalary'=>$totalEmployeesSalary,'month'=>$month,'year'=>$year]);
       }
       else if($kantor === 'kantor 2'){
-        return view('place.kantor2', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary,'month'=>$month,'year'=>$year]);
+        return view('place.kantor2', ['employees'=>$employeesPaginate,'pageTotals'=>$pageTotals,'totalEmployeesSalary'=>$totalEmployeesSalary,'month'=>$month,'year'=>$year]);
       }
     }
 
@@ -528,7 +528,7 @@ class placeController extends Controller
     $year = $request->input('tahun');
     $kantor = 'operator dan helper';
 
-    $query = User::where('kantor', $kantor) // Filter by kantor (from users table)
+    $query = Employee::where('kantor', $kantor) // Filter by kantor (from employee table)
     ->whereHas('salary', function ($q) use ($month, $year) {
         // Filter salaries by bulan (month) and tahun (year)
         if ($month && $year) {
@@ -545,12 +545,12 @@ class placeController extends Controller
     }]);
 
     // Step 2: Clone for total calculation (all data)
-    $allUsers = (clone $query)->get();
+    $allEmployees = (clone $query)->get();
     // Step 3: Paginate the original query
-    $usersPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun','kantor']));
+    $employeesPaginate = $query->paginate(15)->appends($request->only(['bulan', 'tahun','kantor']));
 
-    $totalUsersSalary = $allUsers->reduce(function ($totalValue, $user) {
-      $salary = $user->salary;
+    $totalEmployeesSalary = $allEmployees->reduce(function ($totalValue, $employee) {
+      $salary = $employee->salary;
       return [
         'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
         'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
@@ -569,8 +569,8 @@ class placeController extends Controller
     ]);
 
     // calculate total of data paginate
-    $pageTotals = $usersPaginate->reduce(function ($totalValue, $user) {
-      $salary = $user->salary;
+    $pageTotals = $employeesPaginate->reduce(function ($totalValue, $employee) {
+      $salary = $employee->salary;
 
       return [
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -590,10 +590,10 @@ class placeController extends Controller
     ]);
 
     if($kantor === 'kantor 1'){
-      return view('place.kantor1', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary,'month'=>$month,'year'=>$year]);
+      return view('place.kantor1', ['employees'=>$employeesPaginate,'pageTotals'=>$pageTotals,'totalEmployeesSalary'=>$totalEmployeesSalary,'month'=>$month,'year'=>$year]);
     }
     else if($kantor === 'kantor 2'){
-      return view('place.kantor2', ['users'=>$usersPaginate,'pageTotals'=>$pageTotals,'totalUsersSalary'=>$totalUsersSalary,'month'=>$month,'year'=>$year]);
+      return view('place.kantor2', ['employees'=>$employeesPaginate,'pageTotals'=>$pageTotals,'totalEmployeesSalary'=>$totalEmployeesSalary,'month'=>$month,'year'=>$year]);
     }
   }
 }

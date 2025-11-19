@@ -1,11 +1,11 @@
-<!-- resources/views/user/print.blade.php -->
+<!-- resources/views/employee/print.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/table.css')
-    <title>Print User Details</title>
+    <title>Print Employee Details</title>
 
 </head>
 <body>
@@ -55,7 +55,7 @@
         </form>
 
         <div class="bg-gray-100">
-          @if($users->filter(fn($user) => $user->salary)->isNotEmpty())
+          @if($employees->filter(fn($employee) => $employee->salary)->isNotEmpty())
               <!-- your table -->
           @else
               <p class="text-red-500 mt-4 empty-list">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
@@ -93,17 +93,17 @@
             </thead>
             <tbody>
               @php $no = 1;$num = 1;@endphp
-              @foreach($users as $user)
+              @foreach($employees as $employee)
                 @php
-                  $salary = $user->salary;
+                  $salary = $employee->salary;
                 @endphp
-                @if ($user->salary)
+                @if ($employee->salary)
                   <tr>
                     <td>{{ $no++ }}</td>
-                    <td class="td-nama">{{$user->nama}}</td>
-                    {{-- <td>{{ $user->tempat_lahir . ', ' . $user->tanggal_lahir->format('d M Y') }}</td> --}}
+                    <td class="td-nama">{{$employee->nama}}</td>
+                    {{-- <td>{{ $employee->tempat_lahir . ', ' . $employee->tanggal_lahir->format('d M Y') }}</td> --}}
                     <td class="h-masuk-kerja">
-                      {{$user->tanggal_diangkat}}
+                      {{$employee->tanggal_diangkat}}
                     </td>
 
                     <td>
@@ -133,7 +133,7 @@
                     @if($num % 2 == 0)
                       <td class="el-center">
                         {{ $num++ }}.
-                        {{-- <img src="{{ asset('storage/ttd/' . $user->nama. '.png') }}" alt="{{ "ttd" . $user->nama }}" class="ttd"> --}}
+                        {{-- <img src="{{ asset('storage/ttd/' . $employee->nama. '.png') }}" alt="{{ "ttd" . $employee->nama }}" class="ttd"> --}}
                       </td>
                     @else
                       <td class="el-left">{{ $num++ }}.</td>
@@ -145,26 +145,26 @@
                 <td></td>
                 <td colspan="2"><strong>TOTAL</strong></td>
                 <td>
-                  {{number_format($totalUsersSalary['totalGajiPokok'], 0) ?: ''}}
+                  {{number_format($totalEmployeesSalary['totalGajiPokok'], 0) ?: ''}}
                 </td>
                 <td></td>
                 <td>
-                  {{number_format($totalUsersSalary['totalTunjanganMakan'], 0) ?: ''}}
+                  {{number_format($totalEmployeesSalary['totalTunjanganMakan'], 0) ?: ''}}
                 </td>
                 {{-- <td>{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
                 <td>
-                  {{number_format($totalUsersSalary['totalJumlahGaji'], 0) ?: ''}}
+                  {{number_format($totalEmployeesSalary['totalJumlahGaji'], 0) ?: ''}}
                 </td>
                 <td>
-                  {{number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0) ?: ''}}
+                  {{number_format($totalEmployeesSalary['totalPotonganKreditKasbon'], 0) ?: ''}}
                 </td>
                 <td>
-                  {{number_format($totalUsersSalary['totalPotonganBpjs'], 0) ?: ''}}
+                  {{number_format($totalEmployeesSalary['totalPotonganBpjs'], 0) ?: ''}}
 
                 </td>
-                {{-- <td>{{number_format($totalUsersSalary['totalPotonganHariTua'], 0)}}</td> --}}
+                {{-- <td>{{number_format($totalEmployeesSalary['totalPotonganHariTua'], 0)}}</td> --}}
                 <td>
-                  {{number_format($totalUsersSalary['totalGeneral'], 0) ?: ''}}
+                  {{number_format($totalEmployeesSalary['totalGeneral'], 0) ?: ''}}
                 </td>
                 <td></td>
               </tr>

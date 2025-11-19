@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\User;
+use App\Models\Employee;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -20,7 +20,7 @@ class Awak12Export implements FromView, WithStyles
     }
     public function view(): View
     {
-        // $users = User::where('kantor', "awak 1 dan awak 2")
+        // $employees = Employee::where('kantor', "awak 1 dan awak 2")
         //   ->with(['salary.deliveries' => function ($query) {
         //       $query->whereMonth('bulan', $this->bulan)
         //             ->whereYear('tahun', $this->tahun);
@@ -33,7 +33,7 @@ class Awak12Export implements FromView, WithStyles
 
           
 
-        $query = User::where('kantor', "awak 1 dan awak 2")
+        $query = Employee::where('kantor', "awak 1 dan awak 2")
             ->whereHas('salary', function ($q) {
                     $q->where('bulan', $this->month)
                       ->where('tahun', $this->year);
@@ -45,10 +45,10 @@ class Awak12Export implements FromView, WithStyles
                 }
             ]);
 
-        $users = $query->get();
+        $employees = $query->get();
 
       return view('export.awak12-excel', [
-          'users' => $users,
+          'employees' => $employees,
           'month' => $this->month,
           'year' => $this->year,
       ]);

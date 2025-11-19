@@ -5,15 +5,15 @@
     <main class="min-h-screen flex justify-center items-center">
         <div class="w-1/2 m-auto py-2 px-10 bg-gray-100 rounded-lg border border-black my-4">
             @php
-              $bul = $user->salary->bulan;
-              $tah = $user->salary->tahun;
+              $bul = $employee->salary->bulan;
+              $tah = $employee->salary->tahun;
             @endphp
             <a href="{{ route('awak12.index',['bulan' => $bul,'tahun' => $tah,'page' => request('page')]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
               <i class="fas fa-arrow-left text-lg text-gray-100 mr-1"></i> kembali
             </a>
             <h1 class="text-3xl font-bold text-center">EDIT TRANSPORTIR AWAK 1 & AWAK 2</h1>
             <div class="mt-8">
-                <form action="{{ route('update.awak12', $user->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('update.awak12', $employee->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -25,7 +25,7 @@
 
                             <div>
                                 <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                                <input type="text" id="nama" name="nama" value="{{ old('nama',$user->nama) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                                <input type="text" id="nama" name="nama" value="{{ old('nama',$employee->nama) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
                                 @error('nama')
                                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -42,9 +42,9 @@
                                 @enderror
                             </div>
                               @php
-                                $salary = $user->salary;
+                                $salary = $employee->salary;
                               @endphp
-                              @if($user->salary)
+                              @if($employee->salary)
                                 <div>
                                     <label for="gaji_pokok" class="block text-sm font-medium text-gray-700">Gaji pokok</label>
                                     <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok',$salary->gaji_pokok) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
@@ -163,11 +163,11 @@
                                   <!-- Preview Image -->
                                   <div class="relative">
                                     <img id="preview"
-                                    src="{{ $user->foto_profil ? asset('storage/' . $user->foto_profil) : '#' }}"
+                                    src="{{ $employee->foto_profil ? asset('storage/' . $employee->foto_profil) : '#' }}"
                                     alt="Preview Foto"
-                                    class="mt-2 w-32 h-40 object-cover rounded-md {{ $user->foto_profil ? '' : 'hidden' }}">
+                                    class="mt-2 w-32 h-40 object-cover rounded-md {{ $employee->foto_profil ? '' : 'hidden' }}">
                                     {{-- Cross icon to remove photo --}}
-                                    <button type="button" id="removeBtn" onclick="removePhoto()" class="absolute top-0 left-0 bg-black text-white rounded-full w-6 h-6 items-center justify-center {{ $user->foto_profil ? 'flex' : 'hidden' }}">
+                                    <button type="button" id="removeBtn" onclick="removePhoto()" class="absolute top-0 left-0 bg-black text-white rounded-full w-6 h-6 items-center justify-center {{ $employee->foto_profil ? 'flex' : 'hidden' }}">
                                         &times;
                                     </button>
                                     {{-- Hidden input to signal removal --}}
@@ -237,12 +237,12 @@
                     disableClearButton();
                   }
 
-                  // Watch user drawing and enable clear
+                  // Watch employee drawing and enable clear
                   signaturePad.onBegin = () => {
                     if (signaturePad.isEmpty()) return;
                     disableClearButton();
                   };
-                   // Watch user drawing and enable clear
+                   // Watch employee drawing and enable clear
                   signaturePad.onEnd = () => {
                     if (!signaturePad.isEmpty()) {
                       enableClearButton();

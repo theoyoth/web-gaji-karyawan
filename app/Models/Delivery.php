@@ -15,7 +15,6 @@ class Delivery extends Model
       'jumlah_retase',
       'tarif_retase',
       'jumlah_ur',
-
     ];
 
   public function salary() {

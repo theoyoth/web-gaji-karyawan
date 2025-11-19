@@ -25,17 +25,17 @@
   </thead>
   <tbody>
     @php $no = 1; @endphp
-    @foreach($users as $user)
-      @if ($user->salary)
+    @foreach($employees as $employee)
+      @if ($employee->salary)
         @php
-          $salary = $user->salary;
+          $salary = $employee->salary;
           $deliveryCount = $salary->deliveries->count();
         @endphp
         @foreach ($salary->deliveries as $index => $delivery)
         <tr>
           @if($index === 0)
             <td rowspan="{{ $deliveryCount }}">{{ $no++ }}</td>
-            <td rowspan="{{ $deliveryCount }}">{{ $user->nama }}</td>
+            <td rowspan="{{ $deliveryCount }}">{{ $employee->nama }}</td>
             <td rowspan="{{ $deliveryCount }}">Rp{{ number_format($salary->gaji_pokok, 0, ',', '.') }}</td>
             <td rowspan="{{ $deliveryCount }}">{{ $salary->hari_kerja }}</td>
           @endif
@@ -56,7 +56,7 @@
             <td rowspan="{{ $deliveryCount }}">Rp{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td>
             <td rowspan="{{ $deliveryCount }}">Rp{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') }}</td>
             <td rowspan="{{ $deliveryCount }}">Rp{{ number_format($salary->jumlah_bersih, 0, ',', '.') }}</td>
-            <td rowspan="{{ $deliveryCount }}">{{ $user->nama }}</td> {{-- Or use TTD if needed --}}
+            <td rowspan="{{ $deliveryCount }}">{{ $employee->nama }}</td> {{-- Or use TTD if needed --}}
           @endif
         </tr>
         @endforeach
@@ -66,13 +66,13 @@
     {{-- <tr>
       <td></td>
       <td colspan="6"><strong>TOTAL</strong></td>
-      <td><strong>Rp{{ number_format($totalUsersSalary['totalTunjanganMakan'], 0, ',', '.') }}</strong></td>
-      <td><strong>Rp{{ number_format($totalUsersSalary['totalJumlahRetase'], 0, ',', '.') }}</strong></td>
-      <td><strong>Rp{{ number_format($totalUsersSalary['totalJumlahGaji'], 0, ',', '.') }}</strong></td>
-      <td><strong>Rp{{ number_format($totalUsersSalary['totalPotonganBpjs'], 0, ',', '.') }}</strong></td>
-      <td><strong>Rp{{ number_format($totalUsersSalary['totalPotonganHariTua'], 0, ',', '.') }}</strong></td>
-      <td><strong>Rp{{ number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0, ',', '.') }}</strong></td>
-      <td><strong>Rp{{ number_format($totalUsersSalary['totalGeneral'], 0, ',', '.') }}</strong></td>
+      <td><strong>Rp{{ number_format($totalEmployeesSalary['totalTunjanganMakan'], 0, ',', '.') }}</strong></td>
+      <td><strong>Rp{{ number_format($totalEmployeesSalary['totalJumlahRetase'], 0, ',', '.') }}</strong></td>
+      <td><strong>Rp{{ number_format($totalEmployeesSalary['totalJumlahGaji'], 0, ',', '.') }}</strong></td>
+      <td><strong>Rp{{ number_format($totalEmployeesSalary['totalPotonganBpjs'], 0, ',', '.') }}</strong></td>
+      <td><strong>Rp{{ number_format($totalEmployeesSalary['totalPotonganHariTua'], 0, ',', '.') }}</strong></td>
+      <td><strong>Rp{{ number_format($totalEmployeesSalary['totalPotonganKreditKasbon'], 0, ',', '.') }}</strong></td>
+      <td><strong>Rp{{ number_format($totalEmployeesSalary['totalGeneral'], 0, ',', '.') }}</strong></td>
       <td></td>
     </tr> --}}
   </tbody>

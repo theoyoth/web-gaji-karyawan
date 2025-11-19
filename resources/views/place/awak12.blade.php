@@ -67,7 +67,7 @@
                     </fieldset>
                   </form>
                   <div class="flex gap-4">
-                    <a href="{{ route('user.createAwak12',['bulan' => request('bulan'),'tahun' => request('tahun')]) }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-plus mr-2"></i>Buat baru</a>
+                    <a href="{{ route('employee.createAwak12',['bulan' => request('bulan'),'tahun' => request('tahun')]) }}" class="flex items-center my-4 px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><i class="fas fa-plus mr-2"></i>Buat baru</a>
                     <a href="{{ route('print.awak12.filtered', ['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 1']) }}" class="flex items-center my-4 px-4 py-2 border-2 border-gray-700 text-gray-700 rounded-md hover:bg-gray-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
 
                     {{-- <a href="{{ route('print.excel.awak12') }}" class="flex items-center my-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"><i class="fas fa-file-excel mr-2"></i>Export</a> --}}
@@ -107,7 +107,7 @@
                 </div>
 
 								<div class="bg-gray-100">
-										@if($users->isEmpty())
+										@if($employees->isEmpty())
 												<!-- do nothing -->
 											<p class="text-red-500 py-2 bg-gray-100 indent-2">Tidak ada data karyawan yang ditemukan.</p>
 										@endif
@@ -152,10 +152,10 @@
 												</thead>
 												<tbody>
 														@php $no = 1; @endphp
-														@foreach($users as $user)
-																@if($user->salary)
+														@foreach($employees as $employee)
+																@if($employee->salary)
 																		@php
-																				$salary = $user->salary;
+																				$salary = $employee->salary;
 																				$deliveryCount = $salary->deliveries->count();
 																		@endphp
 																		@foreach ($salary->deliveries as $index => $delivery)
@@ -164,10 +164,10 @@
 																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">{{ $no++ }}</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-left border border-gray-500 text-wrap w-[250px]">
                                             <div class="flex items-center gap-2">
-                                              @if ($user->foto_profil)
-                                                <img src="{{ asset('storage/' . $user->foto_profil) }}" alt="Foto Profil" class="w-[50px] h-[70px] object-cover">
+                                              @if ($employee->foto_profil)
+                                                <img src="{{ asset('storage/' . $employee->foto_profil) }}" alt="Foto Profil" class="w-[50px] h-[70px] object-cover">
                                               @endif
-                                              {{ $user->nama }}
+                                              {{ $employee->nama }}
                                             </div>
                                           </td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
@@ -188,15 +188,15 @@
 																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">{{number_format($salary->jumlah_bersih, 0, ',', '.') ?: ''}}</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-gray-500">
                                             @if ($salary->ttd && file_exists(public_path('storage/ttd' . $salary->ttd)))
-																							<img src="{{ file_exists(public_path('storage/ttd/' . $user->nama . '.png')) ? asset('storage/ttd/' . $user->nama . '.png') : '' }}" alt="ttd" class="w-20 h-20 object-contain">
+																							<img src="{{ file_exists(public_path('storage/ttd/' . $employee->nama . '.png')) ? asset('storage/ttd/' . $employee->nama . '.png') : '' }}" alt="ttd" class="w-20 h-20 object-contain">
                                             @else
                                               <p>-</p>
                                             @endif
 																					</td>
 																					<td rowspan="{{ $deliveryCount }}" class="text-center border border-gray-500">
 																						<div class="flex flex-col gap-1 items-center">
-																							<a href="{{ route('edit.awak12', ['user' => $user->id, 'page' => request('page',1)]) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
-																							<form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
+																							<a href="{{ route('edit.awak12', ['employee' => $employee->id, 'page' => request('page',1)]) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
+																							<form action="{{ route('employee.destroy', $employee->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
 																								@csrf
 																								@method('DELETE')
 																								<button type="submit" class="bg-red-500 py-1 px-2 rounded">
@@ -226,20 +226,20 @@
 															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 														</tr>
-                            @if ($totalUsersSalary)
-                            {{-- total all users salary --}}
+                            @if ($totalEmployeesSalary)
+                            {{-- total all employees salary --}}
 														<tr class="text-lg bg-gray-300 text-gray-900 font-semibold">
 															<td class="text-center border border-gray-500"></td>
 															<td class="border-b border-gray-500"><strong>TOTAL SEMUA</strong></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalJumlahGaji'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalEmployeesSalary['totalJumlahGaji'], 0) ?: '' }}</strong></td>
 															<td colspan="4" class="text-center border-b border-b-gray-500"></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalTunjanganMakan'], 0) ?: '' }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalJumlahRetase'], 0) ?: '' }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalJumlahGaji'], 0) ?: '' }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalPotonganBpjs'], 0) ?: '' }}</strong></td>
-															{{-- <td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalPotonganHariTua'], 0) }}</strong></td> --}}
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalPotonganKreditKasbon'], 0) ?: '' }}</strong></td>
-															<td class="text-center border border-gray-500"><strong>{{ number_format($totalUsersSalary['totalGeneral'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalEmployeesSalary['totalTunjanganMakan'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalEmployeesSalary['totalJumlahRetase'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalEmployeesSalary['totalJumlahGaji'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalEmployeesSalary['totalPotonganBpjs'], 0) ?: '' }}</strong></td>
+															{{-- <td class="text-center border border-gray-500"><strong>{{ number_format($totalEmployeesSalary['totalPotonganHariTua'], 0) }}</strong></td> --}}
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalEmployeesSalary['totalPotonganKreditKasbon'], 0) ?: '' }}</strong></td>
+															<td class="text-center border border-gray-500"><strong>{{ number_format($totalEmployeesSalary['totalGeneral'], 0) ?: '' }}</strong></td>
 															<td class="text-center border border-gray-500"></td>
 															<td class="text-center border border-gray-500"></td>
 														</tr>
@@ -249,7 +249,7 @@
 										</table>
 										<!-- Tailwind-styled pagination -->
 										<div class="mt-4 flex justify-center">
-												{{ $users->links() }}
+												{{ $employees->links() }}
 										</div>
 								</div>
 						</div>
