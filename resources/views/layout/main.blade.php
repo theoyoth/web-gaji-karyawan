@@ -11,13 +11,20 @@
 
         <title>Gaji pegawai</title>
     </head>
-    <body class="antialiased font-poppins bg-gray-300 relative">
-        <div class="w-screen bg-zinc-100 py-4">
-            <div class="w-52 relative ml-10">
-                <img loading="lazy" decoding="async" src="https://gunungselatan.com/wp-content/uploads/2025/03/header.png" alt="logo"
-                class="w-full h-full object-contain" />
-            </div>
+    <body class="antialiased font-poppins relative">
+      @auth
+        <div class="flex justify-between items-center px-10">
+          <div class="w-52 relative">
+              <img loading="lazy" decoding="async" src="https://gunungselatan.com/wp-content/uploads/2025/03/header.png" alt="logo"
+              class="w-full h-full object-contain" />
+          </div>
+          <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            
+            <button class="max-w-max flex items-center my-4 px-4 py-2 bg-red-700 text-white rounded-md hover:bg-red-800"><i class="fa fa-sign-out-alt text-lg text-gray-100 mr-1"></i>Logout</button>
+          </form>
         </div>
+      @endauth
         <main class="px-4">
             @yield('content')
         </main>
