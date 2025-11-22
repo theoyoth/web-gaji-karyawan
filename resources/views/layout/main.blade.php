@@ -9,23 +9,10 @@
         
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <title>Gaji pegawai</title>
+        <title>GS - karyawan</title>
     </head>
-    <body class="antialiased font-poppins relative">
-      @auth
-        <div class="flex justify-between items-center px-10">
-          <div class="w-52 relative">
-              <img loading="lazy" decoding="async" src="https://gunungselatan.com/wp-content/uploads/2025/03/header.png" alt="logo"
-              class="w-full h-full object-contain" />
-          </div>
-          <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            
-            <button class="max-w-max flex items-center my-4 px-4 py-2 bg-red-700 text-white rounded-md hover:bg-red-800"><i class="fa fa-sign-out-alt text-lg text-gray-100 mr-1"></i>Logout</button>
-          </form>
-        </div>
-      @endauth
-        <main class="px-4">
+    <body class="antialiased font-poppins relative bg-zinc-200">
+        <main class="p-4">
             @yield('content')
         </main>
     </body>
