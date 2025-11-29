@@ -2,284 +2,285 @@
 
 @section('content')
 <div class="container-fluid px-4">
-    <main class="min-h-screen flex justify-center items-center">
-        <div class="w-1/2 m-auto py-2 px-10 bg-gray-100 rounded-lg border border-black my-4">
-            @php
-              $bul = $employee->salary->bulan;
-              $tah = $employee->salary->tahun;
-            @endphp
-            <a href="{{ route('filterbymonth.kantor',['bulan' => $bul, 'tahun' => $tah, 'kantor' => request('from') ,'page' => request('page')]) }}" class="inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800">
-              <i class="fas fa-arrow-left text-lg text-gray-100 mr-1"></i> kembali
-            </a>
-            <h1 class="text-3xl font-bold text-center">EDIT KANTOR 1 & KANTOR 2</h1>
-            <div class="mt-8">
-                <form action="{{ route('update.kantor', $employee->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
+  <div class="bg-zinc-100 rounded-md h-[50px] flex items-center justify-between px-1">
+    @php
+      $bul = $employee->salary->bulan;
+      $tah = $employee->salary->tahun;
+    @endphp
+    <a href="{{ route('filterbymonth.kantor',['bulan' => $bul, 'tahun' => $tah, 'kantor' => request('from') ,'page' => request('page')]) }}" class="max-w-max flex items-center bg-zinc-800 text-white rounded-md hover:bg-zinc-900 px-4 py-1"><i class="fas fa-arrow-left text-sm mr-2 text-zinc-100"></i> kembali</a>
+  </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      @php
-                        $salary = $employee->salary;
-                      @endphp
-                      @if($employee->salary)
-                      {{-- send hidden page pagination number to backend --}}
-                      <input type="hidden" name="page" value="{{ request('page') }}">
+  <main class="flex justify-center items-center mt-8">
+   <div class="w-11/12 py-2 px-10 bg-gray-100 rounded-lg border-2 border-white">
+    <h1 class="text-4xl font-bold text-center">EDIT KARYAWAN KANTOR</h1>
+    <div class="mt-8">
+      <form action="{{ route('update.kantor', $employee->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          @if($employee->salary)
+          {{-- send hidden page pagination number to backend --}}
+          <input type="hidden" name="page" value="{{ request('page') }}">
+          <!-- Left Column -->
+          <div class="space-y-2">
+            <div>
+              <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
+              <input type="text" id="nama" name="nama" value="{{ old('nama',$employee->nama) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+              @error('nama')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+              @enderror
+            </div>
+              <div>
+                <label for="kantor" class="block text-sm font-medium text-gray-700">Kantor</label>
+                <select name="kantor" id="kantor" required class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                  @foreach (['kantor 1','kantor 2'] as $kan)
+                    <option value="{{ $kan }}" {{ $employee->kantor == $kan ? 'selected' : '' }}>{{ $kan }}</option>
+                  @endforeach
+                </select>
+                @error('kantor')
+                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+              </div>
+              <div>
+                <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Masuk Kerja</label>
+                <input type="date" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat',$employee->tanggal_diangkat) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                @error('tanggal_diangkat')
+                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+              </div>
+              <div>
+                <label for="gaji_pokok" class="block text-sm font-medium text-gray-700">Gaji pokok</label>
+                <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok',$salary->gaji_pokok) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                @error('gaji_pokok')
+                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+              </div>
+              <div>
+                <label for="hari_kerja" class="block text-sm font-medium text-gray-700">Hari kerja</label>
+                <input type="number" id="hari_kerja" name="hari_kerja" value="{{ old('hari_kerja',$salary->hari_kerja) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                @error('hari_kerja')
+                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+              </div>
+              <div>
+                <label for="bulan" class="block text-sm font-medium text-gray-700">Bulan</label>
+                <select name="bulan" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                  <option value="Januari" {{ old('bulan', $salary->bulan) == 'Januari' ? 'selected' : '' }}>Januari</option>
+                  <option value="Februari" {{ old('bulan', $salary->bulan) == 'Februari' ? 'selected' : '' }}>Februari</option>
+                  <option value="Maret" {{ old('bulan', $salary->bulan) == 'Maret' ? 'selected' : '' }}>Maret</option>
+                  <option value="April" {{ old('bulan', $salary->bulan) == 'April' ? 'selected' : '' }}>April</option>
+                  <option value="Mei" {{ old('bulan', $salary->bulan) == 'Mei' ? 'selected' : '' }}>Mei</option>
+                  <option value="Juni" {{ old('bulan', $salary->bulan) == 'Juni' ? 'selected' : '' }}>Juni</option>
+                  <option value="Juli" {{ old('bulan', $salary->bulan) == 'Juli' ? 'selected' : '' }}>Juli</option>
+                  <option value="Agustus" {{ old('bulan', $salary->bulan) == 'Agustus' ? 'selected' : '' }}>Agustus</option>
+                  <option value="September" {{ old('bulan', $salary->bulan) == 'September' ? 'selected' : '' }}>September</option>
+                  <option value="Oktober" {{ old('bulan', $salary->bulan) == 'Oktober' ? 'selected' : '' }}>Oktober</option>
+                  <option value="November" {{ old('bulan', $salary->bulan) == 'November' ? 'selected' : '' }}>November</option>
+                  <option value="Desember" {{ old('bulan', $salary->bulan) == 'Desember' ? 'selected' : '' }}>Desember</option>
+                </select>
+                @error('bulan')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+              </div>
+              <div>
+                <label for="tahun" class="block text-sm font-medium text-gray-700">Tahun</label>
+                <select name="tahun" id="tahun" required class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                    @for ($y = 2020; $y <= now()->year; $y++)
+                        <option value="{{ $y }}" {{ $salary->tahun == $y ? 'selected' : '' }}>{{ $y }}</option>
+                    @endfor
+                </select>
+                @error('tahun')
+                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+              </div>
+              
+            </div>
+            {{-- right column --}}
+            {{-- TTD --}}
+            <div>
+              <div class="flex items-center gap-10">
+                <p class="block text-sm font-medium text-gray-700">Tunjangan</p>
+                <div class="flex-1">
+                  <div class="mt-2">
+                    <label for="tunjangan_makan" class="block text-sm font-medium text-gray-700">Makan</label>
+                    <input type="number" id="tunjangan_makan" name="tunjangan_makan" value="{{ old('tunjangan_makan',$salary->tunjangan_makan) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                    @error('tunjangan_makan')
+                      <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                  </div>
+                  {{-- <div class="mt-2">
+                      <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">Hari tua</label>
+                      <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                      @error('tunjangan_hari_tua')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                      @enderror
+                  </div> --}}
+                </div>
+              </div>
+              <div class="flex items-center">
+                <p class="block text-sm font-medium text-gray-700 mr-10">Potongan</p>
+                <div class="flex-1">
+                  <div class="mt-2">
+                    <label for="potongan_bpjs" class="block text-sm font-medium text-gray-700">BPJS</label>
+                    <input type="number" id="potongan_bpjs" name="potongan_bpjs" value="{{ old('potongan_bpjs',$salary->potongan_bpjs) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                    @error('potongan_bpjs')
+                      <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                  </div>
+                  {{-- <div class="mt-2">
+                      <label for="potongan_tabungan_hari_tua" class="block text-sm font-medium text-gray-700">Tabungan hari tua</label>
+                      <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua',$salary->potongan_tabungan_hari_tua) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
+                      @error('potongan_tabungan_hari_tua')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                      @enderror
+                  </div> --}}
+                  <div class="mt-2">
+                    <label for="potongan_kredit_kasbon" class="block text-sm font-medium text-gray-700">Kredit/Kasbon</label>
+                    <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon',$salary->potongan_kredit_kasbon) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                    @error('potongan_kredit_kasbon')
+                      <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                  </div>
+                </div>
+              </div>
 
-                        <!-- Left Column -->
-                        <div class="space-y-2">
-                          <div>
-                              <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                              <input type="text" id="nama" name="nama" value="{{ old('nama',$employee->nama) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                              @error('nama')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                              @enderror
-                          </div>
-                          <div>
-                              <label for="kantor" class="block text-sm font-medium text-gray-700">Kantor</label>
-                              <select name="kantor" id="kantor" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                  @foreach (['kantor 1','kantor 2'] as $kan)
-                                      <option value="{{ $kan }}" {{ $employee->kantor == $kan ? 'selected' : '' }}>{{ $kan }}</option>
-                                  @endforeach
-                              </select>
-                              @error('kantor')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                              @enderror
-                          </div>
-                          <div>
-                              <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Masuk Kerja</label>
-                              <input type="text" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat',$employee->tanggal_diangkat) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                              @error('tanggal_diangkat')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                              @enderror
-                          </div>
-                          <div>
-                              <label for="gaji_pokok" class="block text-sm font-medium text-gray-700">Gaji pokok</label>
-                              <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok',$salary->gaji_pokok) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                              @error('gaji_pokok')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                              @enderror
-                          </div>
-                          <div>
-                              <label for="hari_kerja" class="block text-sm font-medium text-gray-700">Hari kerja</label>
-                              <input type="number" id="hari_kerja" name="hari_kerja" value="{{ old('hari_kerja',$salary->hari_kerja) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                              @error('hari_kerja')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                              @enderror
-                          </div>
-                          <div>
-                              <label for="bulan" class="block text-sm font-medium text-gray-700">Bulan</label>
-                              <select name="bulan" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm focus:border-blue-500">
-                                  <option value="Januari" {{ old('bulan', $salary->bulan) == 'Januari' ? 'selected' : '' }}>Januari</option>
-                                  <option value="Februari" {{ old('bulan', $salary->bulan) == 'Februari' ? 'selected' : '' }}>Februari</option>
-                                  <option value="Maret" {{ old('bulan', $salary->bulan) == 'Maret' ? 'selected' : '' }}>Maret</option>
-                                  <option value="April" {{ old('bulan', $salary->bulan) == 'April' ? 'selected' : '' }}>April</option>
-                                  <option value="Mei" {{ old('bulan', $salary->bulan) == 'Mei' ? 'selected' : '' }}>Mei</option>
-                                  <option value="Juni" {{ old('bulan', $salary->bulan) == 'Juni' ? 'selected' : '' }}>Juni</option>
-                                  <option value="Juli" {{ old('bulan', $salary->bulan) == 'Juli' ? 'selected' : '' }}>Juli</option>
-                                  <option value="Agustus" {{ old('bulan', $salary->bulan) == 'Agustus' ? 'selected' : '' }}>Agustus</option>
-                                  <option value="September" {{ old('bulan', $salary->bulan) == 'September' ? 'selected' : '' }}>September</option>
-                                  <option value="Oktober" {{ old('bulan', $salary->bulan) == 'Oktober' ? 'selected' : '' }}>Oktober</option>
-                                  <option value="November" {{ old('bulan', $salary->bulan) == 'November' ? 'selected' : '' }}>November</option>
-                                  <option value="Desember" {{ old('bulan', $salary->bulan) == 'Desember' ? 'selected' : '' }}>Desember</option>
-                              </select>
-                              @error('bulan')
-                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                              @enderror
-                          </div>
-                          <div>
-                              <label for="tahun" class="block text-sm font-medium text-gray-700">Tahun</label>
-                              <select name="tahun" id="tahun" required class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                  @for ($y = 2020; $y <= now()->year; $y++)
-                                      <option value="{{ $y }}" {{ $salary->tahun == $y ? 'selected' : '' }}>{{ $y }}</option>
-                                  @endfor
-                              </select>
-                              @error('tahun')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                              @enderror
-                          </div>
-                          <div class="flex items-center gap-10">
-                            <p class="block text-sm font-medium text-gray-700">Tunjangan</p>
-                            <div class="flex-1">
-                                <div class="mt-2">
-                                    <label for="tunjangan_makan" class="block text-sm font-medium text-gray-700">Makan</label>
-                                    <input type="number" id="tunjangan_makan" name="tunjangan_makan" value="{{ old('tunjangan_makan',$salary->tunjangan_makan) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                    @error('tunjangan_makan')
-                                      <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                {{-- <div class="mt-2">
-                                    <label for="tunjangan_hari_tua" class="block text-sm font-medium text-gray-700">Hari tua</label>
-                                    <input type="number" id="tunjangan_hari_tua" name="tunjangan_hari_tua" value="{{ old('tunjangan_hari_tua') }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                    @error('tunjangan_hari_tua')
-                                      <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                    @enderror
-                                </div> --}}
-                            </div>
-                          </div>
-
-                        </div>
-                        {{-- right column --}}
-                        {{-- TTD --}}
-                        <div>
-                          <div class="flex items-center">
-                            <p class="block text-sm font-medium text-gray-700 mr-10">Potongan</p>
-                            <div class="flex-1">
-                              <div class="mt-2">
-                                  <label for="potongan_bpjs" class="block text-sm font-medium text-gray-700">BPJS</label>
-                                  <input type="number" id="potongan_bpjs" name="potongan_bpjs" value="{{ old('potongan_bpjs',$salary->potongan_bpjs) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                  @error('potongan_bpjs')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                  @enderror
-                              </div>
-                              {{-- <div class="mt-2">
-                                  <label for="potongan_tabungan_hari_tua" class="block text-sm font-medium text-gray-700">Tabungan hari tua</label>
-                                  <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua',$salary->potongan_tabungan_hari_tua) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                  @error('potongan_tabungan_hari_tua')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                  @enderror
-                              </div> --}}
-                              <div class="mt-2">
-                                <label for="potongan_kredit_kasbon" class="block text-sm font-medium text-gray-700">Kredit/Kasbon</label>
-                                <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon',$salary->potongan_kredit_kasbon) }}" class="mt-1 outline-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                                @error('potongan_kredit_kasbon')
-                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                              </div>
-                            </div>
-                          </div>                          
-                          <!-- Upload new photo -->
-                          <div class="mt-2">
-                              <label for="foto_profil" class="block text-sm font-medium text-gray-700">Ganti foto profil</label>
-                              <div class="relative">
-                                <img 
-                                  id="preview"
-                                  src="{{ $employee->foto_profil ? asset('storage/' . $employee->foto_profil) : '#' }}"
-                                  alt="Preview Foto"
-                                  class="mt-2 w-32 h-40 object-contain rounded-md {{ $employee->foto_profil ? '' : 'hidden' }}">
-                                {{-- Cross icon to remove photo --}}
-                                <button type="button" onclick="removePhoto(event)" class="absolute top-0 left-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center {{ $employee->foto_profil ? '' : 'hidden' }}">
-                                    &times;
-                                </button>
-                                {{-- Hidden input to signal removal --}}
-                                <input type="hidden" name="hapus_foto" id="hapus_foto" value="0">
-                              </div>
-                              <input type="file" name="foto_profil" id="foto_profil" accept="image/*" class="mt-1 w-full h-10 px-2 rounded-md border-2 border-gray-300 shadow-sm">
-                              @error('foto_profil')
-                                  <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                              @enderror
-                          </div>
-                          {{-- TTD --}}
-                          <input type="hidden" name="delete_ttd" id="delete_ttd" value="0">
-                          <div class="mt-4">
-                              <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
-                              <canvas id="signature-pad" width="200" height="100" style="border: 1px solid #000;" data-image="{{ $salary->ttd ? asset('storage/ttd/' . $salary->ttd) : '' }}"></canvas>
-                              <input type="hidden" name="ttd" id="ttd" value="{{ old('ttd', $salary->ttd ?? '') }}">
-                              <p class="text-gray-500 text-xs mt-1">Gambar tanda tangan di atas</p>
-                              <div class="flex mt-2">
-                                <button type="button" disabled id="clear" class="mr-4 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md">Clear</button>
-                              </div>
-                          </div>
-                        </div>
-                      @endif
+              <div class="border border-zinc-200 p-2 rounded-md mt-4">
+                {{-- Image container --}}
+                <div>
+                  {{-- Preview image --}}
+                  <div class="relative">
+                    <img
+                      id="preview"
+                      src="{{ $employee->foto_profil ? asset('storage/' . $employee->foto_profil) : '#' }}"
+                      alt="Preview Foto"
+                      class="mt-2 w-32 h-36 object-cover rounded-md {{ $employee->foto_profil ? '' : 'hidden' }}">
+                    {{-- Cross icon to remove photo --}}
+                    <button type="button" id="removeBtn" onclick="removePhoto(event)" class="absolute top-0 left-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center {{ $employee->foto_profil ? '' : 'hidden' }}">
+                      &times;
+                    </button>
+                    {{-- Hidden input to signal removal --}}
+                    <input type="hidden" name="hapus_foto" id="hapus_foto" value="0">
+                  </div>
+                  <!-- Upload new photo -->
+                  <div id="uploadBox" class="{{$employee->foto_profil ? 'hidden' : ''}}">
+                    <label for="foto_profil" class="flex flex-col items-center justify-center gap-2 text-xl text-zinc-800 h-[100px] rounded-lg border border-dashed border-zinc-900 cursor-pointer hover:bg-zinc-200/50 transition">
+                      <i class="fa fa-upload text-2xl text-zinc-700"></i>
+                      <span>Upload Foto</span>
+                    </label>
+                    <input type="file" name="foto_profil" id="foto_profil" accept="image/*" class="mt-1 outline-1 h-10 px-2 py-1 rounded-md hidden">
+                    @error('foto_profil')
+                      <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                  </div>
+                </div>
+                {{-- TTD --}}
+                <div>
+                  <input type="hidden" name="delete_ttd" id="delete_ttd" value="0">
+                  <div class="mt-4">
+                    <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
+                    <canvas id="signature-pad" width="200" height="100" class="bg-white border border-zinc-200" data-image="{{ $salary->ttd ? asset('storage/ttd/' . $salary->ttd) : '' }}"></canvas>
+                    <input type="hidden" name="ttd" id="ttd" value="{{ old('ttd', $salary->ttd ?? '') }}">
+                    <p class="text-gray-500 text-xs mt-1">Gambar tanda tangan di atas</p>
+                    <div class="flex mt-2">
+                      <button type="button" disabled id="clear" class="mr-4 bg-red-500 hover:bg-red-600 text-white px-6 py-1 rounded-md">Clear</button>
                     </div>
-                    <div class="w-full my-6">
-                        <button type="submit" value="submit_data" class="w-full bg-green-600 text-white font-semibold py-2 px-6 rounded hover:bg-green-700 focus:outline-none">
-                            submit
-                        </button>
-                    </div>
-                </form>
-                <!-- Include Signature Pad JS -->
-                <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
-
-                <script>
-                  // input signature
-                  const canvas = document.getElementById('signature-pad');
-                  const signaturePad = new SignaturePad(canvas);
-                  const ttdInput = document.getElementById('ttd');
-                  const clearBtn = document.getElementById('clear');
-
-                  // Disable clear button by default
-                  function disableClearButton() {
-                    clearBtn.disabled = true;
-                    clearBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                  }
-
-                  function enableClearButton() {
-                    clearBtn.disabled = false;
-                    clearBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                  }
-
-                  // Load existing signature if available
-                  const existingImage = canvas.dataset.image;
-                  if (existingImage) {
-                    const img = new Image();
-                    img.src = existingImage;
-                    img.onload = () => {
-                      const ctx = canvas.getContext('2d');
-                      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    }
-                    enableClearButton();
-                  } else {
-                    disableClearButton();
-                  }
-
-                  // Watch employee drawing and disable clear
-                  signaturePad.onBegin = () => {
-                    if (signaturePad.isEmpty()) return;
-                    disableClearButton();
-                  };
-
-                  // Watch employee drawing and enable clear
-                  signaturePad.onEnd = () => {
-                    if (!signaturePad.isEmpty()) {
-                      enableClearButton();
-                    }
-                  };
-
-                  // Submit form: set ttd input to base64 image
-                  document.querySelector('form').addEventListener('submit', function () {
-                    if (!signaturePad.isEmpty()) {
-                      ttdInput.value = signaturePad.toDataURL('image/png');
-                    } else {
-                      ttdInput.value = '';
-                    }
-                  });
-
-                  // Clear signature and delete signature
-                  const deleteTtdInput = document.getElementById('delete_ttd');
-                  clearBtn.addEventListener('click', function () {
-                    signaturePad.clear();
-                    ttdInput.value = '';
-                    deleteTtdInput.value = '1';
-                    disableClearButton();
-                  });
-
-                  // preview photo
-                  document.getElementById('foto_profil').addEventListener('change', function(event) {
-                      const [file] = event.target.files;
-                      const preview = document.getElementById('preview');
-                      const removeBtn = preview.nextElementSibling;
-
-                      if (file) {
-                          preview.src = URL.createObjectURL(file);
-                          preview.classList.remove('hidden');
-                          preview.style.display = 'block';
-                          removeBtn.style.display = 'flex';
-                          document.getElementById('hapus_foto').value = '0';
-                      } else {
-                        preview.src = "#";                    
-                        preview.style.display = 'none';
-                        removeBtn.style.display = 'none';
-                      }
-                  });
-
-                  function removePhoto(event) {
-                      document.getElementById('hapus_foto').value = '1';
-                      document.getElementById('preview').style.display = 'none';
-                      document.getElementById('foto_profil').value = '';
-                      event.target.style.display = 'none'; // Hide the cross button too
-                  }
-                </script>
+                  </div>
+                </div>
+              </div>
+            </div>
+          @endif
         </div>
-    </main>
+        <div class="w-full my-6">
+          <button type="submit" value="submit_data" class="w-full bg-green-600 text-white font-semibold py-2 px-6 rounded hover:bg-green-700 focus:outline-none">
+              submit
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- Include Signature Pad JS -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+    <script>
+      // input signature
+      const canvas = document.getElementById('signature-pad');
+      const signaturePad = new SignaturePad(canvas);
+      const ttdInput = document.getElementById('ttd');
+      const clearBtn = document.getElementById('clear');
+    
+      // Disable clear button by default
+      function disableClearButton() {
+        clearBtn.disabled = true;
+        clearBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      }
+      function enableClearButton() {
+        clearBtn.disabled = false;
+        clearBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      }
+      // Load existing signature if available
+      const existingImage = canvas.dataset.image;
+      if (existingImage) {
+        const img = new Image();
+        img.src = existingImage;
+        img.onload = () => {
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
+        enableClearButton();
+      } else {
+        disableClearButton();
+      }
+      // Watch employee drawing and disable clear
+      signaturePad.onBegin = () => {
+        if (signaturePad.isEmpty()) return;
+        disableClearButton();
+      };
+      // Watch employee drawing and enable clear
+      signaturePad.onEnd = () => {
+        if (!signaturePad.isEmpty()) {
+        enableClearButton();
+        }
+      };
+      // Submit form: set ttd input to base64 image
+      document.querySelector('form').addEventListener('submit', function () {
+        if (!signaturePad.isEmpty()) {
+          ttdInput.value = signaturePad.toDataURL('image/png');
+        } else {
+          ttdInput.value = '';
+        }
+      });
+      // Clear signature and delete signature
+      const deleteTtdInput = document.getElementById('delete_ttd');
+      clearBtn.addEventListener('click', function () {
+        signaturePad.clear();
+        ttdInput.value = '';
+        deleteTtdInput.value = '1';
+        disableClearButton();
+      });
+
+      // preview photo
+      document.getElementById('foto_profil').addEventListener('change', function(event) {
+        const preview = document.getElementById('preview');
+        const removeBtn = document.getElementById('removeBtn');
+        const file = event.target.files[0];
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.classList.remove('hidden');
+          removeBtn.classList.remove('hidden');
+          uploadBox.classList.add('hidden'); // HIDE upload box
+        };
+        reader.readAsDataURL(file);
+      });
+
+      function removePhoto(event) {
+        document.getElementById('hapus_foto').value = '1';
+        document.getElementById('preview').classList.add('hidden');
+        document.getElementById('removeBtn').classList.add('hidden');
+        document.getElementById('uploadBox').classList.remove('hidden');
+        // clear the image src
+        document.getElementById('foto_profil').value = '';
+      }
+    </script>
+   </div>
+  </main>
 @endsection

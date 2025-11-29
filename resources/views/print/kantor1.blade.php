@@ -29,30 +29,28 @@
           <h1 class="subtext">BULAN : {{ request('bulan') ?? '' }} {{ request('tahun') ?? '' }}</h3>
         </div>
 
+        <a href="{{ route('filterbymonth.kantor',['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 1']) }}" class="link-button inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- Kembali</a>
 
-
-        <div>
-            <a href="{{ route('filterbymonth.kantor',['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 1']) }}" class="link-button inline-block my-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800"><- Kembali</a>
+        <section class="section-filter">
+          <form method="GET" action="{{ route('print.kantor1.filtered') }}">
+              <select name="bulan" required class="select-input">
+                  <option value="">-- Pilih Bulan --</option>
+                  @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
+                      <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
+                  @endforeach
+              </select>
+              <select name="tahun" required class="select-input">
+                  <option value="">-- Pilih Tahun --</option>
+                  @for ($y = 2020; $y <= now()->year; $y++)
+                      <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                  @endfor
+              </select>
+              <button type="submit" class="select-input btn-filter">Filter</button>
+          </form>
+          <div>
             <button class="print-button" onclick="window.print()">🖨️ Print</button>
-        </div>
-
-        <form method="GET" action="{{ route('print.kantor1.filtered') }}">
-            <select name="bulan" required class="select-input">
-                <option value="">-- Pilih Bulan --</option>
-                @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
-                    <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
-                @endforeach
-            </select>
-
-            <select name="tahun" required class="select-input">
-                <option value="">-- Pilih Tahun --</option>
-                @for ($y = 2020; $y <= now()->year; $y++)
-                    <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
-                @endfor
-            </select>
-
-            <button type="submit" class="select-input btn-filter">Filter</button>
-        </form>
+          </div>
+        </section>
 
         <div class="bg-gray-100">
           @if($employees->filter(fn($employee) => $employee->salary)->isNotEmpty())
@@ -99,8 +97,8 @@
                 @endphp
                 @if ($employee->salary)
                   <tr>
-                    <td>{{ $no++ }}</td>
-                    <td class="td-nama">{{$employee->nama}}</td>
+                    <td class="td-center">{{ $no++ }}</td>
+                    <td class="td-left">{{$employee->nama}}</td>
                     {{-- <td>{{ $employee->tempat_lahir . ', ' . $employee->tanggal_lahir->format('d M Y') }}</td> --}}
                     <td class="h-masuk-kerja">
                       {{$employee->tanggal_diangkat}}

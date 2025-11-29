@@ -41,7 +41,7 @@ class EmployeeController extends Controller
 			'kantor' => 'required|max:255',
 			'tempat_lahir' => 'nullable|string',
 			'tanggal_lahir' => 'nullable|date',
-			'tanggal_diangkat' => 'nullable|string',
+			'tanggal_masuk' => 'nullable|string',
 
 			'gaji_pokok' => 'required|numeric',
 			'hari_kerja' => 'required|numeric',
@@ -101,7 +101,7 @@ class EmployeeController extends Controller
         $employee->kantor = $request->input('kantor');
         $employee->tempat_lahir = Str::title($request->input('tempat_lahir')) ?: null;
         $employee->tanggal_lahir = $request->input('tanggal_lahir') ?: null;
-        $employee->tanggal_diangkat = $request->input('tanggal_diangkat') ?: null;
+        $employee->tanggal_masuk = $request->input('tanggal_masuk') ?: null;
         $employee->foto_profil = $fotoPath ?: null;
         $employee->save();
     }
@@ -171,7 +171,7 @@ class EmployeeController extends Controller
 			'kantor' => 'required|max:255',
       'tempat_lahir' => 'nullable|string',
 			'tanggal_lahir' => 'nullable|date',
-			'tanggal_diangkat' => 'nullable|string',
+			'tanggal_masuk' => 'nullable|string',
 
 			'gaji_pokok' => 'required|numeric',
 			'hari_kerja' => 'required|numeric',
@@ -246,7 +246,7 @@ class EmployeeController extends Controller
         $employee = new Employee();
         $employee->nama = Str::title($request->input('nama'));
         $employee->kantor = $request->input('kantor');
-        $employee->tanggal_diangkat = $request->input('tanggal_diangkat') ?: null;
+        $employee->tanggal_masuk = $request->input('tanggal_masuk') ?: null;
         $employee->foto_profil = $fotoPath ?: null;
         $employee->save();
     }
@@ -344,13 +344,25 @@ class EmployeeController extends Controller
 		return redirect()->back()->with('success', 'employee deleted successfully.');
 	}
 
-	public function editPageAwak12(Employee $employee){
-		// dd($employee->salaries);
-		return view('edit.awak12', compact('employee'));
+	public function editPageAwak12($employeeId, $employeeSalaryId){
+    $employee = Employee::findOrFail($employeeId);
+
+    $salary = $employee->salary()
+        ->with('deliveries')
+        ->where('id', $employeeSalaryId)
+        ->firstOrFail();
+
+		return view('edit.awak12', compact('employee','salary'));
 	}
-	public function editPageKantor(Employee $employee){
-		// dd($employee->salaries);
-		return view('edit.kantor', compact('employee'));
+	public function editPageKantor($employeeId,$employeeSalaryId){
+    $employee = Employee::findOrFail($employeeId);
+
+    $salary = $employee->salary()
+        ->with('deliveries')
+        ->where('id', $employeeSalaryId)
+        ->firstOrFail();
+
+		return view('edit.kantor', compact('employee','salary'));
 	}
 
 	public function updateAwak12(Request $request, $employeeId){
@@ -373,13 +385,13 @@ class EmployeeController extends Controller
         $employee->foto_profil = $path;
     }
 
-    $employee->tanggal_diangkat = $request->input('tanggal_diangkat', $employee->tanggal_diangkat);
+    $employee->tanggal_masuk = $request->input('tanggal_masuk', $employee->tanggal_masuk);
 
     // Validate employee data
     $employee->update([
         'nama' => $request->nama,
         'kantor' => $request->kantor,
-        'tanggal_diangkat' => $request->tanggal_diangkat,
+        'tanggal_masuk' => $request->tanggal_masuk,
     ]);
 
     $employee->save();
@@ -473,13 +485,13 @@ class EmployeeController extends Controller
       $employee->foto_profil = $path;
     }
 
-    $employee->tanggal_diangkat = $request->input('tanggal_diangkat', $employee->tanggal_diangkat);
+    $employee->tanggal_masuk = $request->input('tanggal_masuk', $employee->tanggal_masuk);
 
     // Validate employee data
     $employee->update([
         'nama' => $request->nama,
         'kantor' => $request->kantor,
-        'tanggal_diangkat' => $request->tanggal_diangkat,
+        'tanggal_masuk' => $request->tanggal_masuk,
     ]);
 
     $employee->save();

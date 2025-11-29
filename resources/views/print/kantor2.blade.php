@@ -30,26 +30,27 @@
 
         <div>
             <a href="{{ route('filterbymonth.kantor',['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 2']) }}" class="link-button"><- Kembali</a>
-            <button class="print-button" onclick="window.print()">🖨️ Print</button>
+            
         </div>
 
-        <form method="GET" action="{{ route('print.kantor2.filtered') }}" class="mb-4">
-          <select name="bulan" required class="select-input">
-              <option value="">-- Pilih Bulan --</option>
-              @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
-                  <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
-              @endforeach
-          </select>
-
-          <select name="tahun" required class="select-input">
-              <option value="">-- Pilih Tahun --</option>
-              @for ($y = 2020; $y <= now()->year; $y++)
-                  <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
-              @endfor
-          </select>
-
-          <button type="submit" class="select-input btn-filter">Filter</button>
-        </form>
+        <section class="section-filter">
+          <form method="GET" action="{{ route('print.kantor2.filtered') }}" class="mb-4">
+            <select name="bulan" required class="select-input">
+                <option value="">-- Pilih Bulan --</option>
+                @foreach (['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] as $bulan)
+                    <option value="{{ $bulan }}" {{ request('bulan') == $bulan ? 'selected' : '' }}>{{ $bulan }}</option>
+                @endforeach
+            </select>
+            <select name="tahun" required class="select-input">
+                <option value="">-- Pilih Tahun --</option>
+                @for ($y = 2020; $y <= now()->year; $y++)
+                    <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                @endfor
+            </select>
+            <button type="submit" class="select-input btn-filter">Filter</button>
+          </form>
+          <button class="print-button" onclick="window.print()">🖨️ Print</button>
+        </section>
 
         <div>
           @if($employees->filter(fn($employee) => $employee->salary)->isNotEmpty())
@@ -98,8 +99,8 @@
                 @endphp
                 @if ($employee->salary)
                   <tr>
-                    <td>{{ $no++ }}</td>
-                    <td class="td-nama">{{$employee->nama}}</td>
+                    <td class="td-center">{{ $no++ }}</td>
+                    <td class="td-left">{{$employee->nama}}</td>
                     {{-- <td>{{$employee->tempat_lahir . ', ' . $employee->tanggal_lahir->format('d M Y') }}</td> --}}
                     <td class="h-masuk-kerja">{{$employee->tanggal_diangkat}}</td>
 

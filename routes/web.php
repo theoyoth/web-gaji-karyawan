@@ -35,8 +35,8 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/employee/create/kantor', [EmployeeController::class, 'store'])->name('employee.store');
   Route::post('/employee/create/awak12', [EmployeeController::class, 'storeAwak12'])->name('employee.storeAwak12');
   // edit
-  Route::get('/awak12/edit/employee/{employee}', [EmployeeController::class, 'editPageAwak12'])->name('edit.awak12');
-  Route::get('/kantor/edit/employee/{employee}', [EmployeeController::class, 'editPageKantor'])->name('edit.kantor');
+  Route::get('/kantor/edit/employee/{employeeId}/{employeeSalaryId}', [EmployeeController::class, 'editPageKantor'])->name('edit.kantor');
+  Route::get('/awak12/edit/employee/{employeeId}/{employeeSalaryId}', [EmployeeController::class, 'editPageAwak12'])->name('edit.awak12');
   // updateR
   Route::put('/awak12/update/employee/{employeeId}', [EmployeeController::class, 'updateAwak12'])->name('update.awak12');
   Route::put('/kantor/update/employee/{employeeId}', [EmployeeController::class, 'updateKantor'])->name('update.kantor');

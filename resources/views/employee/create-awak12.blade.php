@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container-fluid px-4">
-  <div class="bg-zinc-100 rounded-md h-[50px] flex items-center justify-between px-1 ">
+  <div class="bg-zinc-100 rounded-md h-[50px] flex items-center justify-between px-1">
     <a href="{{ route('awak12.index', ['bulan' => request('bulan'),'tahun' => request('tahun'),'page' => 1]) }}" class="max-w-max flex items-center bg-zinc-800 text-white rounded-md hover:bg-zinc-900 px-4 py-1"><i class="fas fa-arrow-left text-sm mr-2 text-zinc-100"></i>kembali</a>
   </div>
-  <main class="flex justify-center items-center h-[90dvh]">
-    <div class="w-11/12 py-2 px-10 bg-gray-100 rounded-lg border-2 border-white">
+  <main class="flex justify-center items-center h-[90vh]">
+    <div class="w-11/12 py-2 px-10 bg-zinc-100 rounded-lg border-2 border-white">
       <h1 class="text-2xl font-bold text-center">INPUT RETASE TRANSPORTIR</h1>
       <h1 class="text-2xl font-bold text-center">AWAK 1 & AWAK 2</h1>
       <div class="mt-8">
@@ -61,8 +61,8 @@
                 @enderror
               </div>
               <div>
-                <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Masa Kerja</label>
-                <input type="number" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat') }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Tanggal masuk</label>
+                <input type="text" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat') }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
                 @error('tanggal_diangkat')
                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
@@ -153,7 +153,7 @@
                       </div>
                   </div>
               </div>
-              <div class="pt-4">
+              <div class="border border-zinc-200 p-2 rounded-md mt-4">
                 {{-- Foto profil input --}}
                 {{-- foto preview --}}
                 <div class="relative">
@@ -164,12 +164,13 @@
                   </button>
                 </div>
                 {{-- input foto --}}
-                <div id="uploadBox" class="mt-2">
+                <div id="uploadBox">
                   <label for="foto_profil" class="flex flex-col items-center justify-center gap-2 text-xl text-zinc-800 h-[100px] rounded-lg border border-dashed border-zinc-900 cursor-pointer hover:bg-zinc-200/50 transition">
                     <i class="fa fa-upload text-2xl text-zinc-700"></i>
                     <span>Upload Foto</span>
                   </label>
                   <input type="file" id="foto_profil" name="foto_profil" accept="image/*" class="mt-1 outline-1 h-10 px-2 py-1 rounded-md hidden">
+
                   @error('foto_profil')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                   @enderror
@@ -177,11 +178,11 @@
                 {{-- TTD --}}
                 <div class="mt-4">
                   <label for="signature" class="block text-sm font-medium text-gray-700">Tanda tangan</label>
-                  <canvas id="signature-pad" width="200" height="100" class="bg-white border border-gray-200"></canvas>
+                  <canvas id="signature-pad" width="200" height="100" class="bg-white border border-zinc-200"></canvas>
                   <input type="hidden" name="ttd" id="ttd">
                   <p class="text-gray-500 text-xs mt-1">Gambar tanda tangan di atas</p>
                   <div class="flex mt-2">
-                      <button type="button" id="clear" class="mr-4 bg-red-500 hover:bg-red-600 text-white px-6 py-1 rounded-md">Clear</button>
+                    <button type="button" id="clear" class="mr-4 bg-red-500 hover:bg-red-600 text-white px-6 py-1 rounded-md">Clear</button>
                   </div>
                 </div>
               </div>

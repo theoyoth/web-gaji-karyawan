@@ -14,13 +14,13 @@ class Employee extends Model
         'kantor',
         'tempat_lahir',
         'tanggal_lahir',
-        'tanggal_diangkat',
+        'tanggal_masuk',
         'foto_profil',
     ];
 
     protected $casts = [
         'tanggal_lahir' => 'date',
-        'tanggal_diangkat' => 'string',
+        'tanggal_masuk' => 'string',
     ];
 
     public function salary(){

@@ -166,7 +166,7 @@
                                     </td>
                                     <td rowspan="{{ $deliveryCount }}" class="text-center border border-zinc-300">
                                       <div class="flex flex-col gap-1 items-center">
-                                        <a href="{{ route('edit.awak12', ['employee' => $employee->id, 'page' => request('page',1)]) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
+                                        <a href="{{ route('edit.awak12', ['employeeId'=> $employee->id,'employeeSalaryId'=>$salary->id, 'page' => request('page',1)]) }}" class="bg-blue-500 rounded py-1 px-2"><i class="fa fa-edit text-white"></i></a>
                                         <form action="{{ route('employee.destroy', $employee->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini?');">
                                           @csrf
                                           @method('DELETE')
