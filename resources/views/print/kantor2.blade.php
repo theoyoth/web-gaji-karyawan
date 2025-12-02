@@ -9,11 +9,6 @@
 </head>
 <body>
     <div class="px-4">
-        {{-- <div>
-            <h1 class="header-text text-2xl font-bold text-center">PT.GUNUNG SELATAN</h3>
-            <h1 class="header-subtext text-xl font-bold text-center">DAFTAR :  GAJI KARYAWAN KANTOR 2</h3>
-            <h1 class="header-subtext text-xl font-bold text-center">BULAN : {{ $month ?? '' }} {{ $year ?? '' }}</h3>
-        </div> --}}
         <div class="logo-container">
           <img src="/image/gunsel.jpg" alt="logo gunsel" class="logo-gunsel">
         </div>
