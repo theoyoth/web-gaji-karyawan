@@ -90,9 +90,12 @@
           ];
         @endphp
         <div class="flex flex-wrap space-x-2 border-b border-b-gray-300 border-t border-gray-300 py-2">
+          @php
+            $currentYear = now()->year;
+          @endphp
           {{-- Loop through months --}}
           @foreach ($months as $name)
-            <a href="{{ route('filterbymonth.kantor', ['bulan' => $name, 'tahun' => 2025, 'kantor' => 'kantor 2']) }}"
+            <a href="{{ route('filterbymonth.kantor', ['bulan' => $name, 'tahun' => $currentYear, 'kantor' => 'kantor 2']) }}"
               class="text-sm px-4 py-1 border rounded hover:shadow-md {{ request('bulan') == $name ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-800' }}">
                 <i class="fas fa-calendar-alt text-sm mr-1"></i>
                 {{ $name }}

@@ -26,21 +26,22 @@
         <div class="w-full m-auto">
             <div class="flex gap-4">
               @php
-                $monthName = \Carbon\Carbon::now()->translatedFormat('F');
+                $monthName = now()->translatedFormat('F');
+                $currentYear = now()->year;
               @endphp
-                <a href="{{ route('awak12.index',['bulan' => $monthName, 'tahun' => 2025, 'page' => 1]) }}" class="my-4 w-[200px] h-[100px] flex flex-col items-center justify-center bg-gray-900 text-white text-center rounded-md hover:bg-gray-950 border-2 border-zinc-200">
+                <a href="{{ route('awak12.index',['bulan' => $monthName, 'tahun' => $currentYear, 'page' => 1]) }}" class="my-4 w-[200px] h-[100px] flex flex-col items-center justify-center bg-gray-900 text-white text-center rounded-md hover:bg-gray-950 border-2 border-zinc-200">
                     <div class="text-blue-500 text-4xl mb-2">
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="text-center font-semibold text-white">AWAK 1 & AWAK 2</div>
                 </a>
-                <a href="{{ route('filterbymonth.kantor',['bulan' => $monthName ,'tahun' => 2025,'kantor' => 'kantor 1']) }}" class="my-4 w-[200px] h-[100px] flex items-center justify-center bg-gray-900 text-white text-center rounded-md hover:bg-gray-950 border-2 border-zinc-200">
+                <a href="{{ route('filterbymonth.kantor',['bulan' => $monthName ,'tahun' => $currentYear,'kantor' => 'kantor 1']) }}" class="my-4 w-[200px] h-[100px] flex items-center justify-center bg-gray-900 text-white text-center rounded-md hover:bg-gray-950 border-2 border-zinc-200">
                     <div class="text-green-500 text-4xl mb-2">
                         <i class="fas fa-building"></i>
                     </div>
                     <div class="text-center font-semibold text-white ml-2">KANTOR 1</div>
                 </a>
-                <a href="{{ route('filterbymonth.kantor',['bulan' => $monthName ,'tahun' => 2025,'kantor' => 'kantor 2']) }}" class="my-4 w-[200px] h-[100px] flex items-center justify-center bg-gray-900 text-white text-center rounded-md hover:bg-gray-950 border-2 border-zinc-200">
+                <a href="{{ route('filterbymonth.kantor',['bulan' => $monthName ,'tahun' => $currentYear,'kantor' => 'kantor 2']) }}" class="my-4 w-[200px] h-[100px] flex items-center justify-center bg-gray-900 text-white text-center rounded-md hover:bg-gray-950 border-2 border-zinc-200">
                     <div class="text-purple-500 text-4xl mb-2">
                         <i class="fas fa-building"></i>
                     </div>
