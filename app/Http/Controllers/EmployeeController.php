@@ -76,7 +76,7 @@ class EmployeeController extends Controller
 		+ ($request->tunjangan_makan ?? 0)
 		+ ($request->tunjangan_hari_tua ?? 0);
 
-    if ($request->filled('employee') &&
+    if ($request->filled('employee_id') &&
         Salary::where('employee_id', $request->employee_id)
             ->where('bulan', $request->bulan)
             ->where('tahun', $request->tahun)

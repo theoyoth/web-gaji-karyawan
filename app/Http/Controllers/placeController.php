@@ -451,6 +451,7 @@ class placeController extends Controller
       $kantor = $request->input('kantor');
 
       $query = Employee::where('kantor', $kantor) // Filter by kantor (from employees table)
+      
       ->whereHas('salaries', function ($q) use ($month, $year) {
           // Filter salaries by bulan (month) and tahun (year)
           if ($month && $year) {
