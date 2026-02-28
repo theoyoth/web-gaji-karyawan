@@ -112,7 +112,7 @@
                   <tr>
                     <th rowspan="2" class="py-2 w-5 border border-zinc-300 bg-zinc-100">No.</th>
                     <th rowspan="2" class="py-2 border border-zinc-300 bg-zinc-100 w-[200px]">Nama</th>
-                    <th  class="py-2 border border-zinc-300 bg-zinc-100 w-[150px]">Masuk kerja</th>
+                    <th  class="py-2 border border-zinc-300 bg-zinc-100 w-[150px]">Tanggal masuk</th>
                     <!-- Gaji Pokok with 3 sub-columns -->
                     <th rowspan="2" class="py-2 border border-zinc-300 bg-zinc-100 text-center">Gaji Pokok (Rp.)</th>
                     <th  class="py-2 border border-zinc-300 bg-zinc-100 text-center">Hari Kerja</th>
@@ -158,13 +158,13 @@
                             </div>
                             </td>
                             {{-- <td class="text-center py-1 border border-zinc-300">{{ $employee->tempat_lahir . ', ' . $employee->tanggal_lahir->format('d M Y') }}</td> --}}
-                            <td class="text-center py-1 border border-zinc-300">{{ $employee->tanggal_diangkat }}</td>
+                            <td class="text-center py-1 border border-zinc-300">{{ $employee->tanggal_masuk }}</td>
                             <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->gaji_pokok, 0, ',', '.') ?: '' }}</td>
                             <td class="text-center py-1 border border-zinc-300">{{ $salary->hari_kerja }}</td>
                             <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->tunjangan_makan, 0, ',', '.') ?: '' }}</td>
                             {{-- <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td> --}}
                             <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->jumlah_gaji, 0, ',', '.') ?: '' }}</td>
-                            <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: '' }}</td>
+                            <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: '-' }}</td>
                             <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->potongan_bpjs, 0, ',', '.') ?: '' }}</td>
                             {{-- <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td> --}}
                             <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->jumlah_bersih, 0, ',', '.') ?: '' }}</td>

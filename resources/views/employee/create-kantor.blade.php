@@ -87,9 +87,9 @@
                   @enderror
                 </div>
                 <div>
-                  <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Masuk kerja</label>
-                  <input type="text" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat') }}"  class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
-                  @error('tanggal_diangkat')
+                  <label for="tanggal_masuk" class="block text-sm font-medium text-gray-700">Tanggal masuk</label>
+                  <input type="text" id="tanggal_masuk" name="tanggal_masuk" value="{{ old('tanggal_masuk') }}"  class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                  @error('tanggal_masuk')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                   @enderror
                 </div>

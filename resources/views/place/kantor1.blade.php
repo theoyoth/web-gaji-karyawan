@@ -150,7 +150,7 @@
                           </td>
                           {{-- <td class="text-center py-1 border border-zinc-300">{{ $employee->tempat_lahir . ', ' . $employee->tanggal_lahir->format('d M Y') }}</td> --}}
                           <td class="text-center py-1 border border-zinc-300">
-                            {{ $employee->tanggal_diangkat }}
+                            {{ $employee->tanggal_masuk }}
                           </td>
                           <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->gaji_pokok, 0, ',', '.') ?: '' }}</td>
                           <td class="text-center py-1 border border-zinc-300">{{ $salary->hari_kerja }}</td>
