@@ -23,7 +23,7 @@ class Employee extends Model
         'tanggal_masuk' => 'string',
     ];
 
-    public function salary(){
-        return $this->hasOne(Salary::class);
+    public function salaries(){
+        return $this->hasMany(Salary::class);
     }
 }

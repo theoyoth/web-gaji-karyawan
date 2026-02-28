@@ -21,7 +21,7 @@ class EmployeeController extends Controller
     }
 
     $employees = Employee::whereIn('kantor', [$kantor])
-             ->with('salary')
+             ->with('salaries')
              ->get();
 		return view('employee.create-kantor',compact('employees'));
 	}
@@ -29,7 +29,7 @@ class EmployeeController extends Controller
 	public function createAwak12(){
     $kantor = ["awak 1 dan awak 2"];
     $employees = Employee::whereIn('kantor', $kantor)
-             ->with('salary')
+             ->with('salaries')
              ->get();
 
     return view('employee.create-awak12', compact('employees'));
@@ -132,7 +132,7 @@ class EmployeeController extends Controller
     $tahun = $request->input('tahun');
 
 		$allEmployeesKantor1 = Employee::where('kantor', "kantor 1")
-    ->whereHas('salary', function ($q) use ($bulan, $tahun) {
+    ->whereHas('salaries', function ($q) use ($bulan, $tahun) {
         // Filter salaries by bulan (month) and tahun (year)
         if ($bulan && $tahun) {
             $q->where('bulan', $bulan)
@@ -141,7 +141,7 @@ class EmployeeController extends Controller
     })->get()->count();
 
 		$allEmployeesKantor2 = Employee::where('kantor', "kantor 2")
-    ->whereHas('salary', function ($q) use ($bulan, $tahun) {
+    ->whereHas('salaries', function ($q) use ($bulan, $tahun) {
         // Filter salaries by bulan (month) and tahun (year)
         if ($bulan && $tahun) {
             $q->where('bulan', $bulan)
@@ -318,28 +318,28 @@ class EmployeeController extends Controller
 		// Loop through each salary associated with the employee
     // ✅ Delete signature (ttd)
 		if ($employee->salary) {
-			$fileName = Str::title($employee->nama) . '.png'; // using capital first letter employee's name for the signature
-			$path = 'ttd/' . $fileName;
+			// $fileName = Str::title($employee->nama) . '.png'; // using capital first letter employee's name for the signature
+			// $path = 'ttd/' . $fileName;
 
-			if (Storage::disk('public')->exists($path)) {
-				// Delete the file
-				Storage::disk('public')->delete($path);
-			}
+			// if (Storage::disk('public')->exists($path)) {
+			// 	// Delete the file
+			// 	Storage::disk('public')->delete($path);
+			// }
 
 			// Optionally delete the salary record if needed
 			$employee->salary->delete();
 		}
 
      // ✅ Delete foto_profil if exists
-    if ($employee->foto_profil) {
-        $photoPath = $employee->foto_profil;
-        if (Storage::disk('public')->exists($photoPath)) {
-            Storage::disk('public')->delete($photoPath);
-        }
-    }
+    // if ($employee->foto_profil) {
+    //     $photoPath = $employee->foto_profil;
+    //     if (Storage::disk('public')->exists($photoPath)) {
+    //         Storage::disk('public')->delete($photoPath);
+    //     }
+    // }
 
 		// Delete the employee
-		$employee->delete();
+		// $employee->salary->delete();
 
 		return redirect()->back()->with('success', 'employee deleted successfully.');
 	}

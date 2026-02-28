@@ -451,14 +451,14 @@ class placeController extends Controller
       $kantor = $request->input('kantor');
 
       $query = Employee::where('kantor', $kantor) // Filter by kantor (from employees table)
-      ->whereHas('salary', function ($q) use ($month, $year) {
+      ->whereHas('salaries', function ($q) use ($month, $year) {
           // Filter salaries by bulan (month) and tahun (year)
           if ($month && $year) {
               $q->where('bulan', $month)
                 ->where('tahun', $year);
           }
       })
-      ->with(['salary' => function ($q) use ($month, $year) {
+      ->with(['salaries' => function ($q) use ($month, $year) {
           // Also filter the eager-loaded salaries by bulan and tahun
           if ($month && $year) {
               $q->where('bulan', $month)
@@ -472,7 +472,7 @@ class placeController extends Controller
       $employeesPaginate = $query->paginate(15)->appends($request->only(['bulan','tahun','kantor']));
 
       $totalEmployeesSalary = $allEmployees->reduce(function ($totalValue, $employee) {
-        $salary = $employee->salary;
+        $salary = $employee->salaries->first();
         return [
           'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -494,7 +494,7 @@ class placeController extends Controller
 
       // calculate total of data paginate
       $pageTotals = $employeesPaginate->reduce(function ($totalValue, $employee) {
-        $salary = $employee->salary;
+        $salary = $employee->salaries->first();
 
         return [
             'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
