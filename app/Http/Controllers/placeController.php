@@ -367,13 +367,13 @@ class placeController extends Controller
 
       // Build query (do NOT call get() here)
       $query = Employee::where('kantor', $kantor)
-          ->whereHas('salary', function ($query) use ($month, $year) {
+          ->whereHas('salaries', function ($query) use ($month, $year) {
               if ($month && $year) {
                   $query->where('bulan', $month)
                         ->where('tahun', $year);
               }
           })
-          ->with(['salary' => function ($query) use ($month, $year) {
+          ->with(['salaries' => function ($query) use ($month, $year) {
               if ($month && $year) {
                   $query->where('bulan', $month)
                         ->where('tahun', $year);
@@ -388,7 +388,7 @@ class placeController extends Controller
 
       // Calculate total for all data
       $totalEmployeesSalary = $allemployees->reduce(function ($total, $employee) {
-          $salary = $employee->salary;
+          $salary = $employee->salaries->first();
 
           return [
               'totalGajiPokok' => $total['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
@@ -413,7 +413,7 @@ class placeController extends Controller
 
       // Calculate total for current page
       $pageTotals = $employeesPaginate->getCollection()->reduce(function ($total, $employee) {
-          $salary = $employee->salary;
+          $salary = $employee->salaries->first();
 
           return [
               'totalGajiPokok' => $total['totalGajiPokok'] + ($salary->jumlah_gaji ?? 0),
@@ -454,24 +454,20 @@ class placeController extends Controller
       
       ->whereHas('salaries', function ($q) use ($month, $year) {
           // Filter salaries by bulan (month) and tahun (year)
-          if ($month && $year) {
-              $q->where('bulan', $month)
-                ->where('tahun', $year);
-          }
+          $q->where('bulan', $month)
+            ->where('tahun', $year);
       })
       ->with(['salaries' => function ($q) use ($month, $year) {
           // Also filter the eager-loaded salaries by bulan and tahun
-          if ($month && $year) {
-              $q->where('bulan', $month)
-                ->where('tahun', $year);
-          }
+          $q->where('bulan', $month)
+            ->where('tahun', $year);  
       }]);
 
       // Step 2: Clone for total calculation (all data)
       $allEmployees = (clone $query)->get();
       // Step 3: Paginate the original query
       $employeesPaginate = $query->paginate(15)->appends($request->only(['bulan','tahun','kantor']));
-
+      
       $totalEmployeesSalary = $allEmployees->reduce(function ($totalValue, $employee) {
         $salary = $employee->salaries->first();
         return [

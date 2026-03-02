@@ -127,9 +127,9 @@
                   <tbody>
                       @php $no = 1; @endphp
                       @foreach($employees as $employee)
-                          @if($employee->salary)
+                          @if($employee->salaries)
                               @php
-                                  $salary = $employee->salary;
+                                  $salary = $employee->salaries->first();
                                   $deliveryCount = $salary->deliveries->count();
                               @endphp
                               @foreach ($salary->deliveries as $index => $delivery)

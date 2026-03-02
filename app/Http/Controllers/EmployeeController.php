@@ -37,6 +37,7 @@ class EmployeeController extends Controller
 
 	public function store(Request $request){
 		$request->validate([
+      'employee_id' => 'nullable|exists:employees,id',
 			'nama' => 'max:255',
 			'kantor' => 'required|max:255',
 			'tempat_lahir' => 'nullable|string',
@@ -87,9 +88,9 @@ class EmployeeController extends Controller
             ->with('error', 'Karyawan ini sudah terdaftar pada bulan ' . $request->bulan . ' tahun ' . $request->tahun);
     }
     else if ($request->filled('employee_id')) {
-        $employee = Employee::find($request->employee_id);
+        $employee = Employee::findOrFail($request->employee_id);
     } else {
-        if ($request->hasFile('foto_profil')) {
+        if ($request->hasFile('foto_profil')) { 
           $fotoPath = $request->file('foto_profil')->store('foto_profil', 'public');
         }
         else{
@@ -299,7 +300,7 @@ class EmployeeController extends Controller
     $tahun = $request->input('tahun');
 
 		$allEmployees = Employee::where('kantor', 'awak 1 dan awak 2') // Filter by kantor
-    ->whereHas('salary', function ($q) use ($bulan, $tahun) {
+    ->whereHas('salaries', function ($q) use ($bulan, $tahun) {
         // Filter salaries by bulan (month) and tahun (year)
         if ($bulan && $tahun) {
             $q->where('bulan', $bulan)
