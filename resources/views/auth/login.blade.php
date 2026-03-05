@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="flex justify-center items-center h-[90vh]">
-    <img src="/image/building.jpg" alt="building" class="absolute inset-0 -z-[10] h-screen w-full object-cover">
+    <img src="/image/kantor_gunsel2.webp" alt="building" class="absolute inset-0 -z-[10] h-screen w-full object-cover">
     <div class="w-1/3 rounded-lg h-1/2 p-10 relative overflow-hidden backdrop-blur-sm bg-white/50 border-2 border-zinc-200 shadow-lg grid place-items-center">
         <div class="w-full">
           <h1 class="text-center font-bold text-4xl text-zinc-950">LOGIN</h1>

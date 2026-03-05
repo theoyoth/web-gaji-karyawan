@@ -17,8 +17,8 @@
     </div>  
   @endauth
   <div class="flex justify-center items-center h-[90dvh]">
-    <img src="/image/building.jpg" alt="building" class="absolute inset-0 -z-[10] h-screen w-full object-cover">
-    <div class="w-2/3 rounded-lg h-[50vh] p-10 relative overflow-hidden backdrop-blur-sm bg-white/50 border-2 border-zinc-200 shadow-lg">
+    <img src="/image/kantor-gunsel.webp" alt="building" class="absolute inset-0 -z-[10] h-screen w-full object-cover">
+    <div class="w-2/3 rounded-lg h-[50vh] p-10 relative overflow-hidden backdrop-blur-sm bg-white/30 border-2 border-zinc-200 shadow-lg">
       <div class="relative z-10">
         <div>
             <h1 class="text-4xl font-bold text-center text-zinc-950">DAFTAR :  GAJI KARYAWAN PT. GUNUNG SELATAN</h3>
