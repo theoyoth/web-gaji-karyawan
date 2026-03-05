@@ -4,8 +4,8 @@
 <div class="container-fluid px-4">
   <div class="bg-zinc-100 rounded-md h-[50px] flex items-center justify-between px-1">
     @php
-      $bul = $employee->salary->bulan;
-      $tah = $employee->salary->tahun;
+      $bul = $salary->bulan;
+      $tah = $salary->tahun;
     @endphp
     <a href="{{ route('awak12.index',['bulan' => $bul,'tahun' => $tah,'page' => request('page')]) }}" class="max-w-max flex items-center bg-zinc-800 text-white rounded-md hover:bg-zinc-900 px-4 py-1"><i class="fas fa-arrow-left text-sm mr-2 text-zinc-100"></i> kembali</a>
   </div>
@@ -40,7 +40,7 @@
                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
               </div>
-              @if($employee->salary)
+              @if($employee->salaries)
                 <div>
                   <label for="gaji_pokok" class="block text-sm font-medium text-gray-700">Gaji pokok</label>
                   <input type="number" id="gaji_pokok" name="gaji_pokok" value="{{ old('gaji_pokok',$salary->gaji_pokok) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
@@ -119,13 +119,13 @@
                       <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                   </div>
-                  <div class="mt-2">
+                  {{-- <div class="mt-2">
                     <label for="potongan_tabungan_hari_tua" class="block text-sm font-medium text-gray-700">Tabungan hari tua</label>
                     <input type="number" id="potongan_tabungan_hari_tua" name="potongan_tabungan_hari_tua" value="{{ old('potongan_tabungan_hari_tua',$salary->potongan_tabungan_hari_tua) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
                     @error('potongan_tabungan_hari_tua')
                       <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
-                  </div>
+                  </div> --}}
                   <div class="mt-2">
                     <label for="potongan_kredit_kasbon" class="block text-sm font-medium text-gray-700">Kredit/Kasbon</label>
                     <input type="number" id="potongan_kredit_kasbon" name="potongan_kredit_kasbon" value="{{ old('potongan_kredit_kasbon',$salary->potongan_kredit_kasbon) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">

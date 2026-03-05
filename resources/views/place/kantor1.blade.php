@@ -144,7 +144,7 @@
                             <div class="flex items-center gap-2">
                               @if ($employee->foto_profil)
                                 <img src="{{ asset('storage/' . $employee->foto_profil) }}" alt="Foto Profil" class="w-[50px] h-[70px] object-cover">
-                              @endif
+                              @endif 
                               {{ $employee->nama }}
                             </div>
                           </td>
@@ -157,7 +157,7 @@
                           <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->tunjangan_makan, 0, ',', '.') ?: '' }}</td>
                           {{-- <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->tunjangan_hari_tua, 0, ',', '.') }}</td> --}}
                           <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->jumlah_gaji, 0, ',', '.') ?: '' }}</td>
-                          <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: '' }}</td>
+                          <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: '-' }}</td>
                           <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->potongan_bpjs, 0, ',', '.') ?: '' }}</td>
                           {{-- <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') }}</td> --}}
                           <td class="text-center py-1 border border-zinc-300">{{ number_format($salary->jumlah_bersih, 0, ',', '.') ?: '' }}</td>

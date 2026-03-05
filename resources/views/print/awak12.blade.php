@@ -95,9 +95,9 @@
           <tbody>
             @php $no = 1; @endphp
               @foreach($employees as $employee)
-                @if ($employee->salary)
+                @if ($employee->salaries)
                   @php $deliveryCount = $salary =
-                      $employee->salary;
+                      $employee->salaries->first();
                       $deliveryCount = $salary->deliveries->count();
                   @endphp
                   @foreach ($salary->deliveries as $index => $delivery)
@@ -120,7 +120,7 @@
                       <td rowspan="{{ $deliveryCount }}">{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
                       <td rowspan="{{ $deliveryCount }}">{{number_format($salary->potongan_bpjs, 0, ',', '.')}}</td>
                       {{-- <td rowspan="{{ $deliveryCount }}">{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.') ?: ''}}</td> --}}
-                      <td rowspan="{{ $deliveryCount }}">{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: ''}}</td>
+                      <td rowspan="{{ $deliveryCount }}">{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: '-'}}</td>
                       <td rowspan="{{ $deliveryCount }}">{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
                       <td rowspan="{{ $deliveryCount }}">
                           {{-- <img src="{{ file_exists(public_path('storage/ttd/' . $employee->nama . '.png')) ? asset('storage/ttd/' . $employee->nama . '.png') : '' }}" alt="ttd"> --}}

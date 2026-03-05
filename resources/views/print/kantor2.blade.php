@@ -61,7 +61,7 @@
                 {{-- <th class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th>
                 <th class="py-2 border border-black bg-gray-500">Tanggal diangkat</th> --}}
 
-                <th>Masuk Kerja</th>
+                <th>Tanggal masuk</th>
                 <!-- Gaji Pokok with 3 sub-columns -->
                 <th class="h-gaji-pokok">Gaji Pokok (Rp.)</th>
                 <th class="h-hari-kerja">Hari Kerja</th>
@@ -90,14 +90,14 @@
               @php $no = 1; $num = 1;@endphp
               @foreach($employees as $employee)
                 @php
-                  $salary = $employee->salary;
+                  $salary = $employee->salaries->first();
                 @endphp
-                @if ($employee->salary)
+                @if ($employee->salaries/*)
                   <tr>
                     <td class="td-center">{{ $no++ }}</td>
                     <td class="td-left">{{$employee->nama}}</td>
                     {{-- <td>{{$employee->tempat_lahir . ', ' . $employee->tanggal_lahir->format('d M Y') }}</td> --}}
-                    <td class="h-masuk-kerja">{{$employee->tanggal_diangkat}}</td>
+                    <td class="h-masuk-kerja">{{$employee->tanggal_masuk}}</td>
 
                     <td>{{number_format($salary->gaji_pokok, 0, ',', '.')}}</td>
                     
@@ -105,8 +105,8 @@
                     <td>{{number_format($salary->tunjangan_makan, 0, ',', '.') ?: ''}}</td>
                     {{-- <td>{{number_format($salary->tunjangan_hari_tua, 0, ',', '.')}}</td> --}}
                     <td>{{number_format($salary->jumlah_gaji, 0, ',', '.')}}</td>
-                    <td>{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: ''}}</td>
-                    <td>{{number_format($salary->potongan_bpjs, 0, ',', '.') ?: ''}}</td>
+                    <td>{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: '-'}}</td>
+                    <td>{{number_format($salary->potongan_bpjs, 0, ',', '.') ?: '-'}}</td>
                     {{-- <td>{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td> --}}
                     <td>{{number_format($salary->jumlah_bersih, 0, ',', '.')}}</td>
                     

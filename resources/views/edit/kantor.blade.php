@@ -4,8 +4,8 @@
 <div class="container-fluid px-4">
   <div class="bg-zinc-100 rounded-md h-[50px] flex items-center justify-between px-1">
     @php
-      $bul = $employee->salary->bulan;
-      $tah = $employee->salary->tahun;
+      $bul = $salary->bulan;
+      $tah = $salary->tahun;
     @endphp
     <a href="{{ route('filterbymonth.kantor',['bulan' => $bul, 'tahun' => $tah, 'kantor' => request('from') ,'page' => request('page')]) }}" class="max-w-max flex items-center bg-zinc-800 text-white rounded-md hover:bg-zinc-900 px-4 py-1"><i class="fas fa-arrow-left text-sm mr-2 text-zinc-100"></i> kembali</a>
   </div>
@@ -18,7 +18,7 @@
         @csrf
         @method('PUT')
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          @if($employee->salary)
+          @if($employee->salaries())
           {{-- send hidden page pagination number to backend --}}
           <input type="hidden" name="page" value="{{ request('page') }}">
           <!-- Left Column -->
@@ -42,9 +42,9 @@
                 @enderror
               </div>
               <div>
-                <label for="tanggal_diangkat" class="block text-sm font-medium text-gray-700">Masuk Kerja</label>
-                <input type="date" id="tanggal_diangkat" name="tanggal_diangkat" value="{{ old('tanggal_diangkat',$employee->tanggal_diangkat) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
-                @error('tanggal_diangkat')
+                <label for="tanggal_masuk" class="block text-sm font-medium text-gray-700">Masuk Kerja</label>
+                <input type="text" id="tanggal_masuk" name="tanggal_masuk" value="{{ old('tanggal_masuk',$employee->tanggal_masuk) }}" class="mt-1 outline-1 w-full h-10 px-2 py-1 border border-gray-200 rounded-md">
+                @error('tanggal_masuk')
                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
               </div>

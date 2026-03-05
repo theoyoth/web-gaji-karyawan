@@ -348,7 +348,7 @@ class EmployeeController extends Controller
 	public function editPageAwak12($employeeId, $employeeSalaryId){
     $employee = Employee::findOrFail($employeeId);
 
-    $salary = $employee->salary()
+    $salary = $employee->salaries->first()
         ->with('deliveries')
         ->where('id', $employeeSalaryId)
         ->firstOrFail();
@@ -358,7 +358,7 @@ class EmployeeController extends Controller
 	public function editPageKantor($employeeId,$employeeSalaryId){
     $employee = Employee::findOrFail($employeeId);
 
-    $salary = $employee->salary()
+    $salary = $employee->salaries->first()
         ->with('deliveries')
         ->where('id', $employeeSalaryId)
         ->firstOrFail();
@@ -367,7 +367,7 @@ class EmployeeController extends Controller
 	}
 
 	public function updateAwak12(Request $request, $employeeId){
-		$employee = Employee::with('salary.deliveries')->findOrFail($employeeId);
+		$employee = Employee::with('salaries.deliveries')->findOrFail($employeeId);
 
     if ($request->input('hapus_foto') == '1' && $employee->foto_profil) {
         Storage::disk('public')->delete($employee->foto_profil);
@@ -398,7 +398,7 @@ class EmployeeController extends Controller
     $employee->save();
 
 		// Update salary
-		$salary = $employee->salary;
+		$salary = $employee->salaries->first();
 
 		$salary->gaji_pokok = $request->input('gaji_pokok', $salary->gaji_pokok);
 		$salary->bulan = $request->input('bulan', $salary->bulan);
@@ -468,7 +468,7 @@ class EmployeeController extends Controller
 	}
 
 	public function updateKantor(Request $request, $employeeId){
-	  $employee = Employee::with('salary')->findOrFail($employeeId);
+	  $employee = Employee::with('salaries')->findOrFail($employeeId);
 
     if ($request->input('hapus_foto') == '1' && $employee->foto_profil) {
         Storage::disk('public')->delete($employee->foto_profil);
@@ -498,7 +498,7 @@ class EmployeeController extends Controller
     $employee->save();
 
 	  // Update salary
-	  $salary = $employee->salary;
+	  $salary = $employee->salaries->first();
 
 	  $salary->gaji_pokok = $request->input('gaji_pokok', $salary->gaji_pokok);
 	  $salary->bulan = $request->input('bulan', $salary->bulan);
@@ -559,15 +559,15 @@ class EmployeeController extends Controller
 
     $employees = Employee::where('kantor', 'awak 1 dan awak 2')
     ->when($search, function ($query, $search) {
-        $query->where('nama', 'like', '%' . $search . '%');
+        $query->where('nama', 'like', $search . '%');
     })
     ->when($month && $year, function ($query) use ($month, $year) {
-        $query->whereHas('salary', function ($q) use ($month, $year) {
+        $query->whereHas('salaries', function ($q) use ($month, $year) {
             $q->where('bulan', $month)
               ->where('tahun', $year);
         });
     })
-    ->with(['salary' => function ($q) use ($month, $year) {
+    ->with(['salaries' => function ($q) use ($month, $year) {
         if ($month && $year) {
             $q->where('bulan', $month)
               ->where('tahun', $year);
@@ -582,7 +582,7 @@ class EmployeeController extends Controller
 
     // Calculate totals
     $totalEmployeesSalary = $allEmployees->reduce(function ($totalValue, $employee) {
-      $salary = $employee->salary;
+      $salary = $employee->salaries->first();
 
       return [
         'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->jumlah_gaji ?? 0),
@@ -598,7 +598,7 @@ class EmployeeController extends Controller
 
     // Calculate paginate employees total
     $pageTotals = $employeesPaginate->reduce(function ($totalValue, $employee) {
-      $salary = $employee->salary;
+      $salary = $employee->salaries->first();
 
       return [
         'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->jumlah_gaji ?? 0),
@@ -626,23 +626,17 @@ class EmployeeController extends Controller
     $month = $request->input('bulan');
     $year = $request->input('tahun');
 
-    $employees = Employee::where('kantor', $kantor) // Filter by kantor (if needed)
-                  ->when($search, function ($query, $search) {
-                    // If there's a search term, filter by the employee's name
-                    return $query->where('nama', 'like', '%' . $search . '%');
-                  })->with('salary');
-
     $employees = Employee::where('kantor', $kantor)
     ->when($search, function ($query, $search) {
-        $query->where('nama', 'like', '%' . $search . '%');
+        $query->where('nama', 'like', $search . '%');
     })
     ->when($month && $year, function ($query) use ($month, $year) {
-        $query->whereHas('salary', function ($q) use ($month, $year) {
+        $query->whereHas('salaries', function ($q) use ($month, $year) {
             $q->where('bulan', $month)
               ->where('tahun', $year);
         });
     })
-    ->with(['salary' => function ($q) use ($month, $year) {
+    ->with(['salaries' => function ($q) use ($month, $year) {
         if ($month && $year) {
             $q->where('bulan', $month)
               ->where('tahun', $year);
@@ -657,7 +651,7 @@ class EmployeeController extends Controller
 
     // Calculate totals
     $totalEmployeesSalary = $allEmployees->reduce(function ($totalValue, $employee) {
-      $salary = $employee->salary;
+      $salary = $employee->salaries->first();
 
       return [
         'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->jumlah_gaji ?? 0),
@@ -672,7 +666,7 @@ class EmployeeController extends Controller
 
     // Calculate paginate employees total
     $pageTotals = $employeesPaginate->reduce(function ($totalValue, $employee) {
-      $salary = $employee->salary;
+      $salary = $employee->salaries->first();
 
       return [
         'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->jumlah_gaji ?? 0),

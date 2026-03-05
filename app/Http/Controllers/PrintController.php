@@ -11,11 +11,11 @@ class PrintController extends Controller
 
         // Load employees with their salaries, filtered by kantor
         $employees = Employee::where('kantor', "kantor 1")
-                    ->with('salary')
+                    ->with('salaries')
                     ->get();
 
         $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
-        $salary = $employee->salary;
+        $salary = $employee->salaries->first();
 
         return [
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -33,11 +33,11 @@ class PrintController extends Controller
     public function kantor2(){
       // Load employees with their salaries, filtered by kantor
       $employees = Employee::where('kantor', "kantor 2")
-                  ->with('salary')
+                  ->with('salaries')
                   ->get();
 
       $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
-      $salary = $employee->salary;
+      $salary = $employee->salaries->first();
 
       return [
         'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
@@ -54,11 +54,12 @@ class PrintController extends Controller
     public function awak12(){
       // Load employees with their salaries, filtered by kantor
       $employees = Employee::where('kantor', "awak 1 dan awak 2")
-                  ->with('salary')
+                  ->with('salaries')
                   ->get();
 
       $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
-        $salary = $employee->salary;
+        $salary = $employee->salaries->first();
+
         return [
           'totalJumlahGaji' => $totalValue['totalJumlahGaji'] + ($salary->jumlah_gaji ?? 0),
           'totalTunjanganMakan' => $totalValue['totalTunjanganMakan'] + ($salary->tunjangan_makan ?? 0),
@@ -82,14 +83,14 @@ class PrintController extends Controller
       $kantor = 'kantor 1';
 
       $employees = Employee::where('kantor', $kantor) // Filter by kantor (from employees table)
-      ->whereHas('salary', function ($query) use ($month, $year) {
+      ->whereHas('salaries', function ($query) use ($month, $year) {
           // Filter salaries by bulan (month) and tahun (year)
           if ($month && $year) {
               $query->where('bulan', $month)
                     ->where('tahun', $year);
           }
       })
-      ->with(['salary' => function ($query) use ($month, $year) {
+      ->with(['salaries' => function ($query) use ($month, $year) {
           // Also filter the eager-loaded salaries by bulan and tahun
           if ($month && $year) {
               $query->where('bulan', $month)
@@ -99,7 +100,7 @@ class PrintController extends Controller
       ->get();
 
       $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
-        $salary = $employee->salary;
+        $salary = $employee->salaries->first();
 
         return [
           'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
@@ -121,14 +122,14 @@ class PrintController extends Controller
       $kantor = 'kantor 2';
 
       $employees = Employee::where('kantor', $kantor) // Filter by kantor (from employees table)
-      ->whereHas('salary', function ($query) use ($month, $year) {
+      ->whereHas('salaries', function ($query) use ($month, $year) {
           // Filter salaries by bulan (month) and tahun (year)
           if ($month && $year) {
               $query->where('bulan', $month)
                     ->where('tahun', $year);
           }
       })
-      ->with(['salary' => function ($query) use ($month, $year) {
+      ->with(['salaries' => function ($query) use ($month, $year) {
           // Also filter the eager-loaded salaries by bulan and tahun
           if ($month && $year) {
               $query->where('bulan', $month)
@@ -138,7 +139,7 @@ class PrintController extends Controller
       ->get();
 
       $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
-        $salary = $employee->salary;
+        $salary = $employee->salaries->first();
 
         return [
           'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->gaji_pokok ?? 0),
@@ -160,14 +161,14 @@ class PrintController extends Controller
       $kantor = 'awak 1 dan awak 2';
 
       $employees = Employee::where('kantor', $kantor) // Filter by kantor (from employees table)
-      ->whereHas('salary', function ($query) use ($month, $year) {
+      ->whereHas('salaries', function ($query) use ($month, $year) {
           // Filter salaries by bulan (month) and tahun (year)
           if ($month && $year) {
               $query->where('bulan', $month)
                     ->where('tahun', $year);
           }
       })
-      ->with(['salary' => function ($query) use ($month, $year) {
+      ->with(['salaries' => function ($query) use ($month, $year) {
           // Also filter the eager-loaded salaries by bulan and tahun
           if ($month && $year) {
               $query->where('bulan', $month)
@@ -177,7 +178,7 @@ class PrintController extends Controller
       ->get();
 
       $totalEmployeesSalary = $employees->reduce(function ($totalValue, $employee) {
-        $salary = $employee->salary;
+        $salary = $employee->salaries->first();
 
         return [
           'totalGajiPokok' => $totalValue['totalGajiPokok'] + ($salary->jumlah_gaji ?? 0),

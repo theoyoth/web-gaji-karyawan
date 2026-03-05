@@ -68,7 +68,7 @@
           </form>
           <div class="flex gap-4">
             <a href="{{ route('employee.createKantor', ['from' => 'kantor 2','bulan' => request('bulan'),'tahun' => request('tahun')]) }}" class="flex items-center my-4 px-4 py-1 bg-zinc-800 text-white rounded-md hover:bg-zinc-900"><i class="fas fa-plus mr-2"></i>Buat baru</a>
-            <a href="{{ route('print.kantor2.filtered',['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 1']) }}" class="bg-zinc-100 border border-zinc-800 flex items-center my-4 px-4 py-1 text-zinc-900 rounded-md hover:bg-zinc-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
+            <a href="{{ route('print.kantor2.filtered',['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 2']) }}" class="bg-zinc-100 border border-zinc-800 flex items-center my-4 px-4 py-1 text-zinc-900 rounded-md hover:bg-zinc-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
 
             {{-- <a href="{{ route('print.excel.awak12') }}" class="flex items-center my-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"><i class="fas fa-file-excel mr-2"></i>Export</a> --}}
           </div>

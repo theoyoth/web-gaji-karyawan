@@ -48,7 +48,7 @@
         </section>
 
         <div class="bg-gray-100">
-          @if($employees->filter(fn($employee) => $employee->salary)->isNotEmpty())
+          @if($employees->filter(fn($employee) => $employee->salaries)->isNotEmpty())
               <!-- your table -->
           @else
               <p class="text-red-500 mt-4 empty-list">Tidak ada data gaji untuk bulan dan tahun yang dipilih.</p>
@@ -59,7 +59,7 @@
                 <th rowspan="2" class="h-no">No.</th>
                 <th rowspan="2" class="h-name">Nama</th>
                 {{-- <th rowspan="2" class="py-2 border border-black bg-gray-500">Tempat, Tanggal Lahir</th> --}}
-                <th rowspan="2" class="py-2 border border-black bg-gray-500">Masuk kerja</th>
+                <th rowspan="2" class="py-2 border border-black bg-gray-500">Tanggal masuk</th>
 
                 <!-- Gaji Pokok with 3 sub-columns -->
                 <th rowspan="2" class="h-gaji-pokok">Gaji Pokok (Rp.)</th>
@@ -88,15 +88,15 @@
               @php $no = 1;$num = 1;@endphp
               @foreach($employees as $employee)
                 @php
-                  $salary = $employee->salary;
+                  $salary = $employee->salaries->first();
                 @endphp
-                @if ($employee->salary)
+                @if ($employee->salaries)
                   <tr>
                     <td class="td-center">{{ $no++ }}</td>
                     <td class="td-left">{{$employee->nama}}</td>
                     {{-- <td>{{ $employee->tempat_lahir . ', ' . $employee->tanggal_lahir->format('d M Y') }}</td> --}}
                     <td class="h-masuk-kerja">
-                      {{$employee->tanggal_diangkat}}
+                      {{$employee->tanggal_masuk}}
                     </td>
 
                     <td>
@@ -114,10 +114,10 @@
                       {{number_format($salary->jumlah_gaji, 0, ',', '.')}}
                     </td>
                     <td>
-                      {{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: ''}}
+                      {{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: '-'}}
                     </td>
                     <td>
-                      {{number_format($salary->potongan_bpjs, 0, ',', '.') ?: ''}}
+                      {{number_format($salary->potongan_bpjs, 0, ',', '.') ?: '-'}}
                     </td>
                     {{-- <td>{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td> --}}
                     <td>

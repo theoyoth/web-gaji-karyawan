@@ -34,12 +34,12 @@ class Awak12Export implements FromView, WithStyles
           
 
         $query = Employee::where('kantor', "awak 1 dan awak 2")
-            ->whereHas('salary', function ($q) {
+            ->whereHas('salaries', function ($q) {
                     $q->where('bulan', $this->month)
                       ->where('tahun', $this->year);
                 }
             )
-            ->with(['salary' => function ($q) {
+            ->with(['salaries' => function ($q) {
                     $q->where('bulan', $this->month)
                       ->where('tahun', $this->year);
                 }

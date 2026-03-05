@@ -43,7 +43,7 @@
             </form>
             <div class="flex items-center gap-4">
               <a href="{{ route('employee.createAwak12',['bulan' => request('bulan'),'tahun' => request('tahun')]) }}" class="flex items-center my-4 px-4 py-1 bg-zinc-800 text-white rounded-md hover:bg-zinc-900"><i class="fas fa-plus mr-2"></i>Buat baru</a>
-              <a href="{{ route('print.awak12.filtered', ['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'kantor 1']) }}" class="bg-zinc-100 border border-zinc-800 flex items-center my-4 px-4 py-1 text-zinc-900 rounded-md hover:bg-zinc-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
+              <a href="{{ route('print.awak12.filtered', ['bulan' => request('bulan'),'tahun' => request('tahun'),'kantor' => 'awak 1 dan awak 2']) }}" class="bg-zinc-100 border border-zinc-800 flex items-center my-4 px-4 py-1 text-zinc-900 rounded-md hover:bg-zinc-200"><i class="fas fa-print mr-2"></i>Print Dokumen</a>
               <a href="{{ route('export.awak12', ['bulan' => request('bulan'), 'tahun' => request('tahun')]) }}"
                 class="flex items-center bg-green-600 text-zinc-200 rounded-md hover:bg-green-700 px-4 py-1">
                   <i class="fas fa-file-excel mr-2"></i>Excel
@@ -158,7 +158,7 @@
                                     <td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-zinc-300">{{number_format($salary->jumlah_gaji, 0, ',', '.') ?: ''}}</td>
                                     <td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-zinc-300">{{number_format($salary->potongan_bpjs, 0, ',', '.') ?: ''}}</td>
                                     {{-- <td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-zinc-300">{{number_format($salary->potongan_tabungan_hari_tua, 0, ',', '.')}}</td> --}}
-                                    <td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-zinc-300">{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: ''}}</td>
+                                    <td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-zinc-300">{{number_format($salary->potongan_kredit_kasbon, 0, ',', '.') ?: '-'}}</td>
                                     <td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-zinc-300">{{number_format($salary->jumlah_bersih, 0, ',', '.') ?: ''}}</td>
                                     <td rowspan="{{ $deliveryCount }}" class="text-center py-1 border border-zinc-300">
                                       @if ($salary->ttd && file_exists(public_path('storage/ttd' . $salary->ttd)))
