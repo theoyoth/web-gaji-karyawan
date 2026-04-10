@@ -33,7 +33,7 @@
                     <div class="text-blue-500 text-4xl mb-2">
                         <i class="fas fa-users"></i>
                     </div>
-                    <div class="text-center font-semibold text-white">AWAK 1 & AWAK 2</div>
+                    <div class="text-center font-semibold text-white">AMT 1 & AMT 2</div>
                 </a>
                 <a href="{{ route('filterbymonth.kantor',['bulan' => $monthName ,'tahun' => $currentYear,'kantor' => 'kantor 1']) }}" class="my-4 w-[200px] h-[100px] flex items-center justify-center bg-gray-900 text-white text-center rounded-md hover:bg-gray-950 border-2 border-zinc-200">
                     <div class="text-green-500 text-4xl mb-2">
