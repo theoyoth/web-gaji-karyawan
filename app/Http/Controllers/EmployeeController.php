@@ -314,11 +314,11 @@ class EmployeeController extends Controller
 	}
 
 	public function destroy($id){
-		$employee = Employee::with('salary')->findOrFail($id);
+		$employee = Employee::with('salaries')->findOrFail($id);
 
 		// Loop through each salary associated with the employee
     // ✅ Delete signature (ttd)
-		if ($employee->salary) {
+		if ($employee->salaries) {
 			// $fileName = Str::title($employee->nama) . '.png'; // using capital first letter employee's name for the signature
 			// $path = 'ttd/' . $fileName;
 
@@ -328,7 +328,7 @@ class EmployeeController extends Controller
 			// }
 
 			// Optionally delete the salary record if needed
-			$employee->salary->delete();
+			$employee->salaries()->delete();
 		}
 
      // ✅ Delete foto_profil if exists

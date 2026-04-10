@@ -92,7 +92,7 @@
                 @php
                   $salary = $employee->salaries->first();
                 @endphp
-                @if ($employee->salaries/*)
+                @if ($employee->salaries)
                   <tr>
                     <td class="td-center">{{ $no++ }}</td>
                     <td class="td-left">{{$employee->nama}}</td>
