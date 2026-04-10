@@ -6,9 +6,13 @@ use App\Models\Employee;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 use Illuminate\Contracts\View\View;
 
-class Awak12Export implements FromView, WithStyles
+class Awak12Export implements FromView, WithStyles, ShouldAutoSize
 {
     protected $month;
     protected $year;
@@ -19,20 +23,7 @@ class Awak12Export implements FromView, WithStyles
         $this->year = $year;
     }
     public function view(): View
-    {
-        // $employees = Employee::where('kantor', "awak 1 dan awak 2")
-        //   ->with(['salary.deliveries' => function ($query) {
-        //       $query->whereMonth('bulan', $this->bulan)
-        //             ->whereYear('tahun', $this->tahun);
-        //   }])
-        //   ->whereHas('salary.deliveries', function ($query) {
-        //       $query->whereMonth('bulan', $this->bulan)
-        //             ->whereYear('tahun', $this->tahun);
-        //   })
-        //   ->get();
-
-          
-
+    {          
         $query = Employee::where('kantor', "awak 1 dan awak 2")
             ->whereHas('salaries', function ($q) {
                     $q->where('bulan', $this->month)
@@ -41,7 +32,8 @@ class Awak12Export implements FromView, WithStyles
             )
             ->with(['salaries' => function ($q) {
                     $q->where('bulan', $this->month)
-                      ->where('tahun', $this->year);
+                      ->where('tahun', $this->year)
+                      ->with('deliveries'); // load deliveries
                 }
             ]);
 
@@ -56,15 +48,37 @@ class Awak12Export implements FromView, WithStyles
 
     public function styles(Worksheet $sheet)
     {
-        return [
-            1 => [
-                'font' => ['bold' => true],
-                'alignment' => ['horizontal' => 'center'],
-                'fill' => [
-                    'fillType' => 'solid',
-                    'startColor' => ['rgb' => 'EEEEEE']
-                ],
-            ],
-        ];
+      $lastColumn = $sheet->getHighestColumn();
+      $lastRow = $sheet->getHighestRow();
+
+      $sheet->getStyle("A1:{$lastColumn}{$lastRow}")
+          ->getBorders()
+          ->getAllBorders()
+          ->setBorderStyle(Border::BORDER_THIN);
+
+      return [
+          1 => [
+              'font' => ['bold' => true],
+              'fill' => [
+                  'fillType' => Fill::FILL_SOLID,
+                  'startColor' => ['rgb' => 'a6a6a6']
+              ],
+              'alignment' => [
+                  'horizontal' => Alignment::HORIZONTAL_CENTER,
+                  'vertical' => Alignment::VERTICAL_CENTER,
+              ],
+          ],
+          2 => [
+              'font' => ['bold' => true],
+              'fill' => [
+                  'fillType' => Fill::FILL_SOLID,
+                  'startColor' => ['rgb' => 'a6a6a6']
+              ],
+              'alignment' => [
+                  'horizontal' => Alignment::HORIZONTAL_CENTER,
+                  'vertical' => Alignment::VERTICAL_CENTER,
+              ],
+          ],
+      ];
     }
 }
